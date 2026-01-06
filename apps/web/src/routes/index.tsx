@@ -16,7 +16,7 @@ export const Route = createFileRoute("/")({
 
 function HomeComponent() {
 	return (
-		<div className="min-h-screen w-full">
+		<div className="h-fit min-h-screen w-full">
 			{/* Hero Section */}
 			<section className="flex items-center justify-center bg-linear-to-br from-blue-50 via-white to-gray-50 px-4 py-20 sm:px-6 lg:px-8">
 				<div className="max-w-4xl text-center">
@@ -179,6 +179,28 @@ function HomeComponent() {
 						<ArrowRight className="ml-2 size-4" />
 					</Button>
 				</Link>
+			</section>
+
+			{/* CTA Section */}
+			<section className="flex justify-center bg-blue-900 px-6 py-16 text-white lg:px-8">
+				<div className="flex max-w-3xl flex-col items-center justify-center text-center">
+					<h2 className="mb-6 font-bold text-3xl capitalize md:text-4xl">
+						Bergabunglah Bersama Kami
+					</h2>
+					<p className="mb-8 text-base text-blue-100 leading-relaxed">
+						Jadilah bagian dari gerakan pemuda yang membawa perubahan positif
+						untuk masyarakat. Bersama kita bisa berkontribusi lebih banyak!
+					</p>
+					<Link to="/">
+						<Button
+							variant="outline"
+							className="rounded-md bg-white p-5 font-[550] text-blue-900 text-sm capitalize transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:bg-gray-100 hover:text-blue-900"
+						>
+							Daftar Sekarang
+							<ArrowRight className="ml-2 size-4" />
+						</Button>
+					</Link>
+				</div>
 			</section>
 		</div>
 	);
