@@ -11,7 +11,7 @@ const links: {
 }[] = [
 	{ to: "/", label: "Beranda" },
 	{ to: "/about", label: "Tentang Kami" },
-	{ to: "/", label: "Struktur Organisasi" },
+	{ to: "/struktur", label: "Struktur Organisasi" },
 	{ to: "/", label: "Program & Kegiatan" },
 	{ to: "/", label: "Berita" },
 	{ to: "/", label: "Galeri" },

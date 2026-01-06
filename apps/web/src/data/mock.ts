@@ -188,3 +188,49 @@ export const contactInfo = {
 		},
 	],
 };
+
+export const organizationalStructure = {
+	period: "2024 - 2026",
+	structure: [
+		{
+			position: "Ketua",
+			name: "Ahmad Rizki Ramadhan",
+			photo: null,
+		},
+		{
+			position: "Wakil Ketua",
+			name: "Siti Nurhaliza",
+			photo: null,
+		},
+		{
+			position: "Sekretaris",
+			name: "Budi Santoso",
+			photo: null,
+		},
+		{
+			position: "Bendahara",
+			name: "Dewi Lestari",
+			photo: null,
+		},
+		{
+			position: "Koordinator Program Sosial",
+			name: "Fajar Ramadhan",
+			photo: null,
+		},
+		{
+			position: "Koordinator Kewirausahaan",
+			name: "Rina Wijaya",
+			photo: null,
+		},
+		{
+			position: "Koordinator Olahraga & Seni",
+			name: "Andi Pratama",
+			photo: null,
+		},
+		{
+			position: "Koordinator Humas",
+			name: "Linda Kusuma",
+			photo: null,
+		},
+	],
+};

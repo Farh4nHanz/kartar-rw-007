@@ -1,9 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { contactInfo } from "@/data/mock";
+import type { FileRoutesByFullPath } from "@/routeTree.gen";
 
-const quickLinks = [
+const quickLinks: {
+	to: keyof FileRoutesByFullPath;
+	label: string;
+}[] = [
 	{ to: "/about", label: "Tentang Kami" },
-	{ to: "/", label: "Struktur Organisasi" },
+	{ to: "/struktur", label: "Struktur Organisasi" },
 	{ to: "/", label: "Program & Kegiatan" },
 	{ to: "/", label: "Berita & Informasi" },
 	{ to: "/", label: "Bergabung dengan Kami" },
