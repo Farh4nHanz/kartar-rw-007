@@ -78,3 +78,51 @@ export const programs = [
 		status: "Rutin",
 	},
 ];
+
+export const news = [
+	{
+		id: 1,
+		title:
+			"Karang Taruna RW 007 Raih Penghargaan Organisasi Kepemudaan Terbaik",
+		date: "15 Januari 2025",
+		category: "Prestasi",
+		excerpt:
+			"Karang Taruna RW 007 meraih penghargaan sebagai organisasi kepemudaan terbaik tingkat kelurahan atas dedikasi dan kontribusinya dalam pemberdayaan masyarakat.",
+		content:
+			"Dalam acara apresiasi organisasi kepemudaan yang diselenggarakan oleh Kelurahan, Karang Taruna RW 007 berhasil meraih penghargaan sebagai organisasi terbaik. Penghargaan ini diberikan atas konsistensi dan dedikasi dalam melaksanakan berbagai program pemberdayaan masyarakat sepanjang tahun 2024.",
+		image: null,
+	},
+	{
+		id: 2,
+		title: "Sukses Gelar Bakti Sosial Ramadhan 2025",
+		date: "10 Januari 2025",
+		category: "Kegiatan",
+		excerpt:
+			"Karang Taruna RW 007 berhasil menyalurkan 150 paket sembako kepada warga kurang mampu dalam rangka menyambut bulan suci Ramadhan.",
+		content:
+			"Program bakti sosial Ramadhan 2025 terlaksana dengan baik berkat dukungan dari seluruh anggota dan donatur. Sebanyak 150 paket sembako berhasil disalurkan kepada warga yang membutuhkan di lingkungan RW 007.",
+		image: null,
+	},
+	{
+		id: 3,
+		title: "Pelatihan Digital Marketing untuk UMKM Lokal",
+		date: "5 Januari 2025",
+		category: "Program",
+		excerpt:
+			"Karang Taruna RW 007 menggelar pelatihan digital marketing yang diikuti oleh 30 pelaku UMKM di lingkungan RW 007 untuk meningkatkan penjualan online.",
+		content:
+			"Dalam upaya memberdayakan ekonomi lokal, Karang Taruna RW 007 mengadakan pelatihan digital marketing yang menghadirkan praktisi berpengalaman. Pelatihan ini fokus pada strategi pemasaran di media sosial dan marketplace.",
+		image: null,
+	},
+	{
+		id: 4,
+		title: "Pendaftaran Anggota Baru Dibuka!",
+		date: "1 Januari 2025",
+		category: "Pengumuman",
+		excerpt:
+			"Karang Taruna RW 007 membuka pendaftaran anggota baru untuk pemuda-pemudi yang ingin berkontribusi dan mengembangkan diri bersama kami.",
+		content:
+			"Bagi pemuda-pemudi usia 17-35 tahun yang berdomisili di RW 007 dan memiliki semangat untuk berkarya, silakan mendaftar menjadi anggota Karang Taruna RW 007. Informasi lengkap dapat menghubungi kontak yang tertera.",
+		image: null,
+	},
+];

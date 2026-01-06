@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Award, Lightbulb, Target, Users } from "lucide-react";
-import { organizationInfo, programs } from "@/components/data/mock";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -9,14 +8,13 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { news, organizationInfo, programs } from "@/data/mock";
 
 export const Route = createFileRoute("/")({
 	component: HomeComponent,
 });
 
 function HomeComponent() {
-	const latestActivities = programs.slice(0, 3);
-
 	return (
 		<div className="min-h-screen w-full">
 			{/* Hero Section */}
@@ -38,7 +36,7 @@ function HomeComponent() {
 						<Link to="/">
 							<Button
 								size="lg"
-								className="rounded-sm bg-blue-900 p-4 text-sm text-white transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:bg-blue-800"
+								className="rounded-sm bg-blue-900 p-4 font-[550] text-white capitalize transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:bg-blue-800"
 							>
 								Tentang Kami
 								<ArrowRight className="ml-2 size-4" />
@@ -50,7 +48,7 @@ function HomeComponent() {
 							<Button
 								size="lg"
 								variant="outline"
-								className="rounded-sm border-blue-900 p-4 text-blue-900 text-sm transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:bg-blue-50"
+								className="rounded-sm border-blue-900 p-4 font-[550] text-blue-900 capitalize transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:bg-blue-50 hover:text-blue-900"
 							>
 								Bergabung Sekarang
 							</Button>
@@ -99,23 +97,23 @@ function HomeComponent() {
 
 				{/* Activity Cards */}
 				<div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-3">
-					{latestActivities.map((activity) => (
+					{programs.slice(0, 3).map((program) => (
 						<Card
-							key={activity.id}
+							key={program.id}
 							className="rounded-md transition-shadow duration-300 hover:shadow-lg"
 						>
 							<CardHeader>
 								<div className="mb-2 inline-block w-fit rounded-full bg-blue-900 px-3 py-1 font-semibold text-white text-xs">
-									{activity.category}
+									{program.category}
 								</div>
-								<CardTitle className="text-blue-900 text-xl">
-									{activity.title}
+								<CardTitle className="font-semibold text-blue-900 text-lg">
+									{program.title}
 								</CardTitle>
-								<CardDescription>{activity.schedule}</CardDescription>
+								<CardDescription>{program.schedule}</CardDescription>
 							</CardHeader>
 
 							<CardContent>
-								<p className="text-gray-600 text-sm">{activity.description}</p>
+								<p className="text-gray-600 text-sm">{program.description}</p>
 							</CardContent>
 						</Card>
 					))}
@@ -125,9 +123,59 @@ function HomeComponent() {
 				<Link to="/">
 					<Button
 						variant="outline"
-						className="rounded-md border-blue-900 p-4 font-medium text-blue-900 text-sm hover:cursor-pointer hover:bg-blue-50"
+						className="rounded-md border-blue-900 p-4 font-[550] text-blue-900 text-sm capitalize hover:cursor-pointer hover:bg-blue-50 hover:text-blue-900"
 					>
 						Lihat semua program
+						<ArrowRight className="ml-2 size-4" />
+					</Button>
+				</Link>
+			</section>
+
+			{/* News Section */}
+			<section className="flex flex-col items-center justify-center bg-white px-6 py-16 lg:px-8">
+				<div className="mb-12 text-center">
+					<h2 className="mb-4 font-bold text-4xl text-blue-900">
+						Berita Terbaru
+					</h2>
+					<p className="text-gray-600 text-lg">
+						Update kegiatan dan informasi terkini
+					</p>
+				</div>
+
+				{/* News Cards */}
+				<div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+					{news.slice(0, 3).map((item) => (
+						<Card
+							key={item.id}
+							className="rounded-md transition-shadow duration-300 hover:shadow-lg"
+						>
+							<CardHeader>
+								<div className="mb-2 flex items-center justify-between gap-4">
+									<span className="rounded-full bg-blue-100 px-3 py-1 font-semibold text-blue-900 text-xs">
+										{item.category}
+									</span>
+									<span className="text-gray-500 text-xs">{item.date}</span>
+								</div>
+
+								<CardTitle className="font-semibold text-blue-900 text-lg leading-snug">
+									{item.title}
+								</CardTitle>
+							</CardHeader>
+
+							<CardContent>
+								<p className="text-gray-600 text-sm">{item.excerpt}</p>
+							</CardContent>
+						</Card>
+					))}
+				</div>
+
+				{/* All News CTA */}
+				<Link to="/">
+					<Button
+						variant="outline"
+						className="rounded-md border-blue-900 p-4 font-[550] text-blue-900 text-sm capitalize hover:cursor-pointer hover:bg-blue-50 hover:text-blue-900"
+					>
+						Lihat Semua Berita
 						<ArrowRight className="ml-2 size-4" />
 					</Button>
 				</Link>
