@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { contactInfo } from "@/data/mock";
 
 const quickLinks = [
-	{ to: "/", label: "Tentang Kami" },
+	{ to: "/about", label: "Tentang Kami" },
 	{ to: "/", label: "Struktur Organisasi" },
 	{ to: "/", label: "Program & Kegiatan" },
 	{ to: "/", label: "Berita & Informasi" },

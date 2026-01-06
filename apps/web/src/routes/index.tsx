@@ -33,7 +33,7 @@ function HomeComponent() {
 					{/* CTA Buttons */}
 					<div className="flex flex-wrap justify-center gap-4">
 						{/* About Us */}
-						<Link to="/">
+						<Link to="/about">
 							<Button
 								size="lg"
 								className="rounded-sm bg-blue-900 p-4 font-[550] text-white capitalize transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:bg-blue-800"
