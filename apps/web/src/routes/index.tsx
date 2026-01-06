@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Award, Lightbulb, Target, Users } from "lucide-react";
 import { organizationInfo } from "@/components/data/mock";
 import { Button } from "@/components/ui/button";
 
@@ -30,7 +30,7 @@ function HomeComponent() {
 							<Link to="/">
 								<Button
 									size="lg"
-									className=" bg-blue-900 text-white transition-all duration-300 hover:scale-105 hover:bg-blue-800 rounded-sm hover:cursor-pointer"
+									className="rounded-sm bg-blue-900 text-white transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:bg-blue-800"
 								>
 									Tentang Kami
 									<ArrowRight className="ml-2 size-4" />
@@ -42,11 +42,42 @@ function HomeComponent() {
 								<Button
 									size="lg"
 									variant="outline"
-									className="border-blue-900 text-blue-900 transition-all duration-300 hover:scale-105 hover:bg-blue-50 rounded-sm hover:cursor-pointer"
+									className="rounded-sm border-blue-900 text-blue-900 transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:bg-blue-50"
 								>
 									Bergabung Sekarang
 								</Button>
 							</Link>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			{/* Stats Section */}
+			<section className="bg-white py-16">
+				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+					<div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+						<div className="rounded-lg bg-blue-50 p-6 text-center transition-transform duration-300 hover:scale-105">
+							<Users className="mx-auto mb-3 size-12 text-blue-900" />
+							<div className="mb-1 font-bold text-3xl text-blue-900">150+</div>
+							<div className="text-gray-600">Anggota Aktif</div>
+						</div>
+
+						<div className="rounded-lg bg-blue-50 p-6 text-center transition-transform duration-300 hover:scale-105">
+							<Target className="mx-auto mb-3 size-12 text-blue-900" />
+							<div className="mb-1 font-bold text-3xl text-blue-900">50+</div>
+							<div className="text-gray-600">Program Terlaksana</div>
+						</div>
+
+						<div className="rounded-lg bg-blue-50 p-6 text-center transition-transform duration-300 hover:scale-105">
+							<Lightbulb className="mx-auto mb-3 size-12 text-blue-900" />
+							<div className="mb-1 font-bold text-3xl text-blue-900">20+</div>
+							<div className="text-gray-600">Kolaborasi</div>
+						</div>
+
+						<div className="rounded-lg bg-blue-50 p-6 text-center transition-transform duration-300 hover:scale-105">
+							<Award className="mx-auto mb-3 size-12 text-blue-900" />
+							<div className="mb-1 font-bold text-3xl text-blue-900">7</div>
+							<div className="text-gray-600">Tahun Berdiri</div>
 						</div>
 					</div>
 				</div>
