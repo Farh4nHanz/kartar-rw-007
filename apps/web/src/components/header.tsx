@@ -3,10 +3,14 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import type { FileRoutesByFullPath } from "@/routeTree.gen";
 
-const links = [
+const links: {
+	to: keyof FileRoutesByFullPath;
+	label: string;
+}[] = [
 	{ to: "/", label: "Beranda" },
-	{ to: "/", label: "Tentang Kami" },
+	{ to: "/about", label: "Tentang Kami" },
 	{ to: "/", label: "Struktur Organisasi" },
 	{ to: "/", label: "Program & Kegiatan" },
 	{ to: "/", label: "Berita" },
