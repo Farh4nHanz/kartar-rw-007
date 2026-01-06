@@ -74,10 +74,11 @@ export default function Header() {
 					<Button
 						variant="ghost"
 						size="icon"
-						className="lg:hidden"
+						className="rounded-md hover:cursor-pointer lg:hidden"
 						onClick={() => setIsOpen((o) => !o)}
+						aria-label="Open menu"
 					>
-						{isOpen ? <X className="size-6" /> : <Menu className="size-6" />}
+						{isOpen ? <X className="size-5" /> : <Menu className="size-5" />}
 					</Button>
 				</div>
 
