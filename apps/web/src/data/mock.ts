@@ -1,3 +1,14 @@
+import {
+	Clock,
+	Facebook,
+	Instagram,
+	Mail,
+	MapPin,
+	MessageSquareText,
+	Phone,
+	Twitter,
+} from "lucide-react";
+
 export const organizationInfo = {
 	name: "Karang Taruna RW 007",
 	tagline: "Membangun Generasi Muda yang Kreatif, Inovatif, dan Berprestasi",
@@ -126,3 +137,54 @@ export const news = [
 		image: null,
 	},
 ];
+
+export const contactInfo = {
+	general: [
+		{
+			label: "Email",
+			icon: Mail,
+			value: "karangtarunarw007@gmail.com",
+		},
+		{
+			label: "Phone",
+			icon: Phone,
+			value: "0812-3456-7890",
+		},
+		{
+			label: "WhatsApp",
+			icon: MessageSquareText,
+			value: "0812-3456-7890",
+		},
+		{
+			label: "Address",
+			icon: MapPin,
+			value: "Sekretariat RW 007, Kelurahan, Kecamatan, Jakarta",
+		},
+		{
+			label: "Operational Hours",
+			icon: Clock,
+			value:
+				"Senin - Jumat: 16.00 - 21.00 WIB, Sabtu - Minggu: 09.00 - 17.00 WIB",
+		},
+	],
+	socialMedia: [
+		{
+			label: "Instagram",
+			icon: Instagram,
+			value: "@karangtaruna_rw007",
+			link: "https://instagram.com/karangtaruna_rw007",
+		},
+		{
+			label: "Facebook",
+			icon: Facebook,
+			value: "Karang Taruna RW 007",
+			link: "https://facebook.com/karangtaruna_rw007",
+		},
+		{
+			label: "Twitter",
+			icon: Twitter,
+			value: "@kt_rw007",
+			link: "https://twitter.com/kt_rw007",
+		},
+	],
+};

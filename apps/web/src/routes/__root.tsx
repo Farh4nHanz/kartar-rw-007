@@ -10,6 +10,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 
 import "../index.css";
+import Footer from "@/components/footer";
 
 export type RouterAppContext = {};
 
@@ -44,9 +45,10 @@ function RootComponent() {
 				disableTransitionOnChange
 				storageKey="vite-ui-theme"
 			>
-				<div className="grid h-svh grid-rows-[auto_1fr]">
+				<div className="grid h-fit min-h-svh grid-rows-[auto_1fr_auto]">
 					<Header />
 					<Outlet />
+					<Footer />
 				</div>
 				<Toaster richColors />
 			</ThemeProvider>
