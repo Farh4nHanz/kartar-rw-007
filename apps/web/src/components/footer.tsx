@@ -6,7 +6,7 @@ const quickLinks: {
 	to: keyof FileRoutesByFullPath;
 	label: string;
 }[] = [
-	{ to: "/about", label: "Tentang Kami" },
+	{ to: "/tentang-kami", label: "Tentang Kami" },
 	{ to: "/struktur", label: "Struktur Organisasi" },
 	{ to: "/", label: "Program & Kegiatan" },
 	{ to: "/", label: "Berita & Informasi" },

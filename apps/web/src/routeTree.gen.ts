@@ -9,12 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TentangKamiRouteImport } from './routes/tentang-kami'
 import { Route as StrukturRouteImport } from './routes/struktur'
 import { Route as KolaborasiRouteImport } from './routes/kolaborasi'
 import { Route as GaleriRouteImport } from './routes/galeri'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TentangKamiRoute = TentangKamiRouteImport.update({
+  id: '/tentang-kami',
+  path: '/tentang-kami',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StrukturRoute = StrukturRouteImport.update({
   id: '/struktur',
   path: '/struktur',
@@ -30,11 +35,6 @@ const GaleriRoute = GaleriRouteImport.update({
   path: '/galeri',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -43,44 +43,57 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/galeri': typeof GaleriRoute
   '/kolaborasi': typeof KolaborasiRoute
   '/struktur': typeof StrukturRoute
+  '/tentang-kami': typeof TentangKamiRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/galeri': typeof GaleriRoute
   '/kolaborasi': typeof KolaborasiRoute
   '/struktur': typeof StrukturRoute
+  '/tentang-kami': typeof TentangKamiRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/galeri': typeof GaleriRoute
   '/kolaborasi': typeof KolaborasiRoute
   '/struktur': typeof StrukturRoute
+  '/tentang-kami': typeof TentangKamiRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/galeri' | '/kolaborasi' | '/struktur'
+  fullPaths: '/' | '/galeri' | '/kolaborasi' | '/struktur' | '/tentang-kami'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/galeri' | '/kolaborasi' | '/struktur'
-  id: '__root__' | '/' | '/about' | '/galeri' | '/kolaborasi' | '/struktur'
+  to: '/' | '/galeri' | '/kolaborasi' | '/struktur' | '/tentang-kami'
+  id:
+    | '__root__'
+    | '/'
+    | '/galeri'
+    | '/kolaborasi'
+    | '/struktur'
+    | '/tentang-kami'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
   GaleriRoute: typeof GaleriRoute
   KolaborasiRoute: typeof KolaborasiRoute
   StrukturRoute: typeof StrukturRoute
+  TentangKamiRoute: typeof TentangKamiRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/tentang-kami': {
+      id: '/tentang-kami'
+      path: '/tentang-kami'
+      fullPath: '/tentang-kami'
+      preLoaderRoute: typeof TentangKamiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/struktur': {
       id: '/struktur'
       path: '/struktur'
@@ -102,13 +115,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GaleriRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -121,10 +127,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
   GaleriRoute: GaleriRoute,
   KolaborasiRoute: KolaborasiRoute,
   StrukturRoute: StrukturRoute,
+  TentangKamiRoute: TentangKamiRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

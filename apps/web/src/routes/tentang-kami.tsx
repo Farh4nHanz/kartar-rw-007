@@ -1,19 +1,13 @@
-/** biome-ignore-all lint/suspicious/noArrayIndexKey: true */
-
 import { createFileRoute } from "@tanstack/react-router";
 import { BookOpen, Briefcase, Heart, Target } from "lucide-react";
-import { useId } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { organizationInfo } from "@/data/mock";
 
-export const Route = createFileRoute("/about")({
+export const Route = createFileRoute("/tentang-kami")({
 	component: RouteComponent,
 });
 
 function RouteComponent() {
-	const missionKey = useId();
-	const goalKey = useId();
-
 	return (
 		<div className="flex h-fit min-h-screen w-full justify-center bg-gray-50 py-16">
 			<div className="container w-full px-6 py-2">
@@ -73,7 +67,10 @@ function RouteComponent() {
 						<CardContent>
 							<ul className="space-y-4">
 								{organizationInfo.mission.map((mission, i) => (
-									<li key={`${missionKey}-${i}`} className="flex items-center">
+									<li
+										key={Math.floor(Math.random() * 100)}
+										className="flex items-center"
+									>
 										<span className="mr-4 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-900 font-semibold text-white">
 											{i + 1}
 										</span>
@@ -99,7 +96,7 @@ function RouteComponent() {
 							<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
 								{organizationInfo.goals.map((goal, i) => (
 									<div
-										key={`${goalKey}-${i}`}
+										key={Math.floor(Math.random() * 100)}
 										className="flex items-start space-x-3 rounded-lg bg-blue-50 p-4"
 									>
 										<span className="flex h-6 w-6 shrink-0 items-center justify-center rounded bg-blue-900 font-semibold text-sm text-white">
