@@ -1,5 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Building2, GraduationCap, Handshake, Heart } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import {
+	Building2,
+	GraduationCap,
+	Handshake,
+	Heart,
+	PhoneCall,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -133,19 +140,25 @@ function RouteComponent() {
 				</Card>
 
 				{/* CTA Section */}
-				<Card className="w-full rounded-lg bg-blue-900 text-white">
-					<CardContent className="flex justify-center py-8">
-						<div className="flex max-w-2xl flex-col items-center text-center">
-							<Handshake className="mb-4 size-16" />
-							<h3 className="mb-3 font-bold text-3xl">
-								Tertarik Berkolaborasi?
-							</h3>
-							<p className="mb-6 text-blue-100 text-sm leading-relaxed">
-								Kami terbuka untuk menjalin kerjasama dengan berbagai pihak yang
-								memiliki visi yang sama dalam pemberdayaan masyarakat. Mari
-								bersama-sama menciptakan dampak positif yang lebih besar.
-							</p>
-						</div>
+				<Card className="flex w-full items-center rounded-lg bg-blue-900 text-white">
+					<CardContent className="flex max-w-2xl flex-col items-center py-8 text-center">
+						<Handshake className="mb-4 size-16" />
+						<h3 className="mb-3 font-bold text-3xl">Tertarik Berkolaborasi?</h3>
+						<p className="mb-6 text-blue-100 text-sm leading-relaxed">
+							Kami terbuka untuk menjalin kerjasama dengan berbagai pihak yang
+							memiliki visi yang sama dalam pemberdayaan masyarakat. Mari
+							bersama-sama menciptakan dampak positif yang lebih besar.
+						</p>
+
+						<Link to="/kontak">
+							<Button
+								size="lg"
+								className="rounded-lg bg-white px-8 py-4 font-semibold text-blue-900 transition-colors duration-300 hover:cursor-pointer hover:bg-gray-100"
+							>
+								<PhoneCall className="mr-2" />
+								Hubungi Kami
+							</Button>
+						</Link>
 					</CardContent>
 				</Card>
 			</div>
