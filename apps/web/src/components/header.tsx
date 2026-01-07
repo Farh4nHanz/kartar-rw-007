@@ -15,7 +15,7 @@ const links: {
 	{ to: "/", label: "Program & Kegiatan" },
 	{ to: "/", label: "Berita" },
 	{ to: "/galeri", label: "Galeri" },
-	{ to: "/", label: "Kolaborasi" },
+	{ to: "/kolaborasi", label: "Kolaborasi" },
 	{ to: "/", label: "Bergabung" },
 	{ to: "/", label: "Kontak" },
 ] as const;

@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as StrukturRouteImport } from './routes/struktur'
+import { Route as KolaborasiRouteImport } from './routes/kolaborasi'
 import { Route as GaleriRouteImport } from './routes/galeri'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -17,6 +18,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const StrukturRoute = StrukturRouteImport.update({
   id: '/struktur',
   path: '/struktur',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KolaborasiRoute = KolaborasiRouteImport.update({
+  id: '/kolaborasi',
+  path: '/kolaborasi',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GaleriRoute = GaleriRouteImport.update({
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/galeri': typeof GaleriRoute
+  '/kolaborasi': typeof KolaborasiRoute
   '/struktur': typeof StrukturRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/galeri': typeof GaleriRoute
+  '/kolaborasi': typeof KolaborasiRoute
   '/struktur': typeof StrukturRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/galeri': typeof GaleriRoute
+  '/kolaborasi': typeof KolaborasiRoute
   '/struktur': typeof StrukturRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/galeri' | '/struktur'
+  fullPaths: '/' | '/about' | '/galeri' | '/kolaborasi' | '/struktur'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/galeri' | '/struktur'
-  id: '__root__' | '/' | '/about' | '/galeri' | '/struktur'
+  to: '/' | '/about' | '/galeri' | '/kolaborasi' | '/struktur'
+  id: '__root__' | '/' | '/about' | '/galeri' | '/kolaborasi' | '/struktur'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   GaleriRoute: typeof GaleriRoute
+  KolaborasiRoute: typeof KolaborasiRoute
   StrukturRoute: typeof StrukturRoute
 }
 
@@ -76,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/struktur'
       fullPath: '/struktur'
       preLoaderRoute: typeof StrukturRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kolaborasi': {
+      id: '/kolaborasi'
+      path: '/kolaborasi'
+      fullPath: '/kolaborasi'
+      preLoaderRoute: typeof KolaborasiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/galeri': {
@@ -106,6 +123,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   GaleriRoute: GaleriRoute,
+  KolaborasiRoute: KolaborasiRoute,
   StrukturRoute: StrukturRoute,
 }
 export const routeTree = rootRouteImport

@@ -285,3 +285,46 @@ export const gallery = [
 		description: "Kegiatan bimbingan belajar rutin setiap minggu",
 	},
 ];
+
+export const collaborations = [
+	{
+		id: 1,
+		partner: "Universitas Indonesia",
+		type: "Akademik",
+		description:
+			"Kerjasama dalam program pengabdian masyarakat dan pelatihan soft skill untuk pemuda.",
+		year: "2024 - Sekarang",
+	},
+	{
+		id: 2,
+		partner: "UMKM Lokal RW 007",
+		type: "Ekonomi",
+		description:
+			"Kolaborasi dalam pengembangan produk lokal dan pemasaran digital.",
+		year: "2023 - Sekarang",
+	},
+	{
+		id: 3,
+		partner: "Puskesmas Kelurahan",
+		type: "Kesehatan",
+		description:
+			"Program penyuluhan kesehatan dan pemeriksaan gratis untuk warga.",
+		year: "2024 - Sekarang",
+	},
+	{
+		id: 4,
+		partner: "Kelurahan Setempat",
+		type: "Pemerintahan",
+		description:
+			"Mitra dalam pelaksanaan program pemberdayaan masyarakat tingkat kelurahan.",
+		year: "2018 - Sekarang",
+	},
+	{
+		id: 5,
+		partner: "Karang Taruna Se-Kecamatan",
+		type: "Organisasi",
+		description:
+			"Koordinasi dan kerjasama antar karang taruna dalam berbagai event bersama.",
+		year: "2020 - Sekarang",
+	},
+];
