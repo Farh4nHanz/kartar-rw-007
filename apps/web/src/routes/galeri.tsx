@@ -88,21 +88,6 @@ function RouteComponent() {
 						</Card>
 					))}
 				</div>
-
-				{/* Info Seciton */}
-				{/* <Card className="mt-12">
-					<CardContent className="mx-auto max-w-2xl py-8 text-center">
-						<h3 className="mb-3 font-bold text-2xl text-blue-900">
-							Dokumentasi Kegiatan
-						</h3>
-						<p className="text-gray-700 leading-relaxed">
-							Setiap kegiatan yang kami laksanakan selalu didokumentasikan
-							dengan baik sebagai bentuk transparansi dan bukti nyata kontribusi
-							kami kepada masyarakat. Foto-foto ini juga menjadi kenangan
-							berharga bagi seluruh anggota dan warga yang terlibat.
-						</p>
-					</CardContent>
-				</Card> */}
 			</div>
 		</div>
 	);
