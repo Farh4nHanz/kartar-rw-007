@@ -16,7 +16,7 @@ function RouteComponent() {
 
 	return (
 		<div className="flex h-fit min-h-screen w-full justify-center bg-gray-50 py-16">
-			<div className="container w-full px-6">
+			<div className="container w-full px-6 py-2">
 				{/* Header */}
 				<div className="mb-16 text-center">
 					<h1 className="mb-4 font-bold text-5xl text-blue-900">

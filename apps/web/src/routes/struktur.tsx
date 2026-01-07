@@ -1,6 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Users } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
 import { organizationalStructure } from "@/data/mock";
 
 export const Route = createFileRoute("/struktur")({
@@ -9,8 +15,8 @@ export const Route = createFileRoute("/struktur")({
 
 function RouteComponent() {
 	return (
-		<div className="h-fit min-h-screen w-full bg-gray-50 py-16">
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+		<div className="flex h-fit min-h-screen w-full justify-center bg-gray-50 py-16">
+			<div className="container w-full px-6 py-2">
 				{/* Header */}
 				<div className="mb-16 text-center">
 					<h1 className="mb-4 font-bold text-5xl text-blue-900">
@@ -41,9 +47,14 @@ function RouteComponent() {
 										<Users className="size-12 text-blue-900" />
 									)}
 								</div>
+
 								<CardTitle className="font-semibold text-base text-blue-900">
 									{member.name}
 								</CardTitle>
+
+								<CardDescription className="font-medium text-muted-foreground text-xs">
+									{member.position}
+								</CardDescription>
 							</CardHeader>
 						</Card>
 					))}
