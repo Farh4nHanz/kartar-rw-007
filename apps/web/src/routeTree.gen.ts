@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as StrukturRouteImport } from './routes/struktur'
+import { Route as GaleriRouteImport } from './routes/galeri'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
 const StrukturRoute = StrukturRouteImport.update({
   id: '/struktur',
   path: '/struktur',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GaleriRoute = GaleriRouteImport.update({
+  id: '/galeri',
+  path: '/galeri',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -32,30 +38,34 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/galeri': typeof GaleriRoute
   '/struktur': typeof StrukturRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/galeri': typeof GaleriRoute
   '/struktur': typeof StrukturRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/galeri': typeof GaleriRoute
   '/struktur': typeof StrukturRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/struktur'
+  fullPaths: '/' | '/about' | '/galeri' | '/struktur'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/struktur'
-  id: '__root__' | '/' | '/about' | '/struktur'
+  to: '/' | '/about' | '/galeri' | '/struktur'
+  id: '__root__' | '/' | '/about' | '/galeri' | '/struktur'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  GaleriRoute: typeof GaleriRoute
   StrukturRoute: typeof StrukturRoute
 }
 
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/struktur'
       fullPath: '/struktur'
       preLoaderRoute: typeof StrukturRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/galeri': {
+      id: '/galeri'
+      path: '/galeri'
+      fullPath: '/galeri'
+      preLoaderRoute: typeof GaleriRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  GaleriRoute: GaleriRoute,
   StrukturRoute: StrukturRoute,
 }
 export const routeTree = rootRouteImport

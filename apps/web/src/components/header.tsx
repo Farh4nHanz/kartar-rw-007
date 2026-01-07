@@ -14,7 +14,7 @@ const links: {
 	{ to: "/struktur", label: "Struktur Organisasi" },
 	{ to: "/", label: "Program & Kegiatan" },
 	{ to: "/", label: "Berita" },
-	{ to: "/", label: "Galeri" },
+	{ to: "/galeri", label: "Galeri" },
 	{ to: "/", label: "Kolaborasi" },
 	{ to: "/", label: "Bergabung" },
 	{ to: "/", label: "Kontak" },

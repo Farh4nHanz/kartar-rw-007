@@ -234,3 +234,54 @@ export const organizationalStructure = {
 		},
 	],
 };
+
+export const gallery = [
+	{
+		id: 1,
+		title: "Bakti Sosial Ramadhan 2024",
+		category: "Sosial",
+		date: "Maret 2024",
+		image: null,
+		description: "Pembagian paket sembako kepada warga kurang mampu",
+	},
+	{
+		id: 2,
+		title: "Turnamen Futsal Antar RT",
+		category: "Olahraga",
+		date: "Juli 2024",
+		image: null,
+		description: "Pertandingan futsal yang meriah dan penuh sportivitas",
+	},
+	{
+		id: 3,
+		title: "Pelatihan Kewirausahaan",
+		category: "Pelatihan",
+		date: "September 2024",
+		image: null,
+		description: "Workshop digital marketing dan manajemen usaha",
+	},
+	{
+		id: 4,
+		title: "Gotong Royong Bersih Lingkungan",
+		category: "Lingkungan",
+		date: "Oktober 2024",
+		image: null,
+		description: "Kegiatan membersihkan lingkungan RW 007",
+	},
+	{
+		id: 5,
+		title: "Festival Seni Budaya",
+		category: "Seni",
+		date: "November 2024",
+		image: null,
+		description: "Pentas seni dan pameran budaya lokal",
+	},
+	{
+		id: 6,
+		title: "Bimbel Gratis untuk Anak-anak",
+		category: "Pendidikan",
+		date: "Desember 2024",
+		image: null,
+		description: "Kegiatan bimbingan belajar rutin setiap minggu",
+	},
+];
