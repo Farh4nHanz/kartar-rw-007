@@ -17,7 +17,7 @@ const links: {
 	{ to: "/galeri", label: "Galeri" },
 	{ to: "/kolaborasi", label: "Kolaborasi" },
 	{ to: "/", label: "Bergabung" },
-	{ to: "/", label: "Kontak" },
+	{ to: "/kontak", label: "Kontak" },
 ] as const;
 
 export default function Header() {

@@ -146,7 +146,7 @@ export const contactInfo = {
 			value: "karangtarunarw007@gmail.com",
 		},
 		{
-			label: "Phone",
+			label: "Telepon",
 			icon: Phone,
 			value: "0812-3456-7890",
 		},
@@ -156,12 +156,12 @@ export const contactInfo = {
 			value: "0812-3456-7890",
 		},
 		{
-			label: "Address",
+			label: "Alamat",
 			icon: MapPin,
 			value: "Sekretariat RW 007, Kelurahan, Kecamatan, Jakarta",
 		},
 		{
-			label: "Operational Hours",
+			label: "Jam Operasional",
 			icon: Clock,
 			value:
 				"Senin - Jumat: 16.00 - 21.00 WIB, Sabtu - Minggu: 09.00 - 17.00 WIB",

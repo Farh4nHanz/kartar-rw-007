@@ -61,8 +61,10 @@ export default function Footer() {
 					<ul className="space-y-3">
 						{contactInfo.general
 							.filter((item) => {
-								const contact = ["Email", "Phone", "Address"];
-								return contact.includes(item.label);
+								const contact = ["Email", "Telepon", "Alamat"].map((c) =>
+									c.toLowerCase(),
+								);
+								return contact.includes(item.label.toLowerCase());
 							})
 							.map((item) => (
 								<li key={item.label} className="flex items-start space-x-2">
