@@ -1,6 +1,6 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Activity, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { FileRoutesByFullPath } from "@/routeTree.gen";
@@ -86,7 +86,7 @@ export default function Header() {
 			</div>
 
 			{/* Mobile Navigation */}
-			{isOpen ? (
+			<Activity mode={isOpen ? "visible" : "hidden"}>
 				<nav className="border-gray-200 border-t py-4 lg:hidden">
 					{links.map((item) => (
 						<Link
@@ -104,7 +104,7 @@ export default function Header() {
 						</Link>
 					))}
 				</nav>
-			) : null}
+			</Activity>
 		</header>
 	);
 }

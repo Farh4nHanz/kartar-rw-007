@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { contactInfo } from "@/data/mock";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { useCallback, useState } from "react";
+import { Activity, useCallback, useState } from "react";
 
 export const Route = createFileRoute("/kontak")({
 	component: RouteComponent,
@@ -262,13 +262,16 @@ function RouteComponent() {
 							anchor="bottom"
 							color="red"
 							onClick={() => setShowPopup(true)}
+							className="hover:cursor-pointer"
 						/>
 
-						{showPopup ? (
+						<Activity mode={showPopup ? "visible" : "hidden"}>
 							<Popup
 								longitude={-122.4}
 								latitude={37.8}
 								closeButton={false}
+								closeOnClick
+								focusAfterOpen
 								onClose={() => setShowPopup(false)}
 							>
 								<Card className="w-fit min-w-56 rounded-md p-0">
@@ -314,7 +317,7 @@ function RouteComponent() {
 									</CardContent>
 								</Card>
 							</Popup>
-						) : null}
+						</Activity>
 					</Map>
 				</Card>
 			</div>
