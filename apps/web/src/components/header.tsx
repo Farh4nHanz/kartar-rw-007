@@ -13,7 +13,7 @@ const links: {
 	{ to: "/tentang-kami", label: "Tentang Kami" },
 	{ to: "/struktur", label: "Struktur Organisasi" },
 	{ to: "/program", label: "Program & Kegiatan" },
-	{ to: "/", label: "Berita" },
+	{ to: "/berita", label: "Berita" },
 	{ to: "/galeri", label: "Galeri" },
 	{ to: "/kolaborasi", label: "Kolaborasi" },
 	{ to: "/", label: "Bergabung" },

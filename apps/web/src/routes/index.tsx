@@ -175,7 +175,7 @@ function HomeComponent() {
 					</div>
 
 					{/* All News CTA */}
-					<Link to="/">
+					<Link to="/berita">
 						<Button
 							variant="outline"
 							className="rounded-md border-blue-900 p-4 font-[550] text-blue-900 text-sm capitalize hover:cursor-pointer hover:bg-blue-50 hover:text-blue-900"

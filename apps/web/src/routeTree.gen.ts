@@ -15,6 +15,7 @@ import { Route as ProgramRouteImport } from './routes/program'
 import { Route as KontakRouteImport } from './routes/kontak'
 import { Route as KolaborasiRouteImport } from './routes/kolaborasi'
 import { Route as GaleriRouteImport } from './routes/galeri'
+import { Route as BeritaRouteImport } from './routes/berita'
 import { Route as IndexRouteImport } from './routes/index'
 
 const TentangKamiRoute = TentangKamiRouteImport.update({
@@ -47,6 +48,11 @@ const GaleriRoute = GaleriRouteImport.update({
   path: '/galeri',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BeritaRoute = BeritaRouteImport.update({
+  id: '/berita',
+  path: '/berita',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -55,6 +61,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/berita': typeof BeritaRoute
   '/galeri': typeof GaleriRoute
   '/kolaborasi': typeof KolaborasiRoute
   '/kontak': typeof KontakRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/berita': typeof BeritaRoute
   '/galeri': typeof GaleriRoute
   '/kolaborasi': typeof KolaborasiRoute
   '/kontak': typeof KontakRoute
@@ -74,6 +82,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/berita': typeof BeritaRoute
   '/galeri': typeof GaleriRoute
   '/kolaborasi': typeof KolaborasiRoute
   '/kontak': typeof KontakRoute
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/berita'
     | '/galeri'
     | '/kolaborasi'
     | '/kontak'
@@ -94,6 +104,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/berita'
     | '/galeri'
     | '/kolaborasi'
     | '/kontak'
@@ -103,6 +114,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/berita'
     | '/galeri'
     | '/kolaborasi'
     | '/kontak'
@@ -113,6 +125,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BeritaRoute: typeof BeritaRoute
   GaleriRoute: typeof GaleriRoute
   KolaborasiRoute: typeof KolaborasiRoute
   KontakRoute: typeof KontakRoute
@@ -165,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GaleriRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/berita': {
+      id: '/berita'
+      path: '/berita'
+      fullPath: '/berita'
+      preLoaderRoute: typeof BeritaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -177,6 +197,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BeritaRoute: BeritaRoute,
   GaleriRoute: GaleriRoute,
   KolaborasiRoute: KolaborasiRoute,
   KontakRoute: KontakRoute,
