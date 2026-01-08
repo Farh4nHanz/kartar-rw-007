@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Users } from "lucide-react";
+import { Info, Users } from "lucide-react";
 import {
 	Card,
 	CardContent,
@@ -33,7 +33,7 @@ function RouteComponent() {
 					{organizationalStructure.structure.map((member) => (
 						<Card
 							key={member.name}
-							className="rounded-lg transition-shadow duration-300 hover:shadow-lg"
+							className="rounded-lg px-2 py-5 transition-shadow duration-300 hover:shadow-lg"
 						>
 							<CardHeader className="pb-4 text-center">
 								<div className="mx-auto mb-4 flex size-24 items-center justify-center rounded-full bg-blue-100">
@@ -61,26 +61,25 @@ function RouteComponent() {
 				</div>
 
 				{/* Additional Info */}
-				<Card className="mt-12 rounded-lg px-4">
+				<Card className="mt-12 rounded-lg px-2 py-5">
 					<CardHeader>
-						<CardTitle className="font-semibold text-blue-900 text-xl">
+						<CardTitle className="flex items-center gap-2 font-semibold text-blue-900 text-xl">
+							<Info className="size-6" />
 							Informasi Kepengurusan
 						</CardTitle>
 					</CardHeader>
 
 					<CardContent className="space-y-4 text-gray-700">
-						<p className="text-base leading-relaxed">
-							Struktur kepengurusan Karang Taruna RW 007 periode{" "}
+						<p className="text-sm leading-relaxed">
+							Struktur kepengurusan Karang Taruna RW 007 periode
 							{organizationalStructure.period} dipilih melalui musyawarah
 							anggota dan dirancang untuk mengoptimalkan pelaksanaan
-							program-program organisasi.
+							program-program organisasi. Setiap pengurus memiliki tugas dan
+							tanggung jawab yang jelas dalam menjalankan fungsi organisasi,
+							mulai dari perencanaan program, pelaksanaan kegiatan, hingga
+							evaluasi dan pelaporan.
 						</p>
-						<p className="text-base leading-relaxed">
-							Setiap pengurus memiliki tugas dan tanggung jawab yang jelas dalam
-							menjalankan fungsi organisasi, mulai dari perencanaan program,
-							pelaksanaan kegiatan, hingga evaluasi dan pelaporan.
-						</p>
-						<p className="text-base leading-relaxed">
+						<p className="text-sm leading-relaxed">
 							Dengan struktur organisasi yang solid dan koordinasi yang baik,
 							kami berkomitmen untuk memberikan kontribusi terbaik bagi
 							pemberdayaan pemuda dan masyarakat di lingkungan RW 007.

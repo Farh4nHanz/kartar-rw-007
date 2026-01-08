@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BookOpen, Briefcase, Heart, Target } from "lucide-react";
+import { BookOpen, Briefcase, Heart, Info, Target } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { organizationInfo } from "@/data/mock";
 
@@ -22,7 +22,7 @@ function RouteComponent() {
 					</p>
 				</div>
 
-				<div className="grid grid-cols-1 gap-5 *:rounded-lg lg:auto-rows-fr lg:grid-cols-2">
+				<div className="grid grid-cols-1 gap-5 *:rounded-lg *:px-2 *:py-5 lg:auto-rows-min lg:grid-cols-2">
 					{/* Profile Section */}
 					<Card>
 						<CardHeader>
@@ -112,7 +112,8 @@ function RouteComponent() {
 					{/* History */}
 					<Card className="lg:col-span-2">
 						<CardHeader>
-							<CardTitle className="font-semibold text-blue-900 text-xl">
+							<CardTitle className="flex items-center gap-2 font-semibold text-blue-900 text-xl">
+								<Info className="size-6" />
 								Sejarah Singkat
 							</CardTitle>
 						</CardHeader>
