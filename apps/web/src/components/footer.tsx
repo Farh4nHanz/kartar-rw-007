@@ -8,7 +8,7 @@ const quickLinks: {
 }[] = [
 	{ to: "/tentang-kami", label: "Tentang Kami" },
 	{ to: "/struktur", label: "Struktur Organisasi" },
-	{ to: "/", label: "Program & Kegiatan" },
+	{ to: "/program", label: "Program & Kegiatan" },
 	{ to: "/", label: "Berita & Informasi" },
 	{ to: "/", label: "Bergabung dengan Kami" },
 ] as const;

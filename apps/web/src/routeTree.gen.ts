@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TentangKamiRouteImport } from './routes/tentang-kami'
 import { Route as StrukturRouteImport } from './routes/struktur'
+import { Route as ProgramRouteImport } from './routes/program'
 import { Route as KontakRouteImport } from './routes/kontak'
 import { Route as KolaborasiRouteImport } from './routes/kolaborasi'
 import { Route as GaleriRouteImport } from './routes/galeri'
@@ -24,6 +25,11 @@ const TentangKamiRoute = TentangKamiRouteImport.update({
 const StrukturRoute = StrukturRouteImport.update({
   id: '/struktur',
   path: '/struktur',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgramRoute = ProgramRouteImport.update({
+  id: '/program',
+  path: '/program',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KontakRoute = KontakRouteImport.update({
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/galeri': typeof GaleriRoute
   '/kolaborasi': typeof KolaborasiRoute
   '/kontak': typeof KontakRoute
+  '/program': typeof ProgramRoute
   '/struktur': typeof StrukturRoute
   '/tentang-kami': typeof TentangKamiRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/galeri': typeof GaleriRoute
   '/kolaborasi': typeof KolaborasiRoute
   '/kontak': typeof KontakRoute
+  '/program': typeof ProgramRoute
   '/struktur': typeof StrukturRoute
   '/tentang-kami': typeof TentangKamiRoute
 }
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/galeri': typeof GaleriRoute
   '/kolaborasi': typeof KolaborasiRoute
   '/kontak': typeof KontakRoute
+  '/program': typeof ProgramRoute
   '/struktur': typeof StrukturRoute
   '/tentang-kami': typeof TentangKamiRoute
 }
@@ -79,6 +88,7 @@ export interface FileRouteTypes {
     | '/galeri'
     | '/kolaborasi'
     | '/kontak'
+    | '/program'
     | '/struktur'
     | '/tentang-kami'
   fileRoutesByTo: FileRoutesByTo
@@ -87,6 +97,7 @@ export interface FileRouteTypes {
     | '/galeri'
     | '/kolaborasi'
     | '/kontak'
+    | '/program'
     | '/struktur'
     | '/tentang-kami'
   id:
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | '/galeri'
     | '/kolaborasi'
     | '/kontak'
+    | '/program'
     | '/struktur'
     | '/tentang-kami'
   fileRoutesById: FileRoutesById
@@ -104,6 +116,7 @@ export interface RootRouteChildren {
   GaleriRoute: typeof GaleriRoute
   KolaborasiRoute: typeof KolaborasiRoute
   KontakRoute: typeof KontakRoute
+  ProgramRoute: typeof ProgramRoute
   StrukturRoute: typeof StrukturRoute
   TentangKamiRoute: typeof TentangKamiRoute
 }
@@ -122,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/struktur'
       fullPath: '/struktur'
       preLoaderRoute: typeof StrukturRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/program': {
+      id: '/program'
+      path: '/program'
+      fullPath: '/program'
+      preLoaderRoute: typeof ProgramRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/kontak': {
@@ -160,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   GaleriRoute: GaleriRoute,
   KolaborasiRoute: KolaborasiRoute,
   KontakRoute: KontakRoute,
+  ProgramRoute: ProgramRoute,
   StrukturRoute: StrukturRoute,
   TentangKamiRoute: TentangKamiRoute,
 }
