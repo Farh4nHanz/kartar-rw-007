@@ -19,7 +19,7 @@ function HomeComponent() {
 		<div className="flex h-fit min-h-screen w-full flex-col items-center *:px-6 *:not-first:py-16">
 			{/* Hero Section */}
 			<section className="flex w-full justify-center bg-linear-to-br from-blue-100 via-white to-gray-50 py-20">
-				<div className="w-full max-w-4xl px-6 text-center">
+				<div className="w-full max-w-4xl text-center">
 					<h1 className="mb-6 font-bold text-5xl text-blue-900 leading-tight md:text-6xl">
 						Karang Taruna RW 007
 					</h1>

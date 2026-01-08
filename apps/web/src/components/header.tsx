@@ -27,7 +27,7 @@ export default function Header() {
 	const isActive = (path: string) => location.pathname === path;
 
 	return (
-		<header className="sticky top-0 z-50 bg-white px-6 shadow-md lg:px-8">
+		<header className="sticky top-0 z-50 bg-white shadow-md *:not-last:px-6 lg:px-8">
 			<div className="flex h-20 items-center justify-between">
 				{/* Logo */}
 				<Link to="/" className="group flex items-center space-x-3">
@@ -39,7 +39,7 @@ export default function Header() {
 						<span className="font-bold text-blue-900 text-lg leading-tight">
 							Karang Taruna
 						</span>
-						<span className="font-medium text-gray-600 text-sm">RW 007</span>
+						<span className="font-semibold text-gray-600 text-xs">RW 007</span>
 					</div>
 				</Link>
 
@@ -87,13 +87,13 @@ export default function Header() {
 
 			{/* Mobile Navigation */}
 			<Activity mode={isOpen ? "visible" : "hidden"}>
-				<nav className="border-gray-200 border-t py-4 lg:hidden">
+				<nav className="border-gray-200 border-t lg:hidden">
 					{links.map((item) => (
 						<Link
 							key={item.label}
 							to={item.to}
 							className={cn(
-								"block px-4 py-3 font-medium text-base transition-colors duration-200",
+								"block px-4 py-3 font-medium text-sm transition-colors duration-200",
 								isActive(item.to)
 									? "bg-blue-900 text-white"
 									: "text-gray-700 hover:bg-blue-50 hover:text-blue-900",
