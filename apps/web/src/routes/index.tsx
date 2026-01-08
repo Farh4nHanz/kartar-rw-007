@@ -44,7 +44,7 @@ function HomeComponent() {
 						</Link>
 
 						{/* Join Us */}
-						<Link to="/">
+						<Link to="/gabung">
 							<Button
 								size="lg"
 								variant="outline"
@@ -199,7 +199,7 @@ function HomeComponent() {
 						untuk masyarakat. Bersama kita bisa berkontribusi lebih banyak!
 					</p>
 
-					<Link to="/">
+					<Link to="/gabung">
 						<Button
 							variant="outline"
 							className="rounded-md bg-white p-5 font-[550] text-blue-900 text-sm capitalize transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:bg-gray-100 hover:text-blue-900"

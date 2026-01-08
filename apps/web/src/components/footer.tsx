@@ -10,7 +10,7 @@ const quickLinks: {
 	{ to: "/struktur", label: "Struktur Organisasi" },
 	{ to: "/program", label: "Program & Kegiatan" },
 	{ to: "/berita", label: "Berita & Informasi" },
-	{ to: "/", label: "Bergabung dengan Kami" },
+	{ to: "/gabung", label: "Bergabung dengan Kami" },
 ] as const;
 
 export default function Footer() {

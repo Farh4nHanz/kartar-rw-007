@@ -16,7 +16,7 @@ const links: {
 	{ to: "/berita", label: "Berita" },
 	{ to: "/galeri", label: "Galeri" },
 	{ to: "/kolaborasi", label: "Kolaborasi" },
-	{ to: "/", label: "Bergabung" },
+	{ to: "/gabung", label: "Bergabung" },
 	{ to: "/kontak", label: "Kontak" },
 ] as const;
 

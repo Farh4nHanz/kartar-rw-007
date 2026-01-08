@@ -328,3 +328,27 @@ export const collaborations = [
 		year: "2020 - Sekarang",
 	},
 ];
+
+export const membershipInfo = {
+	requirements: [
+		"Berusia 17 - 35 tahun",
+		"Berdomisili di lingkungan RW 007",
+		"Memiliki KTP atau kartu identitas yang masih berlaku",
+		"Bersedia aktif mengikuti kegiatan organisasi",
+		"Memiliki komitmen untuk berkontribusi bagi masyarakat",
+	],
+	benefits: [
+		"Mengembangkan soft skill dan hard skill melalui berbagai pelatihan",
+		"Memperluas networking dan relasi",
+		"Mendapat sertifikat keaktifan organisasi",
+		"Kesempatan menjadi pengurus organisasi",
+		"Akses ke berbagai program pengembangan diri",
+		"Berkontribusi nyata untuk masyarakat",
+	],
+	registrationProcess: [
+		"Isi formulir pendaftaran online atau datang langsung ke sekretariat",
+		"Serahkan fotokopi KTP dan pas foto 3x4 (2 lembar)",
+		"Ikuti sesi orientasi anggota baru",
+		"Terima kartu anggota dan seragam organisasi",
+	],
+};
