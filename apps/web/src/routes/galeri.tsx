@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ImageIcon } from "lucide-react";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { gallery } from "@/data/mock";
+import { useFilter } from "@/hooks/use-filter";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/galeri")({
@@ -11,11 +11,7 @@ export const Route = createFileRoute("/galeri")({
 });
 
 function RouteComponent() {
-	const [filter, setFilter] = useState("Semua");
-	const categories = ["Semua", ...new Set(gallery.map((g) => g.category))];
-
-	const filteredGallery =
-		filter === "Semua" ? gallery : gallery.filter((g) => g.category === filter);
+	const { filter, setFilter, categories, filteredData } = useFilter(gallery);
 
 	return (
 		<div className="flex h-fit min-h-screen w-full justify-center bg-gray-50 py-16">
@@ -51,15 +47,15 @@ function RouteComponent() {
 
 				{/* Gallery Grid */}
 				<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-					{filteredGallery.map((item) => (
+					{filteredData.map((gallery) => (
 						<Card
-							key={item.id}
+							key={gallery.id}
 							className="overflow-hidden rounded-lg p-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
 						>
-							{item.image ? (
+							{gallery.image ? (
 								<img
-									src={item.image}
-									alt={item.title}
+									src={gallery.image}
+									alt={gallery.title}
 									className="aspect-video h-full w-full rounded-lg object-cover object-center"
 								/>
 							) : (
@@ -70,18 +66,18 @@ function RouteComponent() {
 
 							<CardContent className="flex flex-col gap-3 p-5">
 								<span className="w-fit rounded-full bg-blue-900 px-3 py-1 font-semibold text-white text-xs">
-									{item.category}
+									{gallery.category}
 								</span>
 
 								<div className="space-y-3">
 									<h3 className="font-bold text-blue-900 text-lg">
-										{item.title}
+										{gallery.title}
 									</h3>
-									<p className="text-gray-600 text-sm">{item.description}</p>
+									<p className="text-gray-600 text-sm">{gallery.description}</p>
 									<p className="text-gray-500 text-xs">
 										{new Intl.DateTimeFormat("id-ID", {
 											dateStyle: "long",
-										}).format(new Date(item.date))}
+										}).format(new Date(gallery.date))}
 									</p>
 								</div>
 							</CardContent>

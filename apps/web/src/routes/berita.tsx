@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Calendar, Tag } from "lucide-react";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -10,6 +9,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { contactInfo, news } from "@/data/mock";
+import { useFilter } from "@/hooks/use-filter";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/berita")({
@@ -17,11 +17,7 @@ export const Route = createFileRoute("/berita")({
 });
 
 function RouteComponent() {
-	const [filter, setFilter] = useState("Semua");
-	const categories = ["Semua", ...new Set(news.map((n) => n.category))];
-
-	const filteredNews =
-		filter === "Semua" ? news : news.filter((n) => n.category === filter);
+	const { filter, setFilter, categories, filteredData } = useFilter(news);
 
 	return (
 		<div className="flex h-fit min-h-screen w-full justify-center bg-gray-50 py-16">
@@ -57,7 +53,7 @@ function RouteComponent() {
 
 				{/* News Grid */}
 				<div className="grid grid-cols-[repeat(auto-fill,minmax(400px,1fr))] gap-6">
-					{filteredNews.map((news) => (
+					{filteredData.map((news) => (
 						<Card
 							key={news.id}
 							className="overflow-hidden rounded-lg px-2 py-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
