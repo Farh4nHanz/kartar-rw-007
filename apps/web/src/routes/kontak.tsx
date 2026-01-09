@@ -86,17 +86,19 @@ function RouteComponent() {
 							<CardContent className="space-y-6">
 								{contactInfo.general.map((contact) => (
 									<div
-										className="flex items-start space-x-4"
+										className="flex items-start space-x-2 sm:space-x-4"
 										key={contact.label}
 									>
 										<div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-blue-900 text-white">
 											<contact.icon className="size-6" />
 										</div>
-										<div>
+										<div className="flex flex-col">
 											<h4 className="mb-1 font-semibold text-gray-900 text-sm">
 												{contact.label}
 											</h4>
-											<p className="text-gray-600 text-sm">{contact.value}</p>
+											<p className="text-gray-600 text-xs sm:text-sm">
+												{contact.value}
+											</p>
 										</div>
 									</div>
 								))}
@@ -115,12 +117,12 @@ function RouteComponent() {
 								<div className="space-y-3">
 									{contactInfo.socialMedia.map((social) => (
 										<div
-											className="flex items-center justify-between rounded-lg bg-blue-50 p-4"
+											className="flex flex-wrap items-center justify-between gap-2 overflow-auto rounded-lg bg-blue-50 p-4"
 											key={social.label}
 										>
 											<div className="flex items-center gap-3">
 												<social.icon className="size-6" />
-												<span className="font-medium text-gray-900 text-sm">
+												<span className="hidden font-medium text-gray-900 text-sm md:inline-block">
 													{social.label}
 												</span>
 											</div>
@@ -128,7 +130,7 @@ function RouteComponent() {
 												to={social.link}
 												target="_blank"
 												rel="noopener noreferrer"
-												className="font-medium text-blue-900 text-sm hover:text-blue-700"
+												className="line-clamp-1 font-medium text-blue-900 text-sm hover:text-blue-700"
 											>
 												{social.value}
 											</Link>

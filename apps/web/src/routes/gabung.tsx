@@ -127,11 +127,11 @@ function RouteComponent() {
 								datang langsung ke sekretariat.
 							</p>
 
-							<div className="flex items-center gap-4">
+							<div className="flex w-full flex-wrap items-center justify-center gap-4">
 								<Link to="/kontak">
 									<Button
 										size="lg"
-										className="rounded-md bg-white px-8 py-4 font-semibold text-blue-900 text-sm transition-colors duration-300 hover:cursor-pointer hover:bg-gray-100"
+										className="min-w-44 rounded-md bg-white px-8 py-4 font-semibold text-blue-900 text-sm transition-colors duration-300 hover:cursor-pointer hover:bg-gray-100 max-sm:text-xs"
 									>
 										Hubungi Kami
 									</Button>
@@ -140,7 +140,7 @@ function RouteComponent() {
 									<Button
 										size="lg"
 										variant="outline"
-										className="rounded-md bg-transparent px-8 py-4 font-semibold text-sm text-white transition-colors duration-300 hover:cursor-pointer hover:bg-white hover:text-blue-900"
+										className="min-w-44 rounded-md bg-transparent px-8 py-4 font-semibold text-sm text-white transition-colors duration-300 hover:cursor-pointer hover:bg-white hover:text-blue-900 max-sm:text-xs"
 									>
 										WhatsApp Kami
 									</Button>

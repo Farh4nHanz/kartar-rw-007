@@ -36,7 +36,7 @@ function HomeComponent() {
 						<Link to="/tentang-kami">
 							<Button
 								size="lg"
-								className="rounded-sm bg-blue-900 p-4 font-[550] text-white capitalize transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:bg-blue-800"
+								className="min-w-40 rounded-sm bg-blue-900 p-4 font-[550] text-white capitalize transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:bg-blue-800"
 							>
 								Tentang Kami
 								<ArrowRight className="ml-2 size-4" />
@@ -48,9 +48,9 @@ function HomeComponent() {
 							<Button
 								size="lg"
 								variant="outline"
-								className="rounded-sm border-blue-900 p-4 font-[550] text-blue-900 capitalize transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:bg-blue-50 hover:text-blue-900"
+								className="min-w-40 rounded-sm border-blue-900 p-4 font-[550] text-blue-900 capitalize transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:bg-blue-50 hover:text-blue-900"
 							>
-								Bergabung Sekarang
+								Gabung Sekarang
 							</Button>
 						</Link>
 					</div>

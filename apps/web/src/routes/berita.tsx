@@ -52,7 +52,7 @@ function RouteComponent() {
 				</div>
 
 				{/* News Grid */}
-				<div className="grid grid-cols-[repeat(auto-fill,minmax(400px,1fr))] gap-6">
+				<div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6">
 					{filteredData.map((news) => (
 						<Card
 							key={news.id}
@@ -105,7 +105,7 @@ function RouteComponent() {
 							tentang kegiatan dan program Karang Taruna RW 007.
 						</p>
 
-						<div className="flex items-center gap-4">
+						<div className="flex flex-wrap items-center justify-center gap-4">
 							{contactInfo.socialMedia
 								.filter((sm) => sm.label.toLowerCase() !== "twitter")
 								.map((sm) => (
