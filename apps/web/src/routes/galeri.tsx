@@ -14,7 +14,7 @@ function RouteComponent() {
 	const { filter, setFilter, categories, filteredData } = useFilter(gallery);
 
 	return (
-		<div className="flex h-fit min-h-screen w-full justify-center bg-gray-50 py-16">
+		<main className="flex h-fit min-h-screen w-full justify-center bg-gray-50 py-16">
 			<div className="container w-full px-6 py-2">
 				{/* Header */}
 				<div className="mb-16 text-center">
@@ -85,6 +85,6 @@ function RouteComponent() {
 					))}
 				</div>
 			</div>
-		</div>
+		</main>
 	);
 }

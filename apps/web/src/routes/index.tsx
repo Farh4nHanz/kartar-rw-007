@@ -16,7 +16,7 @@ export const Route = createFileRoute("/")({
 
 function HomeComponent() {
 	return (
-		<div className="flex h-fit min-h-screen w-full flex-col items-center *:px-6 *:not-first:py-16">
+		<main className="flex h-fit min-h-screen w-full flex-col items-center *:px-6 *:not-first:py-16">
 			{/* Hero Section */}
 			<section className="flex w-full justify-center bg-linear-to-br from-blue-100 via-white to-gray-50 py-20">
 				<div className="w-full max-w-4xl text-center">
@@ -210,6 +210,6 @@ function HomeComponent() {
 					</Link>
 				</div>
 			</section>
-		</div>
+		</main>
 	);
 }
