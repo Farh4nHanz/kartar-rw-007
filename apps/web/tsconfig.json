@@ -11,7 +11,10 @@
 		"types": ["vite/client"],
 		"rootDirs": ["."],
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"@workspace/ui/*": ["../../packages/ui/src/*"]
 		}
-	}
+	},
+	"include": ["**/*.ts", "**/*.tsx"],
+	"exclude": ["node_modules"]
 }
