@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 
-export default function NotFound() {
+export function NotFound() {
 	return (
 		<main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
 			<div className="flex flex-col items-center justify-center text-center">
