@@ -1,18 +1,24 @@
 {
-	"name": "@kartar-rw-007/env",
+	"name": "@workspace/env",
 	"version": "0.0.0",
 	"private": true,
 	"type": "module",
 	"exports": {
-		"./web": "./src/web.ts"
+		".": [
+			"./dist/index.js",
+			"./src/index.ts"
+		]
+	},
+	"scripts": {
+		"build": "tsc -b",
+		"check-types": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@t3-oss/env-core": "^0.13.1",
-		"dotenv": "catalog:",
+		"@t3-oss/env-core": "^0.13.10",
 		"zod": "catalog:"
 	},
 	"devDependencies": {
-		"@kartar-rw-007/config": "workspace:*",
+		"@workspace/config": "workspace:*",
 		"typescript": "catalog:"
 	}
 }

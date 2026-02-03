@@ -12,7 +12,7 @@
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.1.1",
-		"@kartar-rw-007/env": "workspace:*",
+		"@workspace/env": "workspace:*",
 		"@tailwindcss/vite": "catalog:",
 		"@tanstack/react-form": "catalog:",
 		"@tanstack/react-router": "catalog:",
@@ -32,7 +32,7 @@
 		"zod": "catalog:"
 	},
 	"devDependencies": {
-		"@kartar-rw-007/config": "workspace:*",
+		"@workspace/config": "workspace:*",
 		"@tanstack/react-router-devtools": "catalog:",
 		"@tanstack/router-plugin": "catalog:",
 		"@types/node": "catalog:",

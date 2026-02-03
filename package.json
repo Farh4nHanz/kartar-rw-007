@@ -43,19 +43,19 @@
 		"dev": "turbo dev",
 		"build": "turbo build",
 		"check-types": "turbo check-types",
-		"dev:native": "turbo -F native dev",
 		"dev:web": "turbo -F web dev",
+		"dev:dashboard": "turbo -F dashboard dev",
 		"check": "biome check --write .",
 		"prepare": "husky"
 	},
 	"dependencies": {
-		"@kartar-rw-007/env": "workspace:*",
+		"@workspace/env": "workspace:*",
 		"dotenv": "catalog:",
 		"zod": "catalog:"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.2.0",
-		"@kartar-rw-007/config": "workspace:*",
+		"@workspace/config": "workspace:*",
 		"husky": "^9.1.7",
 		"lint-staged": "^16.1.2",
 		"shadcn": "^3.8.2",
