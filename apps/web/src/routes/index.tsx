@@ -1,13 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Award, Lightbulb, Target, Users } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@workspace/ui/components/button";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card";
+} from "@workspace/ui/components/card";
+import { ArrowRight, Award, Lightbulb, Target, Users } from "lucide-react";
 import { news, organizationInfo, programs } from "@/data/mock";
 
 export const Route = createFileRoute("/")({

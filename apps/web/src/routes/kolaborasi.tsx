@@ -1,4 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { Button } from "@workspace/ui/components/button";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@workspace/ui/components/card";
 import {
 	Building2,
 	GraduationCap,
@@ -6,14 +14,6 @@ import {
 	Heart,
 	PhoneCall,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
 import { collaborations } from "@/data/mock";
 
 export const Route = createFileRoute("/kolaborasi")({

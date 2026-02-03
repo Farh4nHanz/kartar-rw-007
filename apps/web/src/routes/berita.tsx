@@ -1,16 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Calendar, Tag } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@workspace/ui/components/button";
 import {
 	Card,
 	CardContent,
 	CardFooter,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card";
+} from "@workspace/ui/components/card";
+import { cn } from "@workspace/ui/lib/utils";
+import { ArrowRight, Calendar, Tag } from "lucide-react";
 import { contactInfo, news } from "@/data/mock";
 import { useFilter } from "@/hooks/use-filter";
-import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/berita")({
 	component: RouteComponent,

@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Button } from "@workspace/ui/components/button";
+import { Card, CardContent } from "@workspace/ui/components/card";
+import { cn } from "@workspace/ui/lib/utils";
 import { ImageIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { gallery } from "@/data/mock";
 import { useFilter } from "@/hooks/use-filter";
-import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/galeri")({
 	component: RouteComponent,

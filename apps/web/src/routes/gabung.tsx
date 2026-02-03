@@ -1,4 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { Button } from "@workspace/ui/components/button";
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle,
+} from "@workspace/ui/components/card";
 import { parsePhoneNumber } from "awesome-phonenumber";
 import {
 	Award,
@@ -8,8 +15,6 @@ import {
 	UserPlus,
 } from "lucide-react";
 import { useMemo } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { contactInfo, membershipInfo } from "@/data/mock";
 
 export const Route = createFileRoute("/gabung")({

@@ -5,10 +5,11 @@ import {
 	Outlet,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { Toaster } from "@workspace/ui/components/sonner";
+import { ThemeProvider } from "@workspace/ui/components/theme-provider";
 import Header from "@/components/header";
-import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster } from "@/components/ui/sonner";
 
+import "@workspace/ui/index.css";
 import "../index.css";
 import Footer from "@/components/footer";
 

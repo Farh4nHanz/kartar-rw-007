@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Info, Users } from "lucide-react";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card";
+} from "@workspace/ui/components/card";
+import { Info, Users } from "lucide-react";
 import { organizationalStructure } from "@/data/mock";
 
 export const Route = createFileRoute("/struktur")({

@@ -1,6 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle,
+} from "@workspace/ui/components/card";
 import { BookOpen, Briefcase, Heart, Info, Target } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { organizationInfo } from "@/data/mock";
 
 export const Route = createFileRoute("/tentang-kami")({

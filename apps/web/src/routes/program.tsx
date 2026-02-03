@@ -1,16 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Calendar, Info } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@workspace/ui/components/button";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card";
+} from "@workspace/ui/components/card";
+import { cn } from "@workspace/ui/lib/utils";
+import { Calendar, Info } from "lucide-react";
 import { programs } from "@/data/mock";
 import { useFilter } from "@/hooks/use-filter";
-import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/program")({
 	component: RouteComponent,
