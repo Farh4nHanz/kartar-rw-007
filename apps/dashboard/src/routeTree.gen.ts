@@ -9,75 +9,93 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as menuRouteRouteImport } from './routes/route'
-import { Route as menuIndexRouteImport } from './routes/(menu)/index'
+import { Route as appRouteRouteImport } from './routes/(app)/route'
+import { Route as appmenuIndexRouteImport } from './routes/(app)/(menu)/index'
+import { Route as appmenuAnggotaRouteImport } from './routes/(app)/(menu)/anggota'
 
-const menuRouteRoute = menuRouteRouteImport.update({
-  id: '/(menu)',
+const appRouteRoute = appRouteRouteImport.update({
+  id: '/(app)',
   getParentRoute: () => rootRouteImport,
 } as any)
-const menuIndexRoute = menuIndexRouteImport.update({
-  id: '/',
+const appmenuIndexRoute = appmenuIndexRouteImport.update({
+  id: '/(menu)/',
   path: '/',
-  getParentRoute: () => menuRouteRoute,
+  getParentRoute: () => appRouteRoute,
+} as any)
+const appmenuAnggotaRoute = appmenuAnggotaRouteImport.update({
+  id: '/(menu)/anggota',
+  path: '/anggota',
+  getParentRoute: () => appRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof menuIndexRoute
+  '/anggota': typeof appmenuAnggotaRoute
+  '/': typeof appmenuIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof menuIndexRoute
+  '/anggota': typeof appmenuAnggotaRoute
+  '/': typeof appmenuIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/(menu)': typeof menuRouteRouteWithChildren
-  '/(menu)/': typeof menuIndexRoute
+  '/(app)': typeof appRouteRouteWithChildren
+  '/(app)/(menu)/anggota': typeof appmenuAnggotaRoute
+  '/(app)/(menu)/': typeof appmenuIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/anggota' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/(menu)' | '/(menu)/'
+  to: '/anggota' | '/'
+  id: '__root__' | '/(app)' | '/(app)/(menu)/anggota' | '/(app)/(menu)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  menuRouteRoute: typeof menuRouteRouteWithChildren
+  appRouteRoute: typeof appRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/(menu)': {
-      id: '/(menu)'
+    '/(app)': {
+      id: '/(app)'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof menuRouteRouteImport
+      preLoaderRoute: typeof appRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(menu)/': {
-      id: '/(menu)/'
+    '/(app)/(menu)/': {
+      id: '/(app)/(menu)/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof menuIndexRouteImport
-      parentRoute: typeof menuRouteRoute
+      preLoaderRoute: typeof appmenuIndexRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/(menu)/anggota': {
+      id: '/(app)/(menu)/anggota'
+      path: '/anggota'
+      fullPath: '/anggota'
+      preLoaderRoute: typeof appmenuAnggotaRouteImport
+      parentRoute: typeof appRouteRoute
     }
   }
 }
 
-interface menuRouteRouteChildren {
-  menuIndexRoute: typeof menuIndexRoute
+interface appRouteRouteChildren {
+  appmenuAnggotaRoute: typeof appmenuAnggotaRoute
+  appmenuIndexRoute: typeof appmenuIndexRoute
 }
 
-const menuRouteRouteChildren: menuRouteRouteChildren = {
-  menuIndexRoute: menuIndexRoute,
+const appRouteRouteChildren: appRouteRouteChildren = {
+  appmenuAnggotaRoute: appmenuAnggotaRoute,
+  appmenuIndexRoute: appmenuIndexRoute,
 }
 
-const menuRouteRouteWithChildren = menuRouteRoute._addFileChildren(
-  menuRouteRouteChildren,
+const appRouteRouteWithChildren = appRouteRoute._addFileChildren(
+  appRouteRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  menuRouteRoute: menuRouteRouteWithChildren,
+  appRouteRoute: appRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

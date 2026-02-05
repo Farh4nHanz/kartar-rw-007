@@ -4,7 +4,7 @@ import { AppSidebar } from "@/shared/components/app-sidebar";
 import { Navbar } from "@/shared/components/navbar";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
 
-export const Route = createFileRoute("")({
+export const Route = createFileRoute("/(app)")({
 	component: RouteComponent,
 });
 

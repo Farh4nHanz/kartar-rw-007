@@ -38,7 +38,7 @@ export function Navbar() {
 					<Separator orientation="vertical" />
 				</div>
 
-				<h1 className="font-bold font-heading text-base tracking-wider">
+				<h1 className="font-heading font-semibold text-base">
 					Admin Dashboard
 				</h1>
 			</div>

@@ -1,7 +1,6 @@
-"use client";
-
 import { Button } from "@workspace/ui/components/button";
 import { cn } from "@workspace/ui/lib/utils";
+import { AnimatePresence, motion } from "motion/react";
 import { AlertDialog as AlertDialogPrimitive } from "radix-ui";
 import type * as React from "react";
 
@@ -32,36 +31,62 @@ function AlertDialogOverlay({
 	...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Overlay>) {
 	return (
-		<AlertDialogPrimitive.Overlay
-			data-slot="alert-dialog-overlay"
-			className={cn(
-				"data-closed:fade-out-0 data-open:fade-in-0 fixed inset-0 z-50 bg-black/10 duration-100 data-closed:animate-out data-open:animate-in supports-backdrop-filter:backdrop-blur-xs",
-				className,
-			)}
-			{...props}
-		/>
+		<AlertDialogPrimitive.Overlay asChild {...props}>
+			<motion.div
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				exit={{ opacity: 0 }}
+				transition={{ duration: 0.2 }}
+				data-slot="alert-dialog-overlay"
+				className={cn(
+					"pointer-events-none fixed inset-0 isolate z-50 bg-black/10 supports-backdrop-filter:backdrop-blur-xs",
+					className,
+				)}
+			/>
+		</AlertDialogPrimitive.Overlay>
 	);
 }
 
 function AlertDialogContent({
 	className,
 	size = "default",
+	open = false,
+	children,
 	...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Content> & {
 	size?: "default" | "sm";
+	open: boolean;
 }) {
 	return (
-		<AlertDialogPortal>
-			<AlertDialogOverlay />
-			<AlertDialogPrimitive.Content
-				data-slot="alert-dialog-content"
-				data-size={size}
-				className={cn(
-					"data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 group/alert-dialog-content fixed top-1/2 left-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 gap-6 rounded-xl bg-background p-6 outline-none ring-1 ring-foreground/10 duration-100 data-[size=default]:max-w-xs data-[size=sm]:max-w-xs data-closed:animate-out data-open:animate-in data-[size=default]:sm:max-w-lg",
-					className,
-				)}
-				{...props}
-			/>
+		<AlertDialogPortal forceMount>
+			<AnimatePresence>
+				{open ? (
+					<>
+						<AlertDialogOverlay key="alert-dialog-overlay" />
+						<AlertDialogPrimitive.Content {...props}>
+							<motion.div
+								key="alert-dialog-content"
+								data-slot="alert-dialog-content"
+								data-size={size}
+								initial={{ opacity: 0, scale: 0.95, y: 10 }}
+								animate={{ opacity: 1, scale: 1, y: 0 }}
+								exit={{ opacity: 0, scale: 0.95, y: 10 }}
+								transition={{
+									type: "spring",
+									stiffness: 450,
+									damping: 25,
+								}}
+								className={cn(
+									"group/alert-dialog-content fixed top-1/2 left-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 gap-6 rounded-xl bg-background p-6 outline-none ring-1 ring-foreground/10 duration-100 data-[size=default]:max-w-xs data-[size=sm]:max-w-xs data-[size=default]:sm:max-w-lg",
+									className,
+								)}
+							>
+								{children}
+							</motion.div>
+						</AlertDialogPrimitive.Content>
+					</>
+				) : null}
+			</AnimatePresence>
 		</AlertDialogPortal>
 	);
 }
