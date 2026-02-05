@@ -9,27 +9,76 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as menuRouteRouteImport } from './routes/route'
+import { Route as menuIndexRouteImport } from './routes/(menu)/index'
 
-export interface FileRoutesByFullPath {}
-export interface FileRoutesByTo {}
+const menuRouteRoute = menuRouteRouteImport.update({
+  id: '/(menu)',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const menuIndexRoute = menuIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => menuRouteRoute,
+} as any)
+
+export interface FileRoutesByFullPath {
+  '/': typeof menuIndexRoute
+}
+export interface FileRoutesByTo {
+  '/': typeof menuIndexRoute
+}
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/(menu)': typeof menuRouteRouteWithChildren
+  '/(menu)/': typeof menuIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: never
+  fullPaths: '/'
   fileRoutesByTo: FileRoutesByTo
-  to: never
-  id: '__root__'
+  to: '/'
+  id: '__root__' | '/(menu)' | '/(menu)/'
   fileRoutesById: FileRoutesById
 }
-export interface RootRouteChildren {}
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {}
+export interface RootRouteChildren {
+  menuRouteRoute: typeof menuRouteRouteWithChildren
 }
 
-const rootRouteChildren: RootRouteChildren = {}
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/(menu)': {
+      id: '/(menu)'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof menuRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(menu)/': {
+      id: '/(menu)/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof menuIndexRouteImport
+      parentRoute: typeof menuRouteRoute
+    }
+  }
+}
+
+interface menuRouteRouteChildren {
+  menuIndexRoute: typeof menuIndexRoute
+}
+
+const menuRouteRouteChildren: menuRouteRouteChildren = {
+  menuIndexRoute: menuIndexRoute,
+}
+
+const menuRouteRouteWithChildren = menuRouteRoute._addFileChildren(
+  menuRouteRouteChildren,
+)
+
+const rootRouteChildren: RootRouteChildren = {
+  menuRouteRoute: menuRouteRouteWithChildren,
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()

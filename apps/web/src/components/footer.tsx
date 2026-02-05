@@ -28,7 +28,7 @@ export default function Footer() {
 							<span className="font-bold text-lg leading-tight">
 								Karang Taruna
 							</span>
-							<span className="text-blue-200 text-sm">RW 007</span>
+							<span className="text-blue-200 text-sm">RW 07</span>
 						</div>
 					</div>
 
@@ -103,7 +103,7 @@ export default function Footer() {
 			{/* Copyright */}
 			<div className="mt-8 border-blue-800 border-t pt-8 text-center">
 				<p className="text-blue-100 text-sm">
-					&copy; {new Date().getFullYear()} Komunitas Hub Karang Taruna RW 007.
+					&copy; {new Date().getFullYear()} Komunitas Hub Karang Taruna RW 07.
 					Semua hak cipta dilindungi.
 				</p>
 			</div>

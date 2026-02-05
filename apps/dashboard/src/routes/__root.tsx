@@ -22,7 +22,8 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 			},
 			{
 				name: "description",
-				content: "kartar-rw-007 is a web application",
+				content:
+					"Karang Taruna RW 07 merupakan wadah pembinaan dan pemberdayaan pemuda tingkat RW yang berfokus pada pengembangan kreativitas, kepedulian sosial, dan partisipasi aktif dalam masyarakat.",
 			},
 		],
 		links: [
@@ -44,12 +45,10 @@ function RootComponent() {
 				disableTransitionOnChange
 				storageKey="vite-ui-theme"
 			>
-				<div className="grid h-fit min-h-svh grid-rows-[auto_auto]">
-					<Outlet />
-				</div>
+				<Outlet />
 				<Toaster richColors />
 			</ThemeProvider>
-			<TanStackRouterDevtools position="bottom-left" />
+			<TanStackRouterDevtools position="bottom-right" />
 		</>
 	);
 }

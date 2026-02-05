@@ -15,6 +15,6 @@
 			"@workspace/ui/*": ["../../packages/ui/src/*"]
 		}
 	},
-	"include": ["**/*.ts", "**/*.tsx"],
+	"include": ["**/*.ts", "**/*.tsx", "../dashboard/src/shared/use-mobile.ts"],
 	"exclude": ["node_modules"]
 }

@@ -39,7 +39,7 @@ export default function Header() {
 						<span className="font-bold text-blue-900 text-lg leading-tight">
 							Karang Taruna
 						</span>
-						<span className="font-semibold text-gray-600 text-xs">RW 007</span>
+						<span className="font-semibold text-gray-600 text-xs">RW 07</span>
 					</div>
 				</Link>
 

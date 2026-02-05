@@ -21,7 +21,7 @@ function HomeComponent() {
 			<section className="flex w-full justify-center bg-linear-to-br from-blue-100 via-white to-gray-50 py-20">
 				<div className="w-full max-w-4xl text-center">
 					<h1 className="mb-6 font-bold text-5xl text-blue-900 leading-tight md:text-6xl">
-						Karang Taruna RW 007
+						Karang Taruna RW 07
 					</h1>
 					<p className="mb-8 font-medium text-gray-700 text-xl md:text-2xl">
 						{organizationInfo.tagline}

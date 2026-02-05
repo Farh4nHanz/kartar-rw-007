@@ -1,6 +1,15 @@
-import { Link } from "@tanstack/react-router";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "./button";
 
-export function NotFound() {
+export function NotFound({ navigateTo }: { navigateTo?: string }) {
+	const handleBack = () => {
+		if (navigateTo) {
+			window.location.href = navigateTo;
+		} else {
+			window.history.back();
+		}
+	};
+
 	return (
 		<main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
 			<div className="flex flex-col items-center justify-center text-center">
@@ -11,12 +20,13 @@ export function NotFound() {
 				<p className="mt-6 text-pretty font-medium text-gray-500 text-sm sm:text-base/8">
 					Maaf, halaman yang Anda cari tidak ditemukan.
 				</p>
-				<Link
-					to="/"
-					className="mt-6 rounded-md bg-blue-900 px-3.5 py-2.5 font-semibold text-white text-xs shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-blue-900 focus-visible:outline-offset-2 sm:text-sm"
+				<Button
+					onClick={handleBack}
+					className="mt-6 rounded-md bg-blue-900 px-3.5 py-2.5 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-blue-900 focus-visible:outline-offset-2"
 				>
-					Pergi ke beranda
-				</Link>
+					<ArrowLeft />
+					Kembali
+				</Button>
 			</div>
 		</main>
 	);

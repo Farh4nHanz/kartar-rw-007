@@ -151,6 +151,7 @@ function Sidebar({
 	variant = "sidebar",
 	collapsible = "offcanvas",
 	className,
+	bgClassName,
 	children,
 	dir,
 	...props
@@ -158,6 +159,7 @@ function Sidebar({
 	side?: "left" | "right";
 	variant?: "sidebar" | "floating" | "inset";
 	collapsible?: "offcanvas" | "icon" | "none";
+	bgClassName?: React.ComponentProps<"div">["className"];
 }) {
 	const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
 
@@ -167,6 +169,7 @@ function Sidebar({
 				data-slot="sidebar"
 				className={cn(
 					"flex h-full w-(--sidebar-width) flex-col bg-sidebar text-sidebar-foreground",
+					bgClassName,
 					className,
 				)}
 				{...props}
@@ -239,7 +242,10 @@ function Sidebar({
 				<div
 					data-sidebar="sidebar"
 					data-slot="sidebar-inner"
-					className="flex size-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:shadow-sm group-data-[variant=floating]:ring-1 group-data-[variant=floating]:ring-sidebar-border"
+					className={cn(
+						"flex size-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:shadow-sm group-data-[variant=floating]:ring-1 group-data-[variant=floating]:ring-sidebar-border",
+						bgClassName,
+					)}
 				>
 					{children}
 				</div>
