@@ -51,7 +51,7 @@ function Content() {
 								<SidebarMenuButton
 									key={item.id}
 									tooltip={state === "collapsed" ? item.label : undefined}
-									className="transition-colors duration-150 ease-out hover:cursor-pointer data-[active=false]:bg-inherit data-[active=true]:bg-primary data-[active=true]:text-primary-foreground data-[active=false]:hover:bg-primary data-[active=false]:hover:text-primary-foreground"
+									className="text-[calc(var(--text-sm)-1px)] transition-colors duration-150 ease-out hover:cursor-pointer data-[active=false]:bg-inherit data-[active=true]:bg-primary data-[active=true]:text-primary-foreground data-[active=false]:hover:bg-primary data-[active=false]:hover:text-primary-foreground"
 									data-label={item.label}
 									asChild
 									isActive={pathname === item.href}
@@ -83,7 +83,7 @@ function Footer() {
 					<SidebarMenuButton
 						key={item.id}
 						tooltip={state === "collapsed" ? item.label : undefined}
-						className="transition-colors duration-150 ease-out hover:cursor-pointer data-[active=false]:bg-inherit data-[active=true]:bg-primary data-[active=true]:text-primary-foreground data-[label='Logout']:text-destructive data-[active=false]:hover:bg-primary data-[label='Logout']:hover:bg-destructive data-[active=false]:hover:text-primary-foreground data-[label='Logout']:focus-within:ring-destructive"
+						className="text-[calc(var(--text-sm)-1px)] transition-colors duration-150 ease-out hover:cursor-pointer data-[active=false]:bg-inherit data-[active=true]:bg-primary data-[active=true]:text-primary-foreground data-[label='Logout']:text-destructive data-[active=false]:hover:bg-primary data-[label='Logout']:hover:bg-destructive data-[active=false]:hover:text-primary-foreground data-[label='Logout']:focus-within:ring-destructive"
 						data-label={item.label}
 						asChild
 						isActive={pathname === item.href}

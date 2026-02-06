@@ -11,7 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as appRouteRouteImport } from './routes/(app)/route'
 import { Route as appmenuIndexRouteImport } from './routes/(app)/(menu)/index'
-import { Route as appmenuAnggotaRouteImport } from './routes/(app)/(menu)/anggota'
+import { Route as appmenuStrukturRouteImport } from './routes/(app)/(menu)/struktur'
 
 const appRouteRoute = appRouteRouteImport.update({
   id: '/(app)',
@@ -22,32 +22,32 @@ const appmenuIndexRoute = appmenuIndexRouteImport.update({
   path: '/',
   getParentRoute: () => appRouteRoute,
 } as any)
-const appmenuAnggotaRoute = appmenuAnggotaRouteImport.update({
-  id: '/(menu)/anggota',
-  path: '/anggota',
+const appmenuStrukturRoute = appmenuStrukturRouteImport.update({
+  id: '/(menu)/struktur',
+  path: '/struktur',
   getParentRoute: () => appRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/anggota': typeof appmenuAnggotaRoute
+  '/struktur': typeof appmenuStrukturRoute
   '/': typeof appmenuIndexRoute
 }
 export interface FileRoutesByTo {
-  '/anggota': typeof appmenuAnggotaRoute
+  '/struktur': typeof appmenuStrukturRoute
   '/': typeof appmenuIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(app)': typeof appRouteRouteWithChildren
-  '/(app)/(menu)/anggota': typeof appmenuAnggotaRoute
+  '/(app)/(menu)/struktur': typeof appmenuStrukturRoute
   '/(app)/(menu)/': typeof appmenuIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/anggota' | '/'
+  fullPaths: '/struktur' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/anggota' | '/'
-  id: '__root__' | '/(app)' | '/(app)/(menu)/anggota' | '/(app)/(menu)/'
+  to: '/struktur' | '/'
+  id: '__root__' | '/(app)' | '/(app)/(menu)/struktur' | '/(app)/(menu)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -70,23 +70,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appmenuIndexRouteImport
       parentRoute: typeof appRouteRoute
     }
-    '/(app)/(menu)/anggota': {
-      id: '/(app)/(menu)/anggota'
-      path: '/anggota'
-      fullPath: '/anggota'
-      preLoaderRoute: typeof appmenuAnggotaRouteImport
+    '/(app)/(menu)/struktur': {
+      id: '/(app)/(menu)/struktur'
+      path: '/struktur'
+      fullPath: '/struktur'
+      preLoaderRoute: typeof appmenuStrukturRouteImport
       parentRoute: typeof appRouteRoute
     }
   }
 }
 
 interface appRouteRouteChildren {
-  appmenuAnggotaRoute: typeof appmenuAnggotaRoute
+  appmenuStrukturRoute: typeof appmenuStrukturRoute
   appmenuIndexRoute: typeof appmenuIndexRoute
 }
 
 const appRouteRouteChildren: appRouteRouteChildren = {
-  appmenuAnggotaRoute: appmenuAnggotaRoute,
+  appmenuStrukturRoute: appmenuStrukturRoute,
   appmenuIndexRoute: appmenuIndexRoute,
 }
 

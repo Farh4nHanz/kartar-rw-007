@@ -13,6 +13,8 @@
 	"dependencies": {
 		"@hookform/resolvers": "catalog:",
 		"@workspace/env": "workspace:*",
+		"@workspace/ui": "workspace:*",
+		"@workspace/supabase": "workspace:*",
 		"@tailwindcss/vite": "catalog:",
 		"@tanstack/react-form": "catalog:",
 		"@tanstack/react-router": "catalog:",

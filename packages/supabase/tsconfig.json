@@ -1,7 +1,6 @@
 {
 	"extends": "../config/tsconfig.base.json",
 	"compilerOptions": {
-		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"composite": true,
 		"jsx": "react-jsx",
 		"declaration": true,
@@ -10,7 +9,7 @@
 		"outDir": "dist",
 		"rootDir": "src",
 		"paths": {
-			"@workspace/ui/*": ["./src/*"]
+			"@workspace/env": ["../env/src/*"]
 		}
 	},
 	"include": ["src"],

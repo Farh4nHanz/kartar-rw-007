@@ -5,17 +5,22 @@ export const sidebarGroups = {
 	menu: {
 		id: "menu",
 		label: "Menu",
-		items: [pages.dashboard, pages.members, pages.collaborations],
+		items: [pages.dashboard],
 	},
-	management: {
-		id: "management",
-		label: "Pengelolaan",
-		items: [pages.categories, pages.periods],
+	organization: {
+		id: "organization",
+		label: "Organisasi",
+		items: [pages.periods, pages.positions, pages.members],
 	},
-	activities: {
-		id: "activities",
-		label: "Program & Aktivitas",
-		items: [pages.programs, pages.news, pages.galleries],
+	publication: {
+		id: "publication",
+		label: "Konten & Publikasi",
+		items: [pages.categories, pages.programs, pages.news, pages.galleries],
+	},
+	collaboration: {
+		id: "collaboration",
+		label: "Kemitraan",
+		items: [pages.collaborations],
 	},
 } as const satisfies Record<string, SidebarGroup>;
 

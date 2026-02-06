@@ -10,8 +10,12 @@ import { ThemeProvider } from "@workspace/ui/components/theme-provider";
 
 import "@workspace/ui/index.css";
 import "../index.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-export type RouterAppContext = {};
+export type RouterAppContext = {
+	queryClient: QueryClient;
+};
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
 	component: RootComponent,
@@ -33,9 +37,27 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 			},
 		],
 	}),
+	context: () => ({
+		queryClient: new QueryClient({
+			defaultOptions: {
+				queries: {
+					retry: 2,
+					retryDelay: 1000,
+					staleTime: 1000 * 60 * 60,
+					refetchOnWindowFocus: false,
+				},
+				mutations: {
+					retry: 3,
+					retryDelay: 1000,
+				},
+			},
+		}),
+	}),
 });
 
 function RootComponent() {
+	const { queryClient } = Route.useRouteContext();
+
 	return (
 		<>
 			<HeadContent />
@@ -45,10 +67,13 @@ function RootComponent() {
 				disableTransitionOnChange
 				storageKey="vite-ui-theme"
 			>
-				<Outlet />
-				<Toaster richColors />
+				<QueryClientProvider client={queryClient}>
+					<Outlet />
+					<Toaster richColors />
+					<ReactQueryDevtools position="right" />
+				</QueryClientProvider>
 			</ThemeProvider>
-			<TanStackRouterDevtools position="bottom-right" />
+			<TanStackRouterDevtools position="bottom-left" />
 		</>
 	);
 }

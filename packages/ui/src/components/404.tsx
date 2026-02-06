@@ -11,7 +11,7 @@ export function NotFound({ navigateTo }: { navigateTo?: string }) {
 	};
 
 	return (
-		<main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+		<main className="grid h-full min-h-dvh place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
 			<div className="flex flex-col items-center justify-center text-center">
 				<p className="font-semibold text-base text-blue-900">404</p>
 				<h1 className="mt-4 text-balance font-semibold text-3xl text-gray-900 tracking-tight sm:text-5xl">

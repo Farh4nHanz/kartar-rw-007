@@ -29,6 +29,7 @@
 		"./index.css": "./src/index.css"
 	},
 	"scripts": {
+		"build": "tsc -b",
 		"check-types": "tsc --noEmit"
 	},
 	"dependencies": {

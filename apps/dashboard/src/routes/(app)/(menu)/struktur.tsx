@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/(app)/(menu)/anggota")({
+export const Route = createFileRoute("/(app)/(menu)/struktur")({
 	component: RouteComponent,
 });
 

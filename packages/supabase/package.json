@@ -1,5 +1,5 @@
 {
-	"name": "@workspace/env",
+	"name": "@workspace/supabase",
 	"version": "0.0.0",
 	"private": true,
 	"type": "module",
@@ -12,8 +12,8 @@
 		"check-types": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@t3-oss/env-core": "^0.13.10",
-		"zod": "catalog:"
+		"@supabase/supabase-js": "^2.95.0",
+		"@workspace/env": "workspace:*"
 	},
 	"devDependencies": {
 		"@workspace/config": "workspace:*",

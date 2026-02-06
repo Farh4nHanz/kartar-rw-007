@@ -12,7 +12,8 @@
 		"rootDirs": ["."],
 		"paths": {
 			"@/*": ["./src/*"],
-			"@workspace/ui/*": ["../../packages/ui/src/*"]
+			"@workspace/ui/*": ["../../packages/ui/src/*"],
+			"@workspace/supabase/*": ["../../packages/supabase/src/*"]
 		}
 	},
 	"include": ["**/*.ts", "**/*.tsx"],

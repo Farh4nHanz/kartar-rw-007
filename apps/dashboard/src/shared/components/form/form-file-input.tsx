@@ -23,12 +23,11 @@ import { useFieldContext } from "./hooks";
 
 export type FormFileInputProps = {
 	accept?: string;
-} & FormControlProps;
+} & Omit<FormControlProps, "placeholder">;
 
 export function FormFileInput({
 	label,
 	description,
-	placeholder,
 	accept = "image/*",
 }: FormFileInputProps) {
 	const field = useFieldContext<File | undefined>();
@@ -82,7 +81,6 @@ export function FormFileInput({
 					ref={fileInputRef}
 					id={field.name}
 					type="file"
-					placeholder={placeholder}
 					accept={accept}
 					onChange={handleFileChange}
 					aria-invalid={isInvalid}
