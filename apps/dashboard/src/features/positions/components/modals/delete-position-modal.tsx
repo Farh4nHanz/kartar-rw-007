@@ -15,24 +15,24 @@ import { ComponentLoader } from "@workspace/ui/components/loader";
 import { BadgeQuestionMark } from "lucide-react";
 import { memo } from "react";
 import { toast } from "sonner";
-import { deletePeriodByIdMutationOptions } from "@/features/periods/hooks/mutation-options";
-import { getAllPeriodsQueryOptions } from "@/features/periods/hooks/query-options";
-import type { Period } from "@/features/periods/services";
+import { deletePositionByIdMutationOptions } from "@/features/positions/hooks/mutation-options";
+import { getAllPositionsQueryOptions } from "@/features/positions/hooks/query-options";
+import type { Position } from "@/features/positions/services";
 import type { ModalProps } from "@/shared/types/props";
 
-export const DeletePeriodModal = memo(
-	({ selectedData, isModalOpen, setIsModalOpen }: ModalProps<Period>) => {
+export const DeletePositionModal = memo(
+	({ selectedData, isModalOpen, setIsModalOpen }: ModalProps<Position>) => {
 		const search = useSearch({
-			from: "/(app)/(organization)/periode",
+			from: "/(app)/(organization)/jabatan",
 		});
 
 		/* ===================
 		 * Delete member mutation
 		 * =================== */
-		const { mutate, isPending: isDeletePeriodPending } = useMutation(
-			deletePeriodByIdMutationOptions(selectedData?.id as string, {
+		const { mutate, isPending: isDeletePositionPending } = useMutation(
+			deletePositionByIdMutationOptions(selectedData?.id as string, {
 				onSuccess: (res, _variables, _onMutateResult, context) => {
-					toast.success(res.message ?? "Periode berhasil dihapus.", {
+					toast.success(res.message ?? "Jabatan berhasil dihapus.", {
 						dismissible: true,
 						closeButton: true,
 						duration: 5000,
@@ -40,7 +40,7 @@ export const DeletePeriodModal = memo(
 
 					setIsModalOpen(false);
 					context.client.invalidateQueries({
-						queryKey: getAllPeriodsQueryOptions(search).queryKey,
+						queryKey: getAllPositionsQueryOptions(search).queryKey,
 					});
 				},
 				onError: (err) => {
@@ -63,10 +63,10 @@ export const DeletePeriodModal = memo(
 							<BadgeQuestionMark className="size-8" />
 						</AlertDialogMedia>
 
-						<AlertDialogTitle>Hapus periode?</AlertDialogTitle>
+						<AlertDialogTitle>Hapus jabatan?</AlertDialogTitle>
 						<AlertDialogDescription>
-							Apakah anda yakin ingin menghapus periode ini? Ini akan menghapus
-							data periode secara permanen.
+							Apakah anda yakin ingin menghapus jabatan ini? Ini akan menghapus
+							data jabatan secara permanen.
 						</AlertDialogDescription>
 					</AlertDialogHeader>
 
@@ -78,9 +78,9 @@ export const DeletePeriodModal = memo(
 								e.preventDefault();
 								mutate(void selectedData?.id);
 							}}
-							disabled={isDeletePeriodPending}
+							disabled={isDeletePositionPending}
 						>
-							{isDeletePeriodPending ? <ComponentLoader /> : "Hapus"}
+							{isDeletePositionPending ? <ComponentLoader /> : "Hapus"}
 						</AlertDialogAction>
 					</AlertDialogFooter>
 				</AlertDialogContent>

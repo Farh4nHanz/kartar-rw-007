@@ -5,9 +5,9 @@ import {
 	DialogTitle,
 } from "@workspace/ui/components/dialog";
 import { memo } from "react";
+import { AddPeriodForm } from "@/features/periods/components/forms/add-period-form";
 import type { Period } from "@/features/periods/services";
 import type { ModalProps } from "@/shared/types/props";
-import { AddPeriodForm } from "../forms/add-period-form";
 
 export const AddPeriodModal = memo(
 	({

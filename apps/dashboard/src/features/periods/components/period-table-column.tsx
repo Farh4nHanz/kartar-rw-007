@@ -6,9 +6,9 @@ import {
 } from "@workspace/ui/components/data-table";
 import { cn } from "@workspace/ui/lib/utils";
 import { useCallback, useState } from "react";
+import { DeletePeriodModal } from "@/features/periods/components/modals/delete-period-modal";
+import { EditPeriodModal } from "@/features/periods/components/modals/edit-period-modal";
 import type { Period } from "@/features/periods/services";
-import { DeletePeriodModal } from "./modals/delete-period-modal";
-import { EditPeriodModal } from "./modals/edit-period-modal";
 
 const columnHelper = createColumnHelper<Period>();
 

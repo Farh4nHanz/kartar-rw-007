@@ -5,9 +5,9 @@ import {
 	DialogTitle,
 } from "@workspace/ui/components/dialog";
 import { memo } from "react";
+import { EditPeriodForm } from "@/features/periods/components/forms/edit-period-form";
 import type { Period } from "@/features/periods/services";
 import type { ModalProps } from "@/shared/types/props";
-import { EditPeriodForm } from "../forms/edit-period-form";
 
 export const EditPeriodModal = memo(
 	({ selectedData, isModalOpen, setIsModalOpen }: ModalProps<Period>) => (

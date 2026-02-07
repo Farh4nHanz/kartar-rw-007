@@ -6,9 +6,9 @@ import {
 } from "@workspace/ui/components/data-table";
 import { cn } from "@workspace/ui/lib/utils";
 import { useCallback, useState } from "react";
+import { DeletePositionModal } from "@/features/positions/components/modals/delete-position-modal";
 import type { Position } from "@/features/positions/services";
 
-// import { DeletePositionModal } from "./modals/delete-position-modal";
 // import { EditPositionModal } from "./modals/edit-position-modal";
 
 const columnHelper = createColumnHelper<Position>();
@@ -61,13 +61,14 @@ export const columns = [
 			 * Stores the currently selected position
 			 * to be used in the modals
 			 * =================== */
-			const [_selectedPosition, setSelectedPosition] =
-				useState<Position | null>(null);
+			const [selectedPosition, setSelectedPosition] = useState<Position | null>(
+				null,
+			);
 
 			/* ===================
 			 * Modal states
 			 * =================== */
-			const [_modalState, setModalState] = useState({
+			const [modalState, setModalState] = useState({
 				isEditModalOpen: false,
 				isDeleteModalOpen: false,
 			});
@@ -100,16 +101,16 @@ export const columns = [
 						setIsModalOpen={(open) =>
 							setModalState((prev) => ({ ...prev, isEditModalOpen: open }))
 						}
-					/>
+					/> */}
 
-					Delete Modal
+					{/* Delete Modal */}
 					<DeletePositionModal
 						selectedData={selectedPosition}
 						isModalOpen={modalState.isDeleteModalOpen}
 						setIsModalOpen={(open) =>
 							setModalState((prev) => ({ ...prev, isDeleteModalOpen: open }))
 						}
-					/> */}
+					/>
 				</>
 			);
 		},

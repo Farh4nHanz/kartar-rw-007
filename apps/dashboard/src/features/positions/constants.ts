@@ -1,4 +1,4 @@
-export const POSITIONS_QUERY_KEYs = {
+export const POSITIONS_QUERY_KEYS = {
 	all: ["positions"],
 } as const;
 
