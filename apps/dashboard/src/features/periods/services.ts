@@ -84,11 +84,12 @@ export async function getAllPeriods(
 export async function addNewPeriod(
 	_payload: PeriodPayload,
 ): Promise<SuccessResponse> {
-	// const res = await supabase.from("periods").insert(payload);
+	// const { error } = await supabase.from("periods").insert(payload);
 
-	// if (res.error) throw new ApiError(res.error.message, res.error.code);
+	// if (error) throw new ApiError(error.message, error.code);
 
 	await new Promise((r) => setTimeout(r, 3000));
+
 	return {
 		success: true,
 		message: "Periode baru berhasil ditambahkan.",
@@ -99,9 +100,9 @@ export async function updatePeriodById(
 	_id: string,
 	_payload: PeriodPayload,
 ): Promise<SuccessResponse> {
-	// const res = await supabase.from("periods").update(payload).eq("id", id);
+	// const { error } = await supabase.from("periods").update(payload).eq("id", id);
 
-	// if (res.error) throw new ApiError(res.error.message, res.error.code);
+	// if (error) throw new ApiError(error.message, error.code);
 
 	await new Promise((r) => setTimeout(r, 3000));
 
@@ -112,10 +113,12 @@ export async function updatePeriodById(
 }
 
 export async function deletePeriodById(_id: string): Promise<SuccessResponse> {
-	// const res = await supabase.from("periods").delete().eq("id", id);
+	// const { error } = await supabase.from("periods").delete().eq("id", id);
 
-	// if (res.error) throw new ApiError(res.error.message, res.error.code);
+	// if (error) throw new ApiError(error.message, error.code);
+
 	await new Promise((r) => setTimeout(r, 3000));
+
 	return {
 		success: true,
 		message: "Periode berhasil dihapus.",

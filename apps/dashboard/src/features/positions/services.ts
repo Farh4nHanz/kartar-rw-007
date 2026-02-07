@@ -86,9 +86,9 @@ export async function getAllPositions(
 export async function addNewPosition(
 	_payload: PositionPayload,
 ): Promise<SuccessResponse> {
-	// const res = await supabase.from("positions").insert(payload);
+	// const { error } = await supabase.from("positions").insert(payload);
 
-	// if (res.error) throw new ApiError(res.error.message, res.error.code);
+	// if (error) throw new ApiError(error.message, error.code);
 
 	await new Promise((r) => setTimeout(r, 3000));
 	return {
@@ -101,9 +101,12 @@ export async function updatePositionById(
 	_id: string,
 	_payload: PositionPayload,
 ): Promise<SuccessResponse> {
-	// const res = await supabase.from("positions").update(payload).eq("id", id);
+	// const { error } = await supabase
+	// 	.from("positions")
+	// 	.update(payload)
+	// 	.eq("id", id);
 
-	// if (res.error) throw new ApiError(res.error.message, res.error.code);
+	// if (error) throw new ApiError(error.message, error.code);
 
 	await new Promise((r) => setTimeout(r, 3000));
 
@@ -116,10 +119,12 @@ export async function updatePositionById(
 export async function deletePositionById(
 	_id: string,
 ): Promise<SuccessResponse> {
-	// const res = await supabase.from("positions").delete().eq("id", id);
+	// const { error } = await supabase.from("positions").delete().eq("id", id);
 
-	// if (res.error) throw new ApiError(res.error.message, res.error.code);
+	// if (error) throw new ApiError(error.message, error.code);
+
 	await new Promise((r) => setTimeout(r, 3000));
+
 	return {
 		success: true,
 		message: "Jabatan berhasil dihapus.",
