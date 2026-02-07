@@ -20,7 +20,7 @@ import type { Period } from "@/features/periods/services";
 import type { ModalProps } from "@/shared/types/props";
 
 export const DeletePeriodModal = memo(
-	({ selectedData, isModalOpen, setModalState }: ModalProps<Period>) => {
+	({ selectedData, isModalOpen, setIsModalOpen }: ModalProps<Period>) => {
 		/* ===================
 		 * Delete member mutation
 		 * =================== */
@@ -33,7 +33,7 @@ export const DeletePeriodModal = memo(
 						duration: 5000,
 					});
 
-					setModalState(false);
+					setIsModalOpen(false);
 					context.client.invalidateQueries({
 						queryKey: PERIODS_QUERY_KEYS.all,
 					});
@@ -45,13 +45,13 @@ export const DeletePeriodModal = memo(
 						duration: 5000,
 					});
 
-					setModalState(false);
+					setIsModalOpen(false);
 				},
 			}),
 		);
 
 		return (
-			<AlertDialog open={isModalOpen} onOpenChange={setModalState}>
+			<AlertDialog open={isModalOpen} onOpenChange={setIsModalOpen}>
 				<AlertDialogContent open={isModalOpen} size="sm">
 					<AlertDialogHeader>
 						<AlertDialogMedia className="size-12">

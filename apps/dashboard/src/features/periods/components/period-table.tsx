@@ -35,6 +35,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { periodsQueryOptions } from "@/features/periods/hooks/query-options";
 import { useDebounce } from "@/shared/hooks/use-debounce";
+import { AddPeriodModal } from "./add-period-modal";
 import { columns } from "./period-table-column";
 
 export default function PeriodTable() {
@@ -47,6 +48,8 @@ export default function PeriodTable() {
 	const navigate = useNavigate({
 		from: "/periode",
 	});
+
+	const [isAddPeriodModalOpen, setIsAddPeriodModalOpen] = useState(false);
 
 	const statuses = [
 		{
@@ -201,10 +204,19 @@ export default function PeriodTable() {
 					onChange={(e) => setNameSearch(e.target.value)}
 				/>
 
-				{/* Add Product Button */}
-				<Button className="place-self-end">
+				{/* Add Period Button */}
+				<Button
+					className="place-self-end"
+					onClick={() => setIsAddPeriodModalOpen(true)}
+				>
 					<Plus /> Tambah periode
 				</Button>
+
+				{/* Add Period Modal */}
+				<AddPeriodModal
+					isModalOpen={isAddPeriodModalOpen}
+					setIsModalOpen={setIsAddPeriodModalOpen}
+				/>
 			</CardHeader>
 
 			<CardContent className="grid auto-rows-auto gap-5">

@@ -7,10 +7,8 @@ import {
 import { cn } from "@workspace/ui/lib/utils";
 import { useCallback, useState } from "react";
 import type { Period } from "@/features/periods/services";
-// import type { Period } from "@/features/periods/types";
 import { DeletePeriodModal } from "./delete-period-modal";
 
-// import { DetailModal } from "../modals/detail-modal";
 // import { EditModal } from "../modals/edit-modal";
 
 const columnHelper = createColumnHelper<Period>();
@@ -106,7 +104,7 @@ export const columns = [
 					<DeletePeriodModal
 						selectedData={selectedPeriod}
 						isModalOpen={modalState.isDeleteModalOpen}
-						setModalState={(open) =>
+						setIsModalOpen={(open) =>
 							setModalState((prev) => ({ ...prev, isDeleteModalOpen: open }))
 						}
 					/>

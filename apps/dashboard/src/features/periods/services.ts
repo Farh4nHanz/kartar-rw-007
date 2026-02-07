@@ -4,6 +4,7 @@ import type {
 	SuccessResponse,
 	SuccessResponseWithMeta,
 } from "@/shared/types/api";
+import type { AddPeriodFormValue as AddPeriodPayload } from "./schemas";
 
 export type Period = Tables<"periods">;
 
@@ -78,6 +79,20 @@ export async function getAllPeriods(
 			// currentPage: page,
 			// pageSize: limit,
 		},
+	};
+}
+
+export async function addNewPeriod(
+	_payload: AddPeriodPayload,
+): Promise<SuccessResponse> {
+	// const res = await supabase.from("periods").insert(payload);
+
+	// if (res.error) throw new ApiError(res.error.message, res.error.code);
+
+	await new Promise((r) => setTimeout(r, 3000));
+	return {
+		success: true,
+		message: "Periode baru berhasil ditambahkan",
 	};
 }
 
