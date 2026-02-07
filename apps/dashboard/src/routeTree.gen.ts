@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as appRouteRouteImport } from './routes/(app)/route'
 import { Route as appmenuIndexRouteImport } from './routes/(app)/(menu)/index'
+import { Route as apporganizationPeriodeRouteImport } from './routes/(app)/(organization)/periode'
 import { Route as appmenuStrukturRouteImport } from './routes/(app)/(menu)/struktur'
 
 const appRouteRoute = appRouteRouteImport.update({
@@ -22,6 +23,11 @@ const appmenuIndexRoute = appmenuIndexRouteImport.update({
   path: '/',
   getParentRoute: () => appRouteRoute,
 } as any)
+const apporganizationPeriodeRoute = apporganizationPeriodeRouteImport.update({
+  id: '/(organization)/periode',
+  path: '/periode',
+  getParentRoute: () => appRouteRoute,
+} as any)
 const appmenuStrukturRoute = appmenuStrukturRouteImport.update({
   id: '/(menu)/struktur',
   path: '/struktur',
@@ -30,24 +36,32 @@ const appmenuStrukturRoute = appmenuStrukturRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/struktur': typeof appmenuStrukturRoute
+  '/periode': typeof apporganizationPeriodeRoute
   '/': typeof appmenuIndexRoute
 }
 export interface FileRoutesByTo {
   '/struktur': typeof appmenuStrukturRoute
+  '/periode': typeof apporganizationPeriodeRoute
   '/': typeof appmenuIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(app)': typeof appRouteRouteWithChildren
   '/(app)/(menu)/struktur': typeof appmenuStrukturRoute
+  '/(app)/(organization)/periode': typeof apporganizationPeriodeRoute
   '/(app)/(menu)/': typeof appmenuIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/struktur' | '/'
+  fullPaths: '/struktur' | '/periode' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/struktur' | '/'
-  id: '__root__' | '/(app)' | '/(app)/(menu)/struktur' | '/(app)/(menu)/'
+  to: '/struktur' | '/periode' | '/'
+  id:
+    | '__root__'
+    | '/(app)'
+    | '/(app)/(menu)/struktur'
+    | '/(app)/(organization)/periode'
+    | '/(app)/(menu)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -70,6 +84,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appmenuIndexRouteImport
       parentRoute: typeof appRouteRoute
     }
+    '/(app)/(organization)/periode': {
+      id: '/(app)/(organization)/periode'
+      path: '/periode'
+      fullPath: '/periode'
+      preLoaderRoute: typeof apporganizationPeriodeRouteImport
+      parentRoute: typeof appRouteRoute
+    }
     '/(app)/(menu)/struktur': {
       id: '/(app)/(menu)/struktur'
       path: '/struktur'
@@ -82,11 +103,13 @@ declare module '@tanstack/react-router' {
 
 interface appRouteRouteChildren {
   appmenuStrukturRoute: typeof appmenuStrukturRoute
+  apporganizationPeriodeRoute: typeof apporganizationPeriodeRoute
   appmenuIndexRoute: typeof appmenuIndexRoute
 }
 
 const appRouteRouteChildren: appRouteRouteChildren = {
   appmenuStrukturRoute: appmenuStrukturRoute,
+  apporganizationPeriodeRoute: apporganizationPeriodeRoute,
   appmenuIndexRoute: appmenuIndexRoute,
 }
 

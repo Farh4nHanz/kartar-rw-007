@@ -35,9 +35,11 @@ function RouteComponent() {
 	 * Dashboard Stats data fetch
 	 * =============================
 	 */
-	const { data: statisticsData, error: statisticsDataFetchError } = useQuery(
-		dashboardStatisticsQueryOptions(),
-	);
+	const {
+		data: statisticsData,
+		isError: isStatisticsDataFetchError,
+		error: statisticsDataFetchError,
+	} = useQuery(dashboardStatisticsQueryOptions());
 
 	/**
 	 * =============================
@@ -47,6 +49,7 @@ function RouteComponent() {
 	const {
 		data: recentNewsData,
 		isLoading: isRecentNewsDataFetchLoading,
+		isError: isRecentNewsDataFetchError,
 		error: recentNewsDataFetchError,
 	} = useQuery(recentNewsQueryOptions());
 
@@ -58,6 +61,7 @@ function RouteComponent() {
 	const {
 		data: recentGalleriesData,
 		isLoading: isRecentGalleriesDataFetchLoading,
+		isError: isRecentGalleriesDataFetchError,
 		error: recentGalleriesDataFetchError,
 	} = useQuery(recentGalleriesQueryOptions());
 
@@ -68,9 +72,9 @@ function RouteComponent() {
 	 */
 	useEffect(() => {
 		if (
-			statisticsDataFetchError ||
-			recentNewsDataFetchError ||
-			recentGalleriesDataFetchError
+			isStatisticsDataFetchError ||
+			isRecentNewsDataFetchError ||
+			isRecentGalleriesDataFetchError
 		) {
 			const message =
 				statisticsDataFetchError?.message ||
@@ -84,6 +88,9 @@ function RouteComponent() {
 			});
 		}
 	}, [
+		isStatisticsDataFetchError,
+		isRecentNewsDataFetchError,
+		isRecentGalleriesDataFetchError,
 		statisticsDataFetchError,
 		recentNewsDataFetchError,
 		recentGalleriesDataFetchError,
@@ -121,7 +128,7 @@ function RouteComponent() {
 	);
 
 	return (
-		<div className="h-full min-h-vh w-full space-y-8 overflow-x-auto px-4 pt-20 pb-6">
+		<div className="h-full min-h-dvh w-full space-y-8 overflow-x-auto px-4 pt-20 pb-6">
 			<h2 className="mb-2 font-bold text-2xl">Dashboard Karang Taruna RW 07</h2>
 			<p className="text-muted-foreground">
 				Kelola dan pantau semua kegiatan organisasi Karang Taruna RW 07.

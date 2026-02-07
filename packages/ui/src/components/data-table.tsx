@@ -74,26 +74,43 @@ function DataTable<TData>({ table }: { table: TTable<TData> }) {
 			</TableHeader>
 
 			<TableBody>
-				{table.getRowModel().rows.map((row) => (
-					<TableRow key={row.id}>
-						{row.getVisibleCells().map((cell) => (
-							<TableCell key={cell.id} className="capitalize">
-								{flexRender(cell.column.columnDef.cell, cell.getContext())}
-							</TableCell>
-						))}
+				{!table.getRowModel().rows.length ? (
+					<TableRow>
+						<TableCell
+							className="p-5 text-center text-muted-foreground text-xs italic"
+							colSpan={table.getAllColumns().length}
+						>
+							Tidak ada data.
+						</TableCell>
 					</TableRow>
-				))}
+				) : (
+					table.getRowModel().rows.map((row) => (
+						<TableRow key={row.id}>
+							{row.getVisibleCells().map((cell) => (
+								<TableCell key={cell.id} className="capitalize">
+									{flexRender(cell.column.columnDef.cell, cell.getContext())}
+								</TableCell>
+							))}
+						</TableRow>
+					))
+				)}
 			</TableBody>
 		</Table>
 	);
 }
 
-function DataTableSkeleton() {
+function DataTableSkeleton({
+	columnLength,
+	rowLength,
+}: {
+	columnLength: number;
+	rowLength: number;
+}) {
 	return (
 		<Table>
 			<TableHeader>
 				<TableRow>
-					{Array.from({ length: 4 }, () => (
+					{Array.from({ length: columnLength }, () => (
 						<TableHead key={Math.random() * 100}>
 							<Skeleton className="h-6 w-20" />
 						</TableHead>
@@ -102,9 +119,9 @@ function DataTableSkeleton() {
 			</TableHeader>
 
 			<TableBody>
-				{Array.from({ length: 10 }, () => (
+				{Array.from({ length: rowLength }, () => (
 					<TableRow key={Math.random() * 100}>
-						{Array.from({ length: 5 }, () => (
+						{Array.from({ length: columnLength + 1 }, () => (
 							<TableCell key={Math.random() * 100}>
 								<Skeleton className="h-6 w-32" />
 							</TableCell>
@@ -268,25 +285,27 @@ function DataTableRowActions({
 					variant="ghost"
 					className="size-8 p-0 hover:cursor-pointer hover:bg-muted/90"
 				>
-					<span className="sr-only">Open Menu</span>
+					<span className="sr-only">Buka Menu</span>
 					<MoreHorizontal />
 				</Button>
 			</DropdownMenuTrigger>
 
 			<DropdownMenuContent align="end">
-				<DropdownMenuLabel>Actions</DropdownMenuLabel>
+				<DropdownMenuLabel>Aksi</DropdownMenuLabel>
+				<Activity mode={onCopy ? "visible" : "hidden"}>
+					<DropdownMenuItem onClick={onCopy}>
+						<Copy />
+						Copy ID
+					</DropdownMenuItem>
+					<DropdownMenuSeparator />
+				</Activity>
 				{/* Copy action */}
-				<DropdownMenuItem onClick={onCopy}>
-					<Copy />
-					Copy ID
-				</DropdownMenuItem>
-				<DropdownMenuSeparator />
 
 				{/* View detail action */}
 				<Activity mode={onView ? "visible" : "hidden"}>
 					<DropdownMenuItem onClick={onView}>
 						<Eye />
-						View details
+						Lihat detail
 					</DropdownMenuItem>
 					<DropdownMenuSeparator />
 				</Activity>
@@ -295,7 +314,7 @@ function DataTableRowActions({
 				<Activity mode={onEdit ? "visible" : "hidden"}>
 					<DropdownMenuItem onClick={onEdit}>
 						<Edit />
-						Edit
+						Ubah
 					</DropdownMenuItem>
 				</Activity>
 
@@ -303,7 +322,7 @@ function DataTableRowActions({
 				<Activity mode={onDelete ? "visible" : "hidden"}>
 					<DropdownMenuItem onClick={onDelete} variant="destructive">
 						<Trash2 />
-						Delete
+						Hapus
 					</DropdownMenuItem>
 				</Activity>
 			</DropdownMenuContent>
@@ -321,13 +340,13 @@ function DataTableRowLimit({
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant="outline" className="mr-auto">
+				<Button variant="outline" className="mr-auto text-xs">
 					Limit {current} <ChevronDown />
 				</Button>
 			</DropdownMenuTrigger>
 
 			<DropdownMenuContent align="start">
-				<DropdownMenuLabel>Set page limit</DropdownMenuLabel>
+				<DropdownMenuLabel>Jumlah baris per halaman</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 
 				{[10, 20, 30, 40, 50].map((limit) => (
@@ -355,7 +374,7 @@ function DataTableColumnVisibillityFilter<TData>({
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant="outline">
+				<Button variant="outline" className="text-xs">
 					Columns <ChevronDown />
 				</Button>
 			</DropdownMenuTrigger>
