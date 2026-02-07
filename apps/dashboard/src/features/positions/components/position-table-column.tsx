@@ -7,9 +7,8 @@ import {
 import { cn } from "@workspace/ui/lib/utils";
 import { useCallback, useState } from "react";
 import { DeletePositionModal } from "@/features/positions/components/modals/delete-position-modal";
+import { EditPositionModal } from "@/features/positions/components/modals/edit-position-modal";
 import type { Position } from "@/features/positions/services";
-
-// import { EditPositionModal } from "./modals/edit-position-modal";
 
 const columnHelper = createColumnHelper<Position>();
 
@@ -94,14 +93,14 @@ export const columns = [
 						onDelete={() => handleDelete(position)}
 					/>
 
-					{/* Edit Modal
+					{/* Edit Modal */}
 					<EditPositionModal
 						selectedData={selectedPosition}
 						isModalOpen={modalState.isEditModalOpen}
 						setIsModalOpen={(open) =>
 							setModalState((prev) => ({ ...prev, isEditModalOpen: open }))
 						}
-					/> */}
+					/>
 
 					{/* Delete Modal */}
 					<DeletePositionModal
