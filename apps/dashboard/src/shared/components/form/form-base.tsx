@@ -21,10 +21,10 @@ export function FormBase({
 		<Field data-invalid={isInvalid} orientation={orientation}>
 			<FieldContent>
 				<FieldLabel htmlFor={field.name}>{label}</FieldLabel>
-				{description ? (
-					<FieldDescription>{description}</FieldDescription>
-				) : null}
 				{children}
+				{description ? (
+					<FieldDescription className="text-xs">{description}</FieldDescription>
+				) : null}
 				{isInvalid ? <FieldError errors={field.state.meta.errors} /> : null}
 			</FieldContent>
 		</Field>

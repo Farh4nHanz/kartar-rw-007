@@ -22,16 +22,7 @@ import {
 	DataTableSearchFilter,
 	DataTableSkeleton,
 } from "@workspace/ui/components/data-table";
-import {
-	DropdownMenu,
-	DropdownMenuCheckboxItem,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger,
-} from "@workspace/ui/components/dropdown-menu";
-import { Filter, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { getAllPeriodsQueryOptions } from "@/features/periods/hooks/query-options";

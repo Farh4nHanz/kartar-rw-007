@@ -61,14 +61,13 @@ export const columns = [
 			 * Stores the currently selected position
 			 * to be used in the modals
 			 * =================== */
-			const [selectedPosition, setSelectedPosition] = useState<Position | null>(
-				null,
-			);
+			const [_selectedPosition, setSelectedPosition] =
+				useState<Position | null>(null);
 
 			/* ===================
 			 * Modal states
 			 * =================== */
-			const [modalState, setModalState] = useState({
+			const [_modalState, setModalState] = useState({
 				isEditModalOpen: false,
 				isDeleteModalOpen: false,
 			});

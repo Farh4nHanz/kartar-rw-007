@@ -1,5 +1,10 @@
 import type { Tables } from "@workspace/supabase/database.types";
-import type { Meta, SuccessResponseWithMeta } from "@/shared/types/api";
+import type {
+	Meta,
+	SuccessResponse,
+	SuccessResponseWithMeta,
+} from "@/shared/types/api";
+import type { PositionFormValue as PositionPayload } from "./schemas";
 
 export type Position = Tables<"positions">;
 
@@ -75,5 +80,48 @@ export async function getAllPositions(
 			// currentPage: page,
 			// pageSize: limit,
 		},
+	};
+}
+
+export async function addNewPosition(
+	_payload: PositionPayload,
+): Promise<SuccessResponse> {
+	// const res = await supabase.from("positions").insert(payload);
+
+	// if (res.error) throw new ApiError(res.error.message, res.error.code);
+
+	await new Promise((r) => setTimeout(r, 3000));
+	return {
+		success: true,
+		message: "Jabatan baru berhasil ditambahkan.",
+	};
+}
+
+export async function updatePositionById(
+	_id: string,
+	_payload: PositionPayload,
+): Promise<SuccessResponse> {
+	// const res = await supabase.from("positions").update(payload).eq("id", id);
+
+	// if (res.error) throw new ApiError(res.error.message, res.error.code);
+
+	await new Promise((r) => setTimeout(r, 3000));
+
+	return {
+		success: true,
+		message: "Jabatan berhasil diperbarui.",
+	};
+}
+
+export async function deletePositionById(
+	_id: string,
+): Promise<SuccessResponse> {
+	// const res = await supabase.from("positions").delete().eq("id", id);
+
+	// if (res.error) throw new ApiError(res.error.message, res.error.code);
+	await new Promise((r) => setTimeout(r, 3000));
+	return {
+		success: true,
+		message: "Jabatan berhasil dihapus.",
 	};
 }

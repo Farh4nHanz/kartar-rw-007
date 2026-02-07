@@ -19,14 +19,13 @@ import {
 	DataTableColumnFilter,
 	DataTablePagination,
 	DataTableRowLimit,
-	DataTableSearchFilter,
 	DataTableSkeleton,
 } from "@workspace/ui/components/data-table";
 import { Plus } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { getAllPositionsQueryOptions } from "@/features/positions/hooks/query-options";
-// import { AddPositionModal } from "./modals/add-position-modal";
+import { AddPositionModal } from "./modals/add-position-modal";
 import { columns } from "./position-table-column";
 
 export function PositionTable() {
@@ -210,10 +209,10 @@ export function PositionTable() {
 				</Button>
 
 				{/* Add Position Modal */}
-				{/* <AddPositionModal
+				<AddPositionModal
 					isModalOpen={isAddPositionModalOpen}
 					setIsModalOpen={setIsAddPositionModalOpen}
-				/> */}
+				/>
 			</CardHeader>
 
 			<CardContent className="grid auto-rows-auto gap-5">
