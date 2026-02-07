@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: true */
 import { Button } from "@workspace/ui/components/button";
 import { cn } from "@workspace/ui/lib/utils";
 import { XIcon } from "lucide-react";
@@ -45,6 +46,7 @@ function DialogOverlay({
 					"pointer-events-none fixed inset-0 isolate z-50 bg-black/10 supports-backdrop-filter:backdrop-blur-xs",
 					className,
 				)}
+				onClick={(e) => e.stopPropagation()}
 			/>
 		</DialogPrimitive.Overlay>
 	);
@@ -66,7 +68,22 @@ function DialogContent({
 				{open ? (
 					<>
 						<DialogOverlay key="dialog-overlay" />
-						<DialogPrimitive.Content asChild {...props}>
+						<DialogPrimitive.Content
+							asChild
+							{...props}
+							onPointerDownOutside={
+								(props as any).onPointerDownOutside ??
+								((e: any) => e.preventDefault())
+							}
+							onInteractOutside={
+								(props as any).onInteractOutside ??
+								((e: any) => e.preventDefault())
+							}
+							onEscapeKeyDown={
+								(props as any).onEscapeKeyDown ??
+								((e: any) => e.preventDefault())
+							}
+						>
 							<motion.div
 								key="dialog-content"
 								data-slot="dialog-content"

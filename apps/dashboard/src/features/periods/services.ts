@@ -4,7 +4,7 @@ import type {
 	SuccessResponse,
 	SuccessResponseWithMeta,
 } from "@/shared/types/api";
-import type { AddPeriodFormValue as AddPeriodPayload } from "./schemas";
+import type { PeriodFormValue as PeriodPayload } from "./schemas";
 
 export type Period = Tables<"periods">;
 
@@ -56,21 +56,20 @@ export async function getAllPeriods(
 	await new Promise((r) => setTimeout(r, 3000));
 	return {
 		success: true,
-		message: "Data berhasil diambil",
+		message: "Data diambil dengan sukses.",
 		// data: data || [],
 		data: [
 			{
 				id: "193928310981ooksqo",
 				created_at: new Date().toISOString(),
-				end_year: new Date().getFullYear() - 2,
+				end_year: new Date().getFullYear(),
 				is_active: true,
 				name: "Kepengurusan 2024-2026",
-				start_year: new Date().getFullYear() + 2,
+				start_year: new Date().getFullYear() - 2,
 				updated_at: new Date().toISOString(),
 			},
 		],
 		// count: count || 0,
-		// count: 0,
 		meta: {
 			totalPages: 1,
 			currentPage: 1,
@@ -83,7 +82,7 @@ export async function getAllPeriods(
 }
 
 export async function addNewPeriod(
-	_payload: AddPeriodPayload,
+	_payload: PeriodPayload,
 ): Promise<SuccessResponse> {
 	// const res = await supabase.from("periods").insert(payload);
 
@@ -92,7 +91,23 @@ export async function addNewPeriod(
 	await new Promise((r) => setTimeout(r, 3000));
 	return {
 		success: true,
-		message: "Periode baru berhasil ditambahkan",
+		message: "Periode baru berhasil ditambahkan.",
+	};
+}
+
+export async function updatePeriodById(
+	_id: string,
+	_payload: PeriodPayload,
+): Promise<SuccessResponse> {
+	// const res = await supabase.from("periods").update(payload).eq("id", id);
+
+	// if (res.error) throw new ApiError(res.error.message, res.error.code);
+
+	await new Promise((r) => setTimeout(r, 3000));
+
+	return {
+		success: true,
+		message: "Periode berhasil diperbarui.",
 	};
 }
 
@@ -103,6 +118,6 @@ export async function deletePeriodById(_id: string): Promise<SuccessResponse> {
 	await new Promise((r) => setTimeout(r, 3000));
 	return {
 		success: true,
-		message: "Periode berhasil dihapus",
+		message: "Periode berhasil dihapus.",
 	};
 }

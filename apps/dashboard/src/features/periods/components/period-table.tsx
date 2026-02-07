@@ -33,7 +33,7 @@ import {
 import { Filter, Plus } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
-import { periodsQueryOptions } from "@/features/periods/hooks/query-options";
+import { getAllPeriodsQueryOptions } from "@/features/periods/hooks/query-options";
 import { useDebounce } from "@/shared/hooks/use-debounce";
 import { AddPeriodModal } from "./add-period-modal";
 import { columns } from "./period-table-column";
@@ -150,7 +150,7 @@ export default function PeriodTable() {
 		isError: isPeriodsFetchError,
 		error: periodsResponseError,
 	} = useQuery(
-		periodsQueryOptions({
+		getAllPeriodsQueryOptions({
 			page: page || 1,
 			limit: limit || 10,
 			sort: sort || undefined,

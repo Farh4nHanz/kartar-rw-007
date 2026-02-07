@@ -7,26 +7,35 @@ import { ComponentLoader } from "@workspace/ui/components/loader";
 import { SelectGroup, SelectItem } from "@workspace/ui/components/select";
 import { memo } from "react";
 import { toast } from "sonner";
-import { addPeriodMutationOpions } from "@/features/periods/hooks/mutation-options";
+import { updatePeriodByIdMutationOptions } from "@/features/periods/hooks/mutation-options";
 import { getAllPeriodsQueryOptions } from "@/features/periods/hooks/query-options";
 import { type PeriodFormValue, periodSchema } from "@/features/periods/schemas";
+import type { Period } from "@/features/periods/services";
 import { useAppForm } from "@/shared/components/form/hooks";
 
-export const AddPeriodForm = memo(
-	({ onSuccess }: { onSuccess?: () => void }) => {
+export const EditPeriodForm = memo(
+	({
+		selectedData,
+		onSuccess,
+	}: {
+		selectedData: Period;
+		onSuccess?: () => void;
+	}) => {
 		const search = useSearch({
 			from: "/(app)/(organization)/periode",
 		});
 
-		const { mutateAsync } = useMutation(addPeriodMutationOpions());
+		const { mutateAsync } = useMutation(
+			updatePeriodByIdMutationOptions(selectedData.id),
+		);
 
 		const form = useAppForm({
-			formId: "add-period-form",
+			formId: "edit-period-form",
 			defaultValues: {
-				name: "",
-				start_year: 0,
-				end_year: 0,
-				is_active: false,
+				name: selectedData.name,
+				start_year: selectedData.start_year,
+				end_year: selectedData.end_year,
+				is_active: selectedData.is_active,
 			} satisfies PeriodFormValue as PeriodFormValue,
 			validators: {
 				onSubmit: periodSchema,
@@ -134,7 +143,7 @@ export const AddPeriodForm = memo(
 										</Button>
 									</DialogClose>
 									<Button type="submit" disabled={!canSubmit || isSubmitting}>
-										{isSubmitting ? <ComponentLoader /> : "Tambah"}
+										{isSubmitting ? <ComponentLoader /> : "Simpan"}
 									</Button>
 								</>
 							)}

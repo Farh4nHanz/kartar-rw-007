@@ -5,9 +5,9 @@ import {
 	getAllPeriods,
 } from "@/features/periods/services";
 
-export function periodsQueryOptions(params: GetAllPeriodsParams) {
+export function getAllPeriodsQueryOptions(params: GetAllPeriodsParams) {
 	return queryOptions({
-		queryKey: [PERIODS_QUERY_KEYS.all, params],
+		queryKey: [...PERIODS_QUERY_KEYS.all, params],
 		queryFn: () => getAllPeriods(params),
 	});
 }
