@@ -7,8 +7,8 @@ import {
 import { cn } from "@workspace/ui/lib/utils";
 import { useCallback, useState } from "react";
 import type { Period } from "@/features/periods/services";
-import { DeletePeriodModal } from "./delete-period-modal";
-import { EditPeriodModal } from "./edit-period-modal";
+import { DeletePeriodModal } from "./modals/delete-period-modal";
+import { EditPeriodModal } from "./modals/edit-period-modal";
 
 const columnHelper = createColumnHelper<Period>();
 

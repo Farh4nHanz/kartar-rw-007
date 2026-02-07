@@ -35,7 +35,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { getAllPeriodsQueryOptions } from "@/features/periods/hooks/query-options";
 import { useDebounce } from "@/shared/hooks/use-debounce";
-import { AddPeriodModal } from "./add-period-modal";
+import { AddPeriodModal } from "./modals/add-period-modal";
 import { columns } from "./period-table-column";
 
 export default function PeriodTable() {

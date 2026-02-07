@@ -7,24 +7,24 @@ import {
 import { memo } from "react";
 import type { Period } from "@/features/periods/services";
 import type { ModalProps } from "@/shared/types/props";
-import { AddPeriodForm } from "./add-period-form";
+import { EditPeriodForm } from "../forms/edit-period-form";
 
-export const AddPeriodModal = memo(
-	({
-		isModalOpen,
-		setIsModalOpen,
-	}: Omit<ModalProps<Period>, "selectedData">) => (
+export const EditPeriodModal = memo(
+	({ selectedData, isModalOpen, setIsModalOpen }: ModalProps<Period>) => (
 		<Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
 			<DialogContent
 				open={isModalOpen}
 				className="max-h-[calc(100vh-2rem)] max-w-sm gap-2 overflow-y-auto md:max-w-xl"
 			>
-				<DialogTitle className="text-base">Tambah Periode</DialogTitle>
+				<DialogTitle className="text-base">Ubah Data Periode</DialogTitle>
 				<DialogDescription>
-					Silahkan isi data-data di bawah ini untuk menambahkan periode baru.
+					Mengubah data {selectedData?.name}
 				</DialogDescription>
 
-				<AddPeriodForm onSuccess={() => setIsModalOpen(false)} />
+				<EditPeriodForm
+					selectedData={selectedData as Period}
+					onSuccess={() => setIsModalOpen(false)}
+				/>
 			</DialogContent>
 		</Dialog>
 	),
