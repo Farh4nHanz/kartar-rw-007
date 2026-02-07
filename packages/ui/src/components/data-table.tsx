@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: true */
 import {
 	type Column,
 	flexRender,
@@ -44,6 +45,7 @@ import {
 	Copy,
 	Edit,
 	Eye,
+	Filter,
 	MoreHorizontal,
 	Search,
 	Trash2,
@@ -409,6 +411,81 @@ function DataTableSearchFilter({ ...props }: React.ComponentProps<"input">) {
 	);
 }
 
+function DataTableColumnFilter<T extends { id: string }>({
+	label,
+	menuLabel,
+	items,
+	selectedValue,
+	onItemChange,
+	onClearFilters,
+	getItemLabel,
+	multiple = false,
+	align = "end",
+}: {
+	label: string;
+	menuLabel: string;
+	items: T[];
+	selectedValue: string | string[] | null | undefined;
+	onItemChange: (id: string, checked: boolean) => void;
+	onClearFilters: () => void;
+	getItemLabel?: (item: T) => string;
+	multiple?: boolean;
+	align?: "start" | "center" | "end";
+}) {
+	const defaultGetItemLabel = (item: T) =>
+		(item as any).label || (item as any).name || String((item as any).id);
+
+	const itemLabel = getItemLabel || defaultGetItemLabel;
+
+	const isSelected = (id: string) => {
+		if (multiple) {
+			return Array.isArray(selectedValue) && selectedValue.includes(id);
+		}
+		return selectedValue === id;
+	};
+
+	const hasSelection = multiple
+		? Array.isArray(selectedValue) && selectedValue.length > 0
+		: Boolean(selectedValue);
+
+	return (
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<Button variant="outline" className="justify-self-end text-xs">
+					{label} <Filter />
+				</Button>
+			</DropdownMenuTrigger>
+
+			<DropdownMenuContent className="w-fit" align={align}>
+				<DropdownMenuLabel>{menuLabel}</DropdownMenuLabel>
+				<DropdownMenuSeparator />
+
+				{items.map((item) => (
+					<DropdownMenuCheckboxItem
+						key={item.id}
+						checked={isSelected(item.id)}
+						onCheckedChange={(checked) => onItemChange(item.id, checked)}
+						disabled={!multiple && isSelected(item.id)}
+						className="capitalize"
+					>
+						{itemLabel(item)}
+					</DropdownMenuCheckboxItem>
+				))}
+
+				<DropdownMenuSeparator />
+
+				<DropdownMenuItem
+					variant="destructive"
+					disabled={!hasSelection}
+					onClick={onClearFilters}
+				>
+					Hapus filter
+				</DropdownMenuItem>
+			</DropdownMenuContent>
+		</DropdownMenu>
+	);
+}
+
 export {
 	DataTable,
 	DataTablePagination,
@@ -416,6 +493,7 @@ export {
 	DataTableRowActions,
 	DataTableRowLimit,
 	DataTableColumnVisibillityFilter,
+	DataTableColumnFilter,
 	DataTableSearchFilter,
 	DataTableSkeleton,
 };

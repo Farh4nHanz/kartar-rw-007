@@ -1,16 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import PeriodTable from "@/features/periods/components/period-table";
-
-type PeriodQueryParams = {
-	page: number;
-	limit: number;
-	sort?: string;
-	status?: string;
-	name?: string;
-};
+import { PeriodTable } from "@/features/periods/components/period-table";
+import type { GetAllPeriodsParams } from "@/features/periods/services";
 
 export const Route = createFileRoute("/(app)/(organization)/periode")({
-	validateSearch: (search: PeriodQueryParams): PeriodQueryParams => ({
+	validateSearch: (search: GetAllPeriodsParams): GetAllPeriodsParams => ({
 		page: search.page || 1,
 		limit: search.limit || 10,
 		sort: search.sort || undefined,

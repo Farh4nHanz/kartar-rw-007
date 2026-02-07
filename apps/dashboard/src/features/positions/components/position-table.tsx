@@ -22,35 +22,25 @@ import {
 	DataTableSearchFilter,
 	DataTableSkeleton,
 } from "@workspace/ui/components/data-table";
-import {
-	DropdownMenu,
-	DropdownMenuCheckboxItem,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger,
-} from "@workspace/ui/components/dropdown-menu";
-import { Filter, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
-import { getAllPeriodsQueryOptions } from "@/features/periods/hooks/query-options";
-import { useDebounce } from "@/shared/hooks/use-debounce";
-import { AddPeriodModal } from "./modals/add-period-modal";
-import { columns } from "./period-table-column";
+import { getAllPositionsQueryOptions } from "@/features/positions/hooks/query-options";
+// import { AddPositionModal } from "./modals/add-position-modal";
+import { columns } from "./position-table-column";
 
-export function PeriodTable() {
+export function PositionTable() {
 	const search = useSearch({
-		from: "/(app)/(organization)/periode",
+		from: "/(app)/(organization)/jabatan",
 	});
 
-	const { page, limit, sort, status, name } = search;
+	const { page, limit, sort, status } = search;
 
 	const navigate = useNavigate({
-		from: "/periode",
+		from: "/jabatan",
 	});
 
-	const [isAddPeriodModalOpen, setIsAddPeriodModalOpen] = useState(false);
+	const [isAddPositionModalOpen, setIsAddPositionModalOpen] = useState(false);
 
 	const statuses = [
 		{
@@ -95,27 +85,6 @@ export function PeriodTable() {
 	);
 
 	/* ===================
-	 * Global search (debounced)
-	 * =================== */
-	const globalFilter = name ?? "";
-	const [nameSearch, setNameSearch] = useState(globalFilter);
-
-	useEffect(() => setNameSearch(globalFilter), [globalFilter]);
-
-	const debouncedSearch = useDebounce(nameSearch, 1000);
-
-	// Update the url only when the debounced search changes
-	useEffect(() => {
-		navigate({
-			search: (prev) => ({
-				...prev,
-				name: debouncedSearch || undefined,
-				page: 1,
-			}),
-		});
-	}, [debouncedSearch, navigate]);
-
-	/* ===================
 	 * Pagination (server-side)
 	 * =================== */
 	const pagination = useMemo<PaginationState>(
@@ -146,16 +115,15 @@ export function PeriodTable() {
 	 * Fetch Data with React Query
 	 * =================== */
 	const {
-		data: periodsResponse,
-		isLoading: isPeriodsFetchLoading,
-		isError: isPeriodsFetchError,
-		error: periodsResponseError,
+		data: positionsResponse,
+		isLoading: isPositionsFetchLoading,
+		isError: isPositionsFetchError,
+		error: positionsResponseError,
 	} = useQuery(
-		getAllPeriodsQueryOptions({
+		getAllPositionsQueryOptions({
 			page: page || 1,
 			limit: limit || 10,
 			sort: sort || undefined,
-			name: debouncedSearch || undefined,
 			status: status || undefined,
 		}),
 	);
@@ -164,20 +132,20 @@ export function PeriodTable() {
 	 * Show toast on error
 	 * =================== */
 	useEffect(() => {
-		if (isPeriodsFetchError) {
-			toast.error(periodsResponseError.message, {
+		if (isPositionsFetchError) {
+			toast.error(positionsResponseError.message, {
 				duration: 5000,
 				closeButton: true,
 				dismissible: true,
 			});
 		}
-	}, [isPeriodsFetchError, periodsResponseError]);
+	}, [isPositionsFetchError, positionsResponseError]);
 
 	/* ===================
 	 * Table
 	 * =================== */
 	const table = useReactTable({
-		data: periodsResponse?.data || [],
+		data: positionsResponse?.data || [],
 		columns,
 		getCoreRowModel: getCoreRowModel(),
 
@@ -188,39 +156,14 @@ export function PeriodTable() {
 
 		onSortingChange: setSorting,
 		onPaginationChange: setPagination,
-		pageCount: periodsResponse?.meta.totalPages || 0,
+		pageCount: positionsResponse?.meta.totalPages || 0,
 		manualSorting: true,
 		manualPagination: true,
 	});
 
 	return (
 		<Card className="h-fit w-full">
-			<CardHeader className="grid-cols-[auto_auto] gap-10">
-				{/* Search */}
-				<DataTableSearchFilter
-					id="name_search"
-					name="name_search"
-					placeholder="Cari periode berdasarkan nama..."
-					value={nameSearch}
-					onChange={(e) => setNameSearch(e.target.value)}
-				/>
-
-				{/* Add Period Button */}
-				<Button
-					className="place-self-end"
-					onClick={() => setIsAddPeriodModalOpen(true)}
-				>
-					<Plus /> Tambah periode
-				</Button>
-
-				{/* Add Period Modal */}
-				<AddPeriodModal
-					isModalOpen={isAddPeriodModalOpen}
-					setIsModalOpen={setIsAddPeriodModalOpen}
-				/>
-			</CardHeader>
-
-			<CardContent className="grid auto-rows-auto gap-5">
+			<CardHeader className="grid-cols-[auto_auto] justify-between gap-10">
 				<div className="flex items-center gap-3">
 					{/* Page Limit */}
 					<DataTableRowLimit
@@ -254,12 +197,28 @@ export function PeriodTable() {
 								}),
 							});
 						}}
-						align="end"
+						align="center"
 					/>
 				</div>
 
+				{/* Add Position Button */}
+				<Button
+					className="place-self-end"
+					onClick={() => setIsAddPositionModalOpen(true)}
+				>
+					<Plus /> Tambah Jabatan
+				</Button>
+
+				{/* Add Position Modal */}
+				{/* <AddPositionModal
+					isModalOpen={isAddPositionModalOpen}
+					setIsModalOpen={setIsAddPositionModalOpen}
+				/> */}
+			</CardHeader>
+
+			<CardContent className="grid auto-rows-auto gap-5">
 				{/* Table */}
-				{isPeriodsFetchLoading ? (
+				{isPositionsFetchLoading ? (
 					<DataTableSkeleton columnLength={4} rowLength={10} />
 				) : (
 					<DataTable table={table} />
@@ -270,7 +229,7 @@ export function PeriodTable() {
 			<CardFooter>
 				<DataTablePagination
 					currentPage={pagination.pageIndex + 1}
-					totalPages={periodsResponse?.meta.totalPages || 1}
+					totalPages={positionsResponse?.meta.totalPages || 1}
 					onPageChange={(page) =>
 						navigate({
 							search: (prev) => ({ ...prev, page }),

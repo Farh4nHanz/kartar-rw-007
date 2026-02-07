@@ -19,7 +19,7 @@ export type GetAllPeriodsParams = {
 export async function getAllPeriods(
 	_params: GetAllPeriodsParams,
 ): Promise<SuccessResponseWithMeta<Period[], Meta>> {
-	// const { page = 1, limit = 10, sort, name, status } = params;
+	// const { page, limit, sort, name, status } = params;
 
 	// let query = supabase.from("periods").select("*", { count: "exact" });
 
@@ -54,6 +54,7 @@ export async function getAllPeriods(
 	// const totalPages = count ? Math.ceil(count / limit) : 0;
 
 	await new Promise((r) => setTimeout(r, 3000));
+
 	return {
 		success: true,
 		message: "Data diambil dengan sukses.",
@@ -69,7 +70,6 @@ export async function getAllPeriods(
 				updated_at: new Date().toISOString(),
 			},
 		],
-		// count: count || 0,
 		meta: {
 			totalPages: 1,
 			currentPage: 1,

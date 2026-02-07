@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as appRouteRouteImport } from './routes/(app)/route'
 import { Route as appmenuIndexRouteImport } from './routes/(app)/(menu)/index'
 import { Route as apporganizationPeriodeRouteImport } from './routes/(app)/(organization)/periode'
+import { Route as apporganizationJabatanRouteImport } from './routes/(app)/(organization)/jabatan'
 import { Route as appmenuStrukturRouteImport } from './routes/(app)/(menu)/struktur'
 
 const appRouteRoute = appRouteRouteImport.update({
@@ -28,6 +29,11 @@ const apporganizationPeriodeRoute = apporganizationPeriodeRouteImport.update({
   path: '/periode',
   getParentRoute: () => appRouteRoute,
 } as any)
+const apporganizationJabatanRoute = apporganizationJabatanRouteImport.update({
+  id: '/(organization)/jabatan',
+  path: '/jabatan',
+  getParentRoute: () => appRouteRoute,
+} as any)
 const appmenuStrukturRoute = appmenuStrukturRouteImport.update({
   id: '/(menu)/struktur',
   path: '/struktur',
@@ -36,11 +42,13 @@ const appmenuStrukturRoute = appmenuStrukturRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/struktur': typeof appmenuStrukturRoute
+  '/jabatan': typeof apporganizationJabatanRoute
   '/periode': typeof apporganizationPeriodeRoute
   '/': typeof appmenuIndexRoute
 }
 export interface FileRoutesByTo {
   '/struktur': typeof appmenuStrukturRoute
+  '/jabatan': typeof apporganizationJabatanRoute
   '/periode': typeof apporganizationPeriodeRoute
   '/': typeof appmenuIndexRoute
 }
@@ -48,18 +56,20 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(app)': typeof appRouteRouteWithChildren
   '/(app)/(menu)/struktur': typeof appmenuStrukturRoute
+  '/(app)/(organization)/jabatan': typeof apporganizationJabatanRoute
   '/(app)/(organization)/periode': typeof apporganizationPeriodeRoute
   '/(app)/(menu)/': typeof appmenuIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/struktur' | '/periode' | '/'
+  fullPaths: '/struktur' | '/jabatan' | '/periode' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/struktur' | '/periode' | '/'
+  to: '/struktur' | '/jabatan' | '/periode' | '/'
   id:
     | '__root__'
     | '/(app)'
     | '/(app)/(menu)/struktur'
+    | '/(app)/(organization)/jabatan'
     | '/(app)/(organization)/periode'
     | '/(app)/(menu)/'
   fileRoutesById: FileRoutesById
@@ -91,6 +101,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof apporganizationPeriodeRouteImport
       parentRoute: typeof appRouteRoute
     }
+    '/(app)/(organization)/jabatan': {
+      id: '/(app)/(organization)/jabatan'
+      path: '/jabatan'
+      fullPath: '/jabatan'
+      preLoaderRoute: typeof apporganizationJabatanRouteImport
+      parentRoute: typeof appRouteRoute
+    }
     '/(app)/(menu)/struktur': {
       id: '/(app)/(menu)/struktur'
       path: '/struktur'
@@ -103,12 +120,14 @@ declare module '@tanstack/react-router' {
 
 interface appRouteRouteChildren {
   appmenuStrukturRoute: typeof appmenuStrukturRoute
+  apporganizationJabatanRoute: typeof apporganizationJabatanRoute
   apporganizationPeriodeRoute: typeof apporganizationPeriodeRoute
   appmenuIndexRoute: typeof appmenuIndexRoute
 }
 
 const appRouteRouteChildren: appRouteRouteChildren = {
   appmenuStrukturRoute: appmenuStrukturRoute,
+  apporganizationJabatanRoute: apporganizationJabatanRoute,
   apporganizationPeriodeRoute: apporganizationPeriodeRoute,
   appmenuIndexRoute: appmenuIndexRoute,
 }
