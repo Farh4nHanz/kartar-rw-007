@@ -3,7 +3,7 @@ export const PERIODS_QUERY_KEYS = {
 } as const;
 
 export const PERIODS_MUTATION_KEYS = {
-	add: ["periods", "add"],
-	updateById: (id: string) => ["periods", "update", id],
-	deleteById: (id: string) => ["periods", "delete", id],
+	add: [...PERIODS_QUERY_KEYS.all, "add"],
+	updateById: (id: string) => [...PERIODS_QUERY_KEYS.all, "update", id],
+	deleteById: (id: string) => [...PERIODS_QUERY_KEYS.all, "delete", id],
 } as const;

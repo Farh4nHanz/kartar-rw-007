@@ -40,7 +40,7 @@ export const pages = {
 	members: {
 		id: "members",
 		label: "Struktur Organisasi",
-		href: "/struktur",
+		href: "/anggota",
 		icon: Users,
 	},
 	galleries: {

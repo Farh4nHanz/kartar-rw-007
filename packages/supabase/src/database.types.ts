@@ -213,7 +213,7 @@ export type Database = {
 					name: string;
 					period_id: string;
 					photo_path: string | null;
-					position_id: string | null;
+					position_id: string;
 					updated_at: string;
 				};
 				Insert: {
@@ -222,7 +222,7 @@ export type Database = {
 					name: string;
 					period_id: string;
 					photo_path?: string | null;
-					position_id?: string | null;
+					position_id: string;
 					updated_at?: string;
 				};
 				Update: {
@@ -231,7 +231,7 @@ export type Database = {
 					name?: string;
 					period_id?: string;
 					photo_path?: string | null;
-					position_id?: string | null;
+					position_id?: string;
 					updated_at?: string;
 				};
 				Relationships: [

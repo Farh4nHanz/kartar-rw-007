@@ -13,7 +13,7 @@ export function addPositionMutationOpions(
 ) {
 	return mutationOptions({
 		mutationKey: POSITIONS_MUTATION_KEYS.add,
-		mutationFn: (payload: PositionPayload) => addNewPosition(payload),
+		mutationFn: (payload) => addNewPosition(payload),
 		...options,
 	});
 }
@@ -24,7 +24,7 @@ export function updatePositionByIdMutationOptions(
 ) {
 	return mutationOptions({
 		mutationKey: POSITIONS_MUTATION_KEYS.updateById(id),
-		mutationFn: (payload: PositionPayload) => updatePositionById(id, payload),
+		mutationFn: (payload) => updatePositionById(id, payload),
 		...options,
 	});
 }

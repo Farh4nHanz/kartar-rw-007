@@ -1,42 +1,44 @@
 import { type MutationOptions, mutationOptions } from "@tanstack/react-query";
-import type { EditMemberSchema } from "@/features/members/schemas";
-import type { ErrorResponse, SuccessResponse } from "@/features/members/types";
+import { MEMBERS_MUTATION_KEYS } from "@/features/members/constants";
+import type {
+	AddMemberFormValues as AddMemberPayload,
+	EditMemberFormValues as EditMemberPayload,
+} from "@/features/members/schemas";
+import {
+	addNewMember,
+	deleteMemberById,
+	updateMemberById,
+} from "@/features/members/services";
+import type { ErrorResponse, SuccessResponse } from "@/shared/types/api";
 
-export function editMemberMutationOptions(
-	id: string,
-	options?: MutationOptions<SuccessResponse, ErrorResponse, EditMemberSchema>,
+export function addMemberMutationOptions(
+	options?: MutationOptions<SuccessResponse, ErrorResponse, AddMemberPayload>,
 ) {
 	return mutationOptions({
-		mutationFn: async (data: EditMemberSchema) => {
-			const res = await fetch(`http://localhost:3000/members/${id}`, {
-				method: "PUT",
-				headers: { "Content-Type": "multipart/form-data" },
-				body: JSON.stringify(data),
-			});
-			const json = await res.json();
-			return json as SuccessResponse;
-		},
-		retry: 3,
-		retryDelay: 1000,
+		mutationKey: MEMBERS_MUTATION_KEYS.add,
+		mutationFn: (payload) => addNewMember(payload),
 		...options,
 	});
 }
 
-export function deleteMemberMutationOptions(
+export function updateMemberByIdMutationOptions(
+	id: string,
+	options?: MutationOptions<SuccessResponse, ErrorResponse, EditMemberPayload>,
+) {
+	return mutationOptions({
+		mutationKey: MEMBERS_MUTATION_KEYS.updateById(id),
+		mutationFn: (payload) => updateMemberById(id, payload),
+		...options,
+	});
+}
+
+export function deleteMemberByIdMutationOptions(
 	id: string,
 	options?: MutationOptions<SuccessResponse, ErrorResponse>,
 ) {
 	return mutationOptions({
-		mutationFn: async () => {
-			const res = await fetch(`http://localhost:3000/members/${id}`, {
-				method: "DELETE",
-				headers: { "Content-Type": "application/json" },
-			});
-			const json = await res.json();
-			return json as SuccessResponse;
-		},
-		retry: 3,
-		retryDelay: 1000,
+		mutationKey: MEMBERS_MUTATION_KEYS.deleteById(id),
+		mutationFn: () => deleteMemberById(id),
 		...options,
 	});
 }

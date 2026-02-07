@@ -3,7 +3,7 @@ export const POSITIONS_QUERY_KEYS = {
 } as const;
 
 export const POSITIONS_MUTATION_KEYS = {
-	add: ["positions", "add"],
-	updateById: (id: string) => ["positions", "update", id],
-	deleteById: (id: string) => ["positions", "delete", id],
+	add: [...POSITIONS_QUERY_KEYS.all, "add"],
+	updateById: (id: string) => [...POSITIONS_QUERY_KEYS.all, "update", id],
+	deleteById: (id: string) => [...POSITIONS_QUERY_KEYS.all, "delete", id],
 } as const;

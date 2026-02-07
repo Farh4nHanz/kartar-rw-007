@@ -1,4 +1,9 @@
-export const MEMBER_QUERY_KEYS = {
+export const MEMBERS_QUERY_KEYS = {
 	all: ["members"],
-	byId: (id: string) => [...MEMBER_QUERY_KEYS.all, id],
-};
+} as const;
+
+export const MEMBERS_MUTATION_KEYS = {
+	add: [...MEMBERS_QUERY_KEYS.all, "add"],
+	updateById: (id: string) => [...MEMBERS_QUERY_KEYS.all, "update", id],
+	deleteById: (id: string) => [...MEMBERS_QUERY_KEYS.all, "delete", id],
+} as const;
