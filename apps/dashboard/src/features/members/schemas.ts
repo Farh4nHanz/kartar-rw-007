@@ -5,7 +5,7 @@ export const addMemberSchema = z.object({
 	position_id: z.string().min(1, "Silahkan pilih jabatan."),
 	period_id: z.string().min(1, "Silahkan pilih periode."),
 	photo: z
-		.instanceof(File)
+		.instanceof(File, { error: "Silahkan upload foto anggota." })
 		.refine(
 			(file) =>
 				!file ||

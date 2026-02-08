@@ -100,7 +100,7 @@ export function FormFileInput({
 										<XCircle size={16} className="text-destructive" />
 									</InputGroupButton>
 								</TooltipTrigger>
-								<TooltipContent>Remove File</TooltipContent>
+								<TooltipContent>Hapus File</TooltipContent>
 							</Tooltip>
 
 							{/* Preview file button */}
@@ -114,7 +114,7 @@ export function FormFileInput({
 										<Eye size={16} className="text-foreground" />
 									</InputGroupButton>
 								</TooltipTrigger>
-								<TooltipContent>Preview File</TooltipContent>
+								<TooltipContent>Lihat File</TooltipContent>
 							</Tooltip>
 						</ButtonGroup>
 					</InputGroupAddon>
@@ -128,12 +128,12 @@ export function FormFileInput({
 				modal={false}
 			>
 				<DialogContent open={isPreviewOpen} aria-describedby={undefined}>
-					<DialogTitle>Preview Image</DialogTitle>
+					<DialogTitle>Meninjau File</DialogTitle>
 
 					{imagePreview && (
 						<img
 							src={imagePreview}
-							alt="Preview of selected file"
+							alt="File"
 							className="aspect-square h-full w-full rounded-md object-contain object-center"
 						/>
 					)}

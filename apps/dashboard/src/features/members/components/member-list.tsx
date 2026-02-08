@@ -11,6 +11,7 @@ import { useEffect, useMemo, useState } from "react";
 import { getAllPeriodsQueryOptions } from "@/features/periods/hooks/query-options";
 import { getAllPositionsQueryOptions } from "@/features/positions/hooks/query-options";
 import { useDebounce } from "@/shared/hooks/use-debounce";
+import { AddMemberModal } from "./modals/add-member-modal";
 
 export function MemberList() {
 	const { name, period, position } = useSearch({
@@ -44,6 +45,8 @@ export function MemberList() {
 		[positionsData?.data, position],
 	);
 
+	const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
+
 	/* ===================
 	 * Global search (debounced)
 	 * =================== */
@@ -76,23 +79,27 @@ export function MemberList() {
 					onChange={(e) => setNameSearch(e.target.value)}
 				/>
 
-				{/* Add Position Button */}
+				{/* Add Member Button */}
 				<Button
 					className="place-self-end"
-					// onClick={() => setIsAddPositionModalOpen(true)}
+					onClick={() => setIsAddMemberModalOpen(true)}
 				>
 					<Plus /> Tambah Anggota
 				</Button>
 
-				{/* Add Position Modal */}
-				{/* <AddPositionModal
-					isModalOpen={isAddPositionModalOpen}
-					setIsModalOpen={setIsAddPositionModalOpen}
-				/> */}
+				{/* Add Member Modal */}
+				<AddMemberModal
+					isModalOpen={isAddMemberModalOpen}
+					setIsModalOpen={setIsAddMemberModalOpen}
+					positionsData={positionsData?.data || []}
+					periodsData={periodsData?.data || []}
+				/>
 			</CardHeader>
 
 			<CardContent className="grid auto-rows-auto gap-5">
+				{/* Filters */}
 				<div className="flex items-center gap-3">
+					{/* Filter by period */}
 					<DataTableColumnFilter
 						items={periodsData?.data || []}
 						onItemLoading={isPeriodsDataFetchLoading}
@@ -124,6 +131,7 @@ export function MemberList() {
 						align="start"
 					/>
 
+					{/* Filter by position */}
 					<DataTableColumnFilter
 						items={positionsData?.data || []}
 						onItemLoading={isPositionsDataFetchLoading}
