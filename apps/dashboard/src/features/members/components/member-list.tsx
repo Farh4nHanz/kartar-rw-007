@@ -2,16 +2,15 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { Button } from "@workspace/ui/components/button";
 import { Card, CardContent, CardHeader } from "@workspace/ui/components/card";
-import {
-	DataTableColumnFilter,
-	DataTableSearchFilter,
-} from "@workspace/ui/components/data-table";
+import { DataTableSearchFilter } from "@workspace/ui/components/data-table";
 import { Plus } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { getAllPeriodsQueryOptions } from "@/features/periods/hooks/query-options";
 import { getAllPositionsQueryOptions } from "@/features/positions/hooks/query-options";
 import { useDebounce } from "@/shared/hooks/use-debounce";
 import { AddMemberModal } from "./modals/add-member-modal";
+import { PeriodFilter } from "./period-filter";
+import { PositionFilter } from "./position-filter";
 
 export function MemberList() {
 	const { name, period, position } = useSearch({
@@ -22,13 +21,24 @@ export function MemberList() {
 		from: "/anggota",
 	});
 
+	/* ===================
+	 * Periods data fetch
+	 * =================== */
 	const { data: periodsData, isLoading: isPeriodsDataFetchLoading } = useQuery(
 		getAllPeriodsQueryOptions(),
 	);
 
+	/* ===================
+	 * Positions data fetch
+	 * =================== */
 	const { data: positionsData, isLoading: isPositionsDataFetchLoading } =
 		useQuery(getAllPositionsQueryOptions());
 
+	/* ===================
+	 * Selected period
+	 * the return value is formatted as `${start_year}-${end_year}`
+	 * example: "2020-2025"
+	 * =================== */
 	const selectedPeriod = useMemo(() => {
 		const selected = periodsData?.data.find(
 			(p) => `${p.start_year}-${p.end_year}` === period,
@@ -37,6 +47,10 @@ export function MemberList() {
 		return `${selected?.start_year}-${selected?.end_year}`;
 	}, [periodsData?.data, period]);
 
+	/* ===================
+	 * Selected position
+	 * the return value is the position name
+	 * =================== */
 	const selectedPosition = useMemo(
 		() =>
 			positionsData?.data
@@ -100,67 +114,17 @@ export function MemberList() {
 				{/* Filters */}
 				<div className="flex items-center gap-3">
 					{/* Filter by period */}
-					<DataTableColumnFilter
-						items={periodsData?.data || []}
-						onItemLoading={isPeriodsDataFetchLoading}
-						label="Periode"
-						menuLabel="Filter berdasarkan periode"
-						getItemLabel={(period) => `${period.start_year}-${period.end_year}`}
-						getItemValue={(period) => `${period.start_year}-${period.end_year}`}
-						selectedValue={selectedPeriod}
-						onItemChange={(periodId, checked) => {
-							const period = periodsData?.data.find((p) => p.id === periodId);
-
-							navigate({
-								search: (prev) => ({
-									...prev,
-									period: checked
-										? `${period?.start_year}-${period?.end_year}`
-										: undefined,
-								}),
-							});
-						}}
-						onClearFilters={() => {
-							navigate({
-								search: (prev) => ({
-									...prev,
-									period: undefined,
-								}),
-							});
-						}}
-						align="start"
+					<PeriodFilter
+						isLoading={isPeriodsDataFetchLoading}
+						periodsData={periodsData?.data || []}
+						selectedPeriod={selectedPeriod}
 					/>
 
 					{/* Filter by position */}
-					<DataTableColumnFilter
-						items={positionsData?.data || []}
-						onItemLoading={isPositionsDataFetchLoading}
-						label="Jabatan"
-						menuLabel="Filter berdasarkan jabatan"
-						getItemLabel={(position) => position.name.toLowerCase()}
-						getItemValue={(position) => position.name.toLowerCase()}
-						selectedValue={selectedPosition}
-						onItemChange={(positionId, checked) => {
-							const positionName = positionsData?.data
-								.find((p) => p.id === positionId)
-								?.name.toLowerCase();
-
-							navigate({
-								search: (prev) => ({
-									...prev,
-									position: checked ? positionName : undefined,
-								}),
-							});
-						}}
-						onClearFilters={() => {
-							navigate({
-								search: (prev) => ({
-									...prev,
-									position: undefined,
-								}),
-							});
-						}}
-						align="start"
+					<PositionFilter
+						isLoading={isPositionsDataFetchLoading}
+						positionsData={positionsData?.data || []}
+						selectedPosition={selectedPosition as string}
 					/>
 				</div>
 			</CardContent>
