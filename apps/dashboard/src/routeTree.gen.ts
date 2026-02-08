@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as appRouteRouteImport } from './routes/(app)/route'
 import { Route as appmenuIndexRouteImport } from './routes/(app)/(menu)/index'
+import { Route as apppublicationKategoriRouteImport } from './routes/(app)/(publication)/kategori'
 import { Route as apporganizationPeriodeRouteImport } from './routes/(app)/(organization)/periode'
 import { Route as apporganizationJabatanRouteImport } from './routes/(app)/(organization)/jabatan'
 import { Route as apporganizationAnggotaRouteImport } from './routes/(app)/(organization)/anggota'
@@ -22,6 +23,11 @@ const appRouteRoute = appRouteRouteImport.update({
 const appmenuIndexRoute = appmenuIndexRouteImport.update({
   id: '/(menu)/',
   path: '/',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const apppublicationKategoriRoute = apppublicationKategoriRouteImport.update({
+  id: '/(publication)/kategori',
+  path: '/kategori',
   getParentRoute: () => appRouteRoute,
 } as any)
 const apporganizationPeriodeRoute = apporganizationPeriodeRouteImport.update({
@@ -44,12 +50,14 @@ export interface FileRoutesByFullPath {
   '/anggota': typeof apporganizationAnggotaRoute
   '/jabatan': typeof apporganizationJabatanRoute
   '/periode': typeof apporganizationPeriodeRoute
+  '/kategori': typeof apppublicationKategoriRoute
   '/': typeof appmenuIndexRoute
 }
 export interface FileRoutesByTo {
   '/anggota': typeof apporganizationAnggotaRoute
   '/jabatan': typeof apporganizationJabatanRoute
   '/periode': typeof apporganizationPeriodeRoute
+  '/kategori': typeof apppublicationKategoriRoute
   '/': typeof appmenuIndexRoute
 }
 export interface FileRoutesById {
@@ -58,19 +66,21 @@ export interface FileRoutesById {
   '/(app)/(organization)/anggota': typeof apporganizationAnggotaRoute
   '/(app)/(organization)/jabatan': typeof apporganizationJabatanRoute
   '/(app)/(organization)/periode': typeof apporganizationPeriodeRoute
+  '/(app)/(publication)/kategori': typeof apppublicationKategoriRoute
   '/(app)/(menu)/': typeof appmenuIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/anggota' | '/jabatan' | '/periode' | '/'
+  fullPaths: '/anggota' | '/jabatan' | '/periode' | '/kategori' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/anggota' | '/jabatan' | '/periode' | '/'
+  to: '/anggota' | '/jabatan' | '/periode' | '/kategori' | '/'
   id:
     | '__root__'
     | '/(app)'
     | '/(app)/(organization)/anggota'
     | '/(app)/(organization)/jabatan'
     | '/(app)/(organization)/periode'
+    | '/(app)/(publication)/kategori'
     | '/(app)/(menu)/'
   fileRoutesById: FileRoutesById
 }
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof appmenuIndexRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/(publication)/kategori': {
+      id: '/(app)/(publication)/kategori'
+      path: '/kategori'
+      fullPath: '/kategori'
+      preLoaderRoute: typeof apppublicationKategoriRouteImport
       parentRoute: typeof appRouteRoute
     }
     '/(app)/(organization)/periode': {
@@ -122,6 +139,7 @@ interface appRouteRouteChildren {
   apporganizationAnggotaRoute: typeof apporganizationAnggotaRoute
   apporganizationJabatanRoute: typeof apporganizationJabatanRoute
   apporganizationPeriodeRoute: typeof apporganizationPeriodeRoute
+  apppublicationKategoriRoute: typeof apppublicationKategoriRoute
   appmenuIndexRoute: typeof appmenuIndexRoute
 }
 
@@ -129,6 +147,7 @@ const appRouteRouteChildren: appRouteRouteChildren = {
   apporganizationAnggotaRoute: apporganizationAnggotaRoute,
   apporganizationJabatanRoute: apporganizationJabatanRoute,
   apporganizationPeriodeRoute: apporganizationPeriodeRoute,
+  apppublicationKategoriRoute: apppublicationKategoriRoute,
   appmenuIndexRoute: appmenuIndexRoute,
 }
 

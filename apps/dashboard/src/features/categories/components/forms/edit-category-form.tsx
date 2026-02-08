@@ -7,29 +7,38 @@ import { ComponentLoader } from "@workspace/ui/components/loader";
 import { SelectGroup, SelectItem } from "@workspace/ui/components/select";
 import { memo } from "react";
 import { toast } from "sonner";
-import { addNewCategoryMutationOptions } from "@/features/categories/hooks/mutation-options";
+import { updateCategoryByIdMutationOptions } from "@/features/categories/hooks/mutation-options";
 import { getAllCategoriesQueryOptions } from "@/features/categories/hooks/query-options";
 import {
 	type CategoryFormValue,
 	categorySchema,
 } from "@/features/categories/schemas";
+import type { Category } from "@/features/categories/services";
 import { useAppForm } from "@/shared/components/form/hooks";
 
-export const AddCategoryForm = memo(
-	({ onSuccess }: { onSuccess?: () => void }) => {
+export const EditCategoryForm = memo(
+	({
+		selectedData,
+		onSuccess,
+	}: {
+		selectedData: Category;
+		onSuccess?: () => void;
+	}) => {
 		const search = useSearch({
 			from: "/(app)/(publication)/kategori",
 		});
 
-		const { mutateAsync } = useMutation(addNewCategoryMutationOptions());
+		const { mutateAsync } = useMutation(
+			updateCategoryByIdMutationOptions(selectedData.id),
+		);
 
 		const types = ["galeri", "program", "berita", "kolaborasi"] as const;
 
 		const form = useAppForm({
-			formId: "add-category-form",
+			formId: "edit-category-form",
 			defaultValues: {
-				name: "",
-				type: "",
+				name: selectedData.name,
+				type: selectedData.type,
 			} satisfies CategoryFormValue as CategoryFormValue,
 			validators: {
 				onSubmit: categorySchema,

@@ -27,7 +27,7 @@ export const columns = [
 		header: "Deskripsi",
 	}),
 	columnHelper.accessor("sort_order", {
-		id: "order",
+		id: "sort_order",
 		header: ({ column }) => (
 			<DataTableSortableHeader label="Urutan" column={column} />
 		),

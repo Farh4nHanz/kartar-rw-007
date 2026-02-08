@@ -7,7 +7,7 @@ import {
 
 export function getAllCategoriesQueryOptions(params?: GetAllCategoriesParams) {
 	return queryOptions({
-		queryKey: CATEGORIES_QUERY_KEYS.all,
+		queryKey: [...CATEGORIES_QUERY_KEYS.all, params],
 		queryFn: () => getAllCategories(params),
 	});
 }
