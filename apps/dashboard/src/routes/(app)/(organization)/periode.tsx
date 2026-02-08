@@ -4,8 +4,8 @@ import type { GetAllPeriodsParams } from "@/features/periods/services";
 
 export const Route = createFileRoute("/(app)/(organization)/periode")({
 	validateSearch: (search: GetAllPeriodsParams): GetAllPeriodsParams => ({
-		page: search.page || 1,
-		limit: search.limit || 10,
+		page: search.page || undefined,
+		limit: search.limit || undefined,
 		sort: search.sort || undefined,
 		status: search.status || undefined,
 		name: search.name || undefined,

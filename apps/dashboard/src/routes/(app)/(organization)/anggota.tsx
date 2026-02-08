@@ -1,13 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { MemberList } from "@/features/members/components/member-list";
 import type { GetAllMembersParams } from "@/features/members/services";
 
 export const Route = createFileRoute("/(app)/(organization)/anggota")({
 	validateSearch: (search: GetAllMembersParams): GetAllMembersParams => ({
-		page: search.page || 1,
-		limit: search.limit || 10,
-		sort: search.sort || undefined,
 		name: search.name || undefined,
 		period: search.period || undefined,
+		position: search.position || undefined,
 	}),
 	component: RouteComponent,
 });
@@ -19,6 +18,8 @@ function RouteComponent() {
 			<p className="text-muted-foreground">
 				Kelola anggota dan jabatan yang ada di dalam organisasi.
 			</p>
+
+			<MemberList />
 		</div>
 	);
 }

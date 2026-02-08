@@ -39,8 +39,8 @@ export const columns = [
 			const value = getValue() === true ? "Aktif" : "Tidak Aktif";
 			const color =
 				getValue() === true
-					? "bg-green-500 dark:bg-green-300"
-					: "bg-gray-500 dark:bg-gray-300";
+					? "bg-green-200 dark:bg-green-500 text-green-700 dark:text-green-50"
+					: "bg-gray-200 dark:bg-gray-500 text-gray-700 dark:text-gray-50";
 
 			return (
 				<Badge className={cn("text-[calc(var(--text-xs)-1px)]", color)}>

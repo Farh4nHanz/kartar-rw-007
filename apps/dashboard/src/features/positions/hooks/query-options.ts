@@ -5,7 +5,7 @@ import {
 	getAllPositions,
 } from "@/features/positions/services";
 
-export function getAllPositionsQueryOptions(params: GetAllPositionsParams) {
+export function getAllPositionsQueryOptions(params?: GetAllPositionsParams) {
 	return queryOptions({
 		queryKey: [...POSITIONS_QUERY_KEYS.all, params],
 		queryFn: () => getAllPositions(params),

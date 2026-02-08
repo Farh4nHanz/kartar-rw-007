@@ -9,14 +9,14 @@ import type { PositionFormValue as PositionPayload } from "./schemas";
 export type Position = Tables<"positions">;
 
 export type GetAllPositionsParams = {
-	page: number;
-	limit: number;
+	page?: number;
+	limit?: number;
 	sort?: string;
 	status?: string;
 };
 
 export async function getAllPositions(
-	_params: GetAllPositionsParams,
+	_params?: GetAllPositionsParams,
 ): Promise<SuccessResponseWithMeta<Position[], Meta>> {
 	// const { page, limit, sort, status } = params;
 
@@ -39,13 +39,26 @@ export async function getAllPositions(
 	// 	query = query.order("sort_order", { ascending: false });
 	// }
 
+	// let data: Position[] = [];
+	// let count = 0;
+
 	// // Pagination
+	// if (page && limit) {
 	// const offset = (page - 1) * limit;
-	// const { data, error, count } = await query.range(offset, offset + limit - 1);
+	// const { data: paginatedData, error, count: countData } = await query.range(offset, offset + limit - 1);
 
 	// if (error) throw new ApiError(error.message, error.code);
 
-	// const totalPages = count ? Math.ceil(count / limit) : 0;
+	// data = paginatedData || [];
+	// count = countData
+	// } else {
+	// const { data: allData, error, count: allCount } = await query;
+
+	// if (error) throw new ApiError(error.message, error.code);
+
+	// data = paginatedData || [];
+	// count = countData
+	// }
 
 	await new Promise((r) => setTimeout(r, 3000));
 	return {
@@ -76,7 +89,7 @@ export async function getAllPositions(
 			totalPages: 1,
 			currentPage: 1,
 			pageSize: 1,
-			// totalPages,
+			// totalPages: page && limit ? Math.ceil(count / limit) : 1,
 			// currentPage: page,
 			// pageSize: limit,
 		},

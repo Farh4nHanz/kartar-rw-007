@@ -51,6 +51,7 @@ import {
 	Trash2,
 } from "lucide-react";
 import { Activity } from "react";
+import { ComponentLoader } from "./loader";
 
 function DataTable<TData>({ table }: { table: TTable<TData> }) {
 	return (
@@ -419,8 +420,10 @@ function DataTableColumnFilter<T extends { id: string }>({
 	onItemChange,
 	onClearFilters,
 	getItemLabel,
+	getItemValue,
 	multiple = false,
 	align = "end",
+	onItemLoading,
 }: {
 	label: string;
 	menuLabel: string;
@@ -429,19 +432,25 @@ function DataTableColumnFilter<T extends { id: string }>({
 	onItemChange: (id: string, checked: boolean) => void;
 	onClearFilters: () => void;
 	getItemLabel?: (item: T) => string;
+	getItemValue?: (item: T) => string;
 	multiple?: boolean;
 	align?: "start" | "center" | "end";
+	onItemLoading?: boolean;
 }) {
 	const defaultGetItemLabel = (item: T) =>
 		(item as any).label || (item as any).name || String((item as any).id);
 
-	const itemLabel = getItemLabel || defaultGetItemLabel;
+	const defaultGetItemValue = (item: T) => (item as any).id;
 
-	const isSelected = (id: string) => {
+	const itemLabel = getItemLabel || defaultGetItemLabel;
+	const itemValue = getItemValue || defaultGetItemValue;
+
+	const isSelected = (item: T) => {
+		const value = itemValue(item);
 		if (multiple) {
-			return Array.isArray(selectedValue) && selectedValue.includes(id);
+			return Array.isArray(selectedValue) && selectedValue.includes(value);
 		}
-		return selectedValue === id;
+		return selectedValue === value;
 	};
 
 	const hasSelection = multiple
@@ -460,17 +469,27 @@ function DataTableColumnFilter<T extends { id: string }>({
 				<DropdownMenuLabel>{menuLabel}</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 
-				{items.map((item) => (
-					<DropdownMenuCheckboxItem
-						key={item.id}
-						checked={isSelected(item.id)}
-						onCheckedChange={(checked) => onItemChange(item.id, checked)}
-						disabled={!multiple && isSelected(item.id)}
-						className="capitalize"
-					>
-						{itemLabel(item)}
-					</DropdownMenuCheckboxItem>
-				))}
+				{onItemLoading ? (
+					<DropdownMenuItem disabled>
+						<ComponentLoader />
+					</DropdownMenuItem>
+				) : !items.length ? (
+					<DropdownMenuItem disabled className="text-muted-foreground text-xs">
+						Tidak ada data
+					</DropdownMenuItem>
+				) : (
+					items.map((item) => (
+						<DropdownMenuCheckboxItem
+							key={item.id}
+							checked={isSelected(item)}
+							onCheckedChange={(checked) => onItemChange(item.id, checked)}
+							disabled={!multiple && isSelected(item)}
+							className="capitalize"
+						>
+							{itemLabel(item)}
+						</DropdownMenuCheckboxItem>
+					))
+				)}
 
 				<DropdownMenuSeparator />
 

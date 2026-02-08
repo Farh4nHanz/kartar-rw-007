@@ -1,8 +1,7 @@
 import type { Tables } from "@workspace/supabase/database.types";
 import type {
-	Meta,
 	SuccessResponse,
-	SuccessResponseWithMeta,
+	SuccessResponseWithData,
 } from "@/shared/types/api";
 import type {
 	AddMemberFormValues as AddMemberPayload,
@@ -19,34 +18,26 @@ export type Member = Omit<
 };
 
 export type GetAllMembersParams = {
-	page: number;
-	limit: number;
-	sort?: string;
 	name?: string;
 	period?: string;
+	position?: string;
 };
 
 export async function getAllMembers(
-	_params: GetAllMembersParams,
-): Promise<SuccessResponseWithMeta<Member[], Meta>> {
-	// const { page, limit, sort, name, period } = params;
+	_params?: GetAllMembersParams,
+): Promise<SuccessResponseWithData<Member[]>> {
+	// const { name, period, position } = _params;
 
 	// let query = supabase
 	// 	.from("organization_members")
 	// 	.select(
 	// 		"id, name, photo_path, created_at, updated_at, periods(start_year, end_year), positions(name, sort_order)",
 	// 		{ count: "exact" },
-	// 	);
+	// 	)
+	// 	.order("positions.sort_order", { ascending: true });
 
 	// if (name) {
 	// 	query = query.ilike("name", `%${name}%`);
-	// }
-
-	// if (sort) {
-	// 	const [field, direction] = sort.split(".");
-	// 	query = query.order(field, {
-	// 		ascending: direction === "asc",
-	// 	});
 	// }
 
 	// if (period) {
@@ -54,8 +45,11 @@ export async function getAllMembers(
 	// 	query = query.eq("periods.start_year", +start).eq("periods.end_year", +end);
 	// }
 
-	// const offset = (page - 1) * limit;
-	// const { data, error, count } = await query.range(offset, offset + limit - 1);
+	// if (position) {
+	// 	query = query.eq("positions.name", position);
+	// }
+
+	// const { data, error } = await query;
 
 	// if (error) throw new ApiError(error.message, error.code);
 
@@ -63,8 +57,6 @@ export async function getAllMembers(
 	// 	...member,
 	// 	photo_url: getPublicImageUrl("profiles", member.photo_path),
 	// }));
-
-	// const totalPages = count ? Math.ceil(count / limit) : 0;
 
 	const data: Member[] = [
 		{
@@ -119,14 +111,6 @@ export async function getAllMembers(
 		message: "Data diambil dengan sukses.",
 		data,
 		// members,
-		meta: {
-			// totalPages,
-			// currentPage: page,
-			// pageSize: limit,
-			totalPages: 1,
-			currentPage: 1,
-			pageSize: 10,
-		},
 	};
 }
 
