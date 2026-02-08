@@ -45,6 +45,7 @@ export function PositionFilter({
 				});
 			}}
 			align="start"
+			disabled={isLoading}
 		/>
 	);
 }

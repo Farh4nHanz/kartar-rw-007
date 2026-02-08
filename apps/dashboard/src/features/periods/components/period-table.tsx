@@ -27,6 +27,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { getAllPeriodsQueryOptions } from "@/features/periods/hooks/query-options";
 import { useDebounce } from "@/shared/hooks/use-debounce";
+import { useErrorToast } from "@/shared/hooks/use-error-toast";
 import { AddPeriodModal } from "./modals/add-period-modal";
 import { columns } from "./period-table-column";
 
@@ -137,10 +138,9 @@ export function PeriodTable() {
 	 * Fetch Data with React Query
 	 * =================== */
 	const {
-		data: periodsResponse,
+		data: periodsData,
 		isLoading: isPeriodsFetchLoading,
-		isError: isPeriodsFetchError,
-		error: periodsResponseError,
+		error: periodsDataFetchError,
 	} = useQuery(
 		getAllPeriodsQueryOptions({
 			page: page || 1,
@@ -154,21 +154,13 @@ export function PeriodTable() {
 	/* ===================
 	 * Show toast on error
 	 * =================== */
-	useEffect(() => {
-		if (isPeriodsFetchError) {
-			toast.error(periodsResponseError.message, {
-				duration: 5000,
-				closeButton: true,
-				dismissible: true,
-			});
-		}
-	}, [isPeriodsFetchError, periodsResponseError]);
+	useErrorToast(periodsDataFetchError);
 
 	/* ===================
 	 * Table
 	 * =================== */
 	const table = useReactTable({
-		data: periodsResponse?.data || [],
+		data: periodsData?.data || [],
 		columns,
 		getCoreRowModel: getCoreRowModel(),
 
@@ -179,14 +171,14 @@ export function PeriodTable() {
 
 		onSortingChange: setSorting,
 		onPaginationChange: setPagination,
-		pageCount: periodsResponse?.meta.totalPages || 0,
+		pageCount: periodsData?.meta.totalPages || 0,
 		manualSorting: true,
 		manualPagination: true,
 	});
 
 	return (
 		<Card className="h-fit w-full">
-			<CardHeader className="grid-cols-[auto_auto] gap-10">
+			<CardHeader className="grid-cols-[1fr_auto] gap-10">
 				{/* Search */}
 				<DataTableSearchFilter
 					id="name_search"
@@ -198,7 +190,7 @@ export function PeriodTable() {
 
 				{/* Add Period Button */}
 				<Button
-					className="place-self-end"
+					className="place-self-start"
 					onClick={() => setIsAddPeriodModalOpen(true)}
 				>
 					<Plus /> Tambah periode
@@ -219,6 +211,7 @@ export function PeriodTable() {
 						onLimitChange={(newLimit) =>
 							setPagination((p) => ({ ...p, pageSize: newLimit }))
 						}
+						disabled={!periodsData?.data.length || isPeriodsFetchLoading}
 					/>
 
 					{/* Filter by Status */}
@@ -246,6 +239,7 @@ export function PeriodTable() {
 							});
 						}}
 						align="end"
+						disabled={isPeriodsFetchLoading}
 					/>
 				</div>
 
@@ -261,7 +255,7 @@ export function PeriodTable() {
 			<CardFooter>
 				<DataTablePagination
 					currentPage={pagination.pageIndex + 1}
-					totalPages={periodsResponse?.meta.totalPages || 1}
+					totalPages={periodsData?.meta.totalPages || 1}
 					onPageChange={(page) =>
 						navigate({
 							search: (prev) => ({ ...prev, page }),

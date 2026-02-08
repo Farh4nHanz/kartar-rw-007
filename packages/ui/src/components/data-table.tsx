@@ -336,9 +336,11 @@ function DataTableRowActions({
 function DataTableRowLimit({
 	current,
 	onLimitChange,
+	disabled = false,
 }: {
 	current: number;
 	onLimitChange: (limit: number) => void;
+	disabled?: boolean;
 }) {
 	return (
 		<DropdownMenu>
@@ -356,6 +358,7 @@ function DataTableRowLimit({
 					<DropdownMenuItem
 						key={`${limit}-row`}
 						onClick={() => onLimitChange(limit)}
+						disabled={disabled}
 					>
 						{limit}
 
@@ -424,6 +427,7 @@ function DataTableColumnFilter<T extends { id: string }>({
 	multiple = false,
 	align = "end",
 	onItemLoading,
+	disabled = false,
 }: {
 	label: string;
 	menuLabel: string;
@@ -436,6 +440,7 @@ function DataTableColumnFilter<T extends { id: string }>({
 	multiple?: boolean;
 	align?: "start" | "center" | "end";
 	onItemLoading?: boolean;
+	disabled?: boolean;
 }) {
 	const defaultGetItemLabel = (item: T) =>
 		(item as any).label || (item as any).name || String((item as any).id);
@@ -483,7 +488,7 @@ function DataTableColumnFilter<T extends { id: string }>({
 							key={item.id}
 							checked={isSelected(item)}
 							onCheckedChange={(checked) => onItemChange(item.id, checked)}
-							disabled={!multiple && isSelected(item)}
+							disabled={(!multiple && isSelected(item)) || disabled}
 							className="capitalize"
 						>
 							{itemLabel(item)}

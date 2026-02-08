@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader } from "@workspace/ui/components/card";
 import { DataTableSearchFilter } from "@workspace/ui/components/data-table";
 import {
 	Empty,
-	EmptyContent,
 	EmptyDescription,
 	EmptyHeader,
 	EmptyMedia,
@@ -39,7 +38,7 @@ export function MemberList() {
 	 * =================== */
 	const {
 		data: periodsData,
-		isLoading: isPeriodsDataFetchLoading,
+		isLoading: isPeriodsFetchLoading,
 		error: periodsDataFetchError,
 	} = useQuery(getAllPeriodsQueryOptions());
 
@@ -48,7 +47,7 @@ export function MemberList() {
 	 * =================== */
 	const {
 		data: positionsData,
-		isLoading: isPositionsDataFetchLoading,
+		isLoading: isPositionsFetchLoading,
 		error: positionsDataFetchError,
 	} = useQuery(getAllPositionsQueryOptions());
 
@@ -57,7 +56,7 @@ export function MemberList() {
 	 * =================== */
 	const {
 		data: membersData,
-		isLoading: isMembersDataFetchLoading,
+		isLoading: isMembersFetchLoading,
 		error: membersDataFetchError,
 	} = useQuery(getAllMembersQueryOptions(search));
 
@@ -119,25 +118,21 @@ export function MemberList() {
 		<Card className="h-fit w-full">
 			<CardHeader className="grid-cols-[auto_auto] gap-10">
 				{/* Search */}
-				{!isMembersDataFetchLoading && membersData?.data.length ? (
-					<DataTableSearchFilter
-						id="name_search"
-						name="name_search"
-						placeholder="Cari anggota berdasarkan nama..."
-						value={nameSearch}
-						onChange={(e) => setNameSearch(e.target.value)}
-					/>
-				) : null}
+				<DataTableSearchFilter
+					id="name_search"
+					name="name_search"
+					placeholder="Cari anggota berdasarkan nama..."
+					value={nameSearch}
+					onChange={(e) => setNameSearch(e.target.value)}
+				/>
 
 				{/* Add Member Button */}
-				{membersData?.data.length ? (
-					<Button
-						className="place-self-end"
-						onClick={() => setIsAddMemberModalOpen(true)}
-					>
-						<Plus /> Tambah Anggota
-					</Button>
-				) : null}
+				<Button
+					className="place-self-end"
+					onClick={() => setIsAddMemberModalOpen(true)}
+				>
+					<Plus /> Tambah Anggota
+				</Button>
 
 				{/* Add Member Modal */}
 				<AddMemberModal
@@ -150,30 +145,28 @@ export function MemberList() {
 
 			<CardContent className="grid auto-rows-auto gap-5">
 				{/* Filters */}
-				{!isMembersDataFetchLoading && membersData?.data.length ? (
-					<div className="flex items-center gap-3">
-						{/* Filter by period */}
-						<PeriodFilter
-							isLoading={isPeriodsDataFetchLoading}
-							periodsData={periodsData?.data || []}
-							selectedPeriod={selectedPeriod as string}
-						/>
+				<div className="flex items-center gap-3">
+					{/* Filter by period */}
+					<PeriodFilter
+						isLoading={isPeriodsFetchLoading}
+						periodsData={periodsData?.data || []}
+						selectedPeriod={selectedPeriod as string}
+					/>
 
-						{/* Filter by position */}
-						<PositionFilter
-							isLoading={isPositionsDataFetchLoading}
-							positionsData={positionsData?.data || []}
-							selectedPosition={selectedPosition as string}
-						/>
-					</div>
-				) : null}
+					{/* Filter by position */}
+					<PositionFilter
+						isLoading={isPositionsFetchLoading}
+						positionsData={positionsData?.data || []}
+						selectedPosition={selectedPosition as string}
+					/>
+				</div>
 
-				{isMembersDataFetchLoading ? (
+				{isMembersFetchLoading ? (
 					<div className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
 						<MemberCardSkeleton />
 					</div>
 				) : !membersData?.data.length ? (
-					<MemberListEmpty action={() => setIsAddMemberModalOpen(true)} />
+					<MemberListEmpty />
 				) : (
 					<div className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
 						{membersData?.data.map((member) => (
@@ -186,29 +179,19 @@ export function MemberList() {
 	);
 }
 
-function MemberListEmpty({ action }: { action: () => void }) {
+function MemberListEmpty() {
 	return (
 		<Empty>
 			<EmptyHeader>
 				<EmptyMedia variant="icon">
 					<Users />
 				</EmptyMedia>
-				<EmptyTitle className="text-base">Belum Ada Anggota</EmptyTitle>
+				<EmptyTitle className="text-base">Tidak Ada Anggota</EmptyTitle>
 				<EmptyDescription className="text-sm">
-					Organisasi Karang Taruna RW 07 belum memiliki anggota. Silahkan tambah
-					anggota terlebih dahulu.
+					Anggota tidak ditemukan atau organisasi Karang Taruna RW 07 belum
+					memiliki anggota.
 				</EmptyDescription>
 			</EmptyHeader>
-			<EmptyContent>
-				<Button
-					variant="link"
-					className="text-muted-foreground hover:text-primary"
-					size="sm"
-					onClick={action}
-				>
-					Tambah Anggota <Plus />
-				</Button>
-			</EmptyContent>
 		</Empty>
 	);
 }

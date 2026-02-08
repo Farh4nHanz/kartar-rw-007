@@ -45,6 +45,7 @@ export function PeriodFilter({
 				});
 			}}
 			align="start"
+			disabled={isLoading}
 		/>
 	);
 }

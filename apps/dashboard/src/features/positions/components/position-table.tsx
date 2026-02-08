@@ -25,6 +25,7 @@ import { Plus } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { getAllPositionsQueryOptions } from "@/features/positions/hooks/query-options";
+import { useErrorToast } from "@/shared/hooks/use-error-toast";
 import { AddPositionModal } from "./modals/add-position-modal";
 import { columns } from "./position-table-column";
 
@@ -114,10 +115,9 @@ export function PositionTable() {
 	 * Fetch Data with React Query
 	 * =================== */
 	const {
-		data: positionsResponse,
+		data: positionsData,
 		isLoading: isPositionsFetchLoading,
-		isError: isPositionsFetchError,
-		error: positionsResponseError,
+		error: positionsDataFetchError,
 	} = useQuery(
 		getAllPositionsQueryOptions({
 			page: page || 1,
@@ -130,21 +130,13 @@ export function PositionTable() {
 	/* ===================
 	 * Show toast on error
 	 * =================== */
-	useEffect(() => {
-		if (isPositionsFetchError) {
-			toast.error(positionsResponseError.message, {
-				duration: 5000,
-				closeButton: true,
-				dismissible: true,
-			});
-		}
-	}, [isPositionsFetchError, positionsResponseError]);
+	useErrorToast(positionsDataFetchError);
 
 	/* ===================
 	 * Table
 	 * =================== */
 	const table = useReactTable({
-		data: positionsResponse?.data || [],
+		data: positionsData?.data || [],
 		columns,
 		getCoreRowModel: getCoreRowModel(),
 
@@ -155,7 +147,7 @@ export function PositionTable() {
 
 		onSortingChange: setSorting,
 		onPaginationChange: setPagination,
-		pageCount: positionsResponse?.meta.totalPages || 0,
+		pageCount: positionsData?.meta.totalPages || 0,
 		manualSorting: true,
 		manualPagination: true,
 	});
@@ -170,6 +162,7 @@ export function PositionTable() {
 						onLimitChange={(newLimit) =>
 							setPagination((p) => ({ ...p, pageSize: newLimit }))
 						}
+						disabled={!positionsData?.data.length || isPositionsFetchLoading}
 					/>
 
 					{/* Filter by Status */}
@@ -197,6 +190,7 @@ export function PositionTable() {
 							});
 						}}
 						align="center"
+						disabled={isPositionsFetchLoading}
 					/>
 				</div>
 
@@ -228,7 +222,7 @@ export function PositionTable() {
 			<CardFooter>
 				<DataTablePagination
 					currentPage={pagination.pageIndex + 1}
-					totalPages={positionsResponse?.meta.totalPages || 1}
+					totalPages={positionsData?.meta.totalPages || 1}
 					onPageChange={(page) =>
 						navigate({
 							search: (prev) => ({ ...prev, page }),

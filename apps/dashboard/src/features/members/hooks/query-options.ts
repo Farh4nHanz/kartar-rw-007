@@ -7,7 +7,7 @@ import {
 
 export function getAllMembersQueryOptions(params: GetAllMembersParams) {
 	return queryOptions({
-		queryKey: MEMBERS_QUERY_KEYS.all,
+		queryKey: [...MEMBERS_QUERY_KEYS.all, params],
 		queryFn: () => getAllMembers(params),
 	});
 }
