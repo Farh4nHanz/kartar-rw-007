@@ -27,25 +27,23 @@ export const columns = [
 			const getColorType = (type: string) => {
 				switch (type.toLowerCase()) {
 					case "galeri":
-						return "emerald";
+						return "bg-emerald-200 dark:bg-emerald-500 text-emerald-800 dark:text-emerald-50";
 					case "program":
-						return "blue";
+						return "bg-blue-200 dark:bg-blue-500 text-blue-800 dark:text-blue-50";
 					case "berita":
-						return "violet";
+						return "bg-violet-200 dark:bg-violet-500 text-violet-800 dark:text-violet-50";
 					case "kolaborasi":
-						return "amber";
+						return "bg-amber-200 dark:bg-amber-500 text-amber-800 dark:text-amber-50";
 					default:
-						return "gray";
+						return "bg-gray-200 dark:bg-gray-500 text-gray-700 dark:text-gray-50";
 				}
 			};
-
-			const color = getColorType((renderValue() as string).toLowerCase());
 
 			return (
 				<Badge
 					className={cn(
 						"text-[calc(var(--text-xs)-1px)]",
-						`bg-${color}-200 dark:bg-${color}-500 text-${color}-800 dark:text-${color}-50`,
+						getColorType((renderValue() as string).toLowerCase()),
 					)}
 				>
 					{renderValue()}

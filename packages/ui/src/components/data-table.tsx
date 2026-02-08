@@ -381,11 +381,11 @@ function DataTableColumnVisibillityFilter<TData>({
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Button variant="outline" className="text-xs">
-					Columns <ChevronDown />
+					Kolom <ChevronDown />
 				</Button>
 			</DropdownMenuTrigger>
 
-			<DropdownMenuContent align="end">
+			<DropdownMenuContent align="end" className="w-full">
 				{table
 					.getAllColumns()
 					.filter((column) => column.getCanHide())

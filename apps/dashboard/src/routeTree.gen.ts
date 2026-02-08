@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as appRouteRouteImport } from './routes/(app)/route'
 import { Route as appmenuIndexRouteImport } from './routes/(app)/(menu)/index'
+import { Route as apppublicationProgramRouteImport } from './routes/(app)/(publication)/program'
 import { Route as apppublicationKategoriRouteImport } from './routes/(app)/(publication)/kategori'
 import { Route as apporganizationPeriodeRouteImport } from './routes/(app)/(organization)/periode'
 import { Route as apporganizationJabatanRouteImport } from './routes/(app)/(organization)/jabatan'
@@ -23,6 +24,11 @@ const appRouteRoute = appRouteRouteImport.update({
 const appmenuIndexRoute = appmenuIndexRouteImport.update({
   id: '/(menu)/',
   path: '/',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const apppublicationProgramRoute = apppublicationProgramRouteImport.update({
+  id: '/(publication)/program',
+  path: '/program',
   getParentRoute: () => appRouteRoute,
 } as any)
 const apppublicationKategoriRoute = apppublicationKategoriRouteImport.update({
@@ -51,6 +57,7 @@ export interface FileRoutesByFullPath {
   '/jabatan': typeof apporganizationJabatanRoute
   '/periode': typeof apporganizationPeriodeRoute
   '/kategori': typeof apppublicationKategoriRoute
+  '/program': typeof apppublicationProgramRoute
   '/': typeof appmenuIndexRoute
 }
 export interface FileRoutesByTo {
@@ -58,6 +65,7 @@ export interface FileRoutesByTo {
   '/jabatan': typeof apporganizationJabatanRoute
   '/periode': typeof apporganizationPeriodeRoute
   '/kategori': typeof apppublicationKategoriRoute
+  '/program': typeof apppublicationProgramRoute
   '/': typeof appmenuIndexRoute
 }
 export interface FileRoutesById {
@@ -67,13 +75,20 @@ export interface FileRoutesById {
   '/(app)/(organization)/jabatan': typeof apporganizationJabatanRoute
   '/(app)/(organization)/periode': typeof apporganizationPeriodeRoute
   '/(app)/(publication)/kategori': typeof apppublicationKategoriRoute
+  '/(app)/(publication)/program': typeof apppublicationProgramRoute
   '/(app)/(menu)/': typeof appmenuIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/anggota' | '/jabatan' | '/periode' | '/kategori' | '/'
+  fullPaths:
+    | '/anggota'
+    | '/jabatan'
+    | '/periode'
+    | '/kategori'
+    | '/program'
+    | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/anggota' | '/jabatan' | '/periode' | '/kategori' | '/'
+  to: '/anggota' | '/jabatan' | '/periode' | '/kategori' | '/program' | '/'
   id:
     | '__root__'
     | '/(app)'
@@ -81,6 +96,7 @@ export interface FileRouteTypes {
     | '/(app)/(organization)/jabatan'
     | '/(app)/(organization)/periode'
     | '/(app)/(publication)/kategori'
+    | '/(app)/(publication)/program'
     | '/(app)/(menu)/'
   fileRoutesById: FileRoutesById
 }
@@ -102,6 +118,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof appmenuIndexRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/(publication)/program': {
+      id: '/(app)/(publication)/program'
+      path: '/program'
+      fullPath: '/program'
+      preLoaderRoute: typeof apppublicationProgramRouteImport
       parentRoute: typeof appRouteRoute
     }
     '/(app)/(publication)/kategori': {
@@ -140,6 +163,7 @@ interface appRouteRouteChildren {
   apporganizationJabatanRoute: typeof apporganizationJabatanRoute
   apporganizationPeriodeRoute: typeof apporganizationPeriodeRoute
   apppublicationKategoriRoute: typeof apppublicationKategoriRoute
+  apppublicationProgramRoute: typeof apppublicationProgramRoute
   appmenuIndexRoute: typeof appmenuIndexRoute
 }
 
@@ -148,6 +172,7 @@ const appRouteRouteChildren: appRouteRouteChildren = {
   apporganizationJabatanRoute: apporganizationJabatanRoute,
   apporganizationPeriodeRoute: apporganizationPeriodeRoute,
   apppublicationKategoriRoute: apppublicationKategoriRoute,
+  apppublicationProgramRoute: apppublicationProgramRoute,
   appmenuIndexRoute: appmenuIndexRoute,
 }
 
