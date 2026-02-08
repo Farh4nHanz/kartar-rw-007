@@ -7,9 +7,12 @@ import { Button } from "@workspace/ui/components/button";
 import { Card, CardContent, CardFooter } from "@workspace/ui/components/card";
 import { Skeleton } from "@workspace/ui/components/skeleton";
 import { Edit2, Trash2, User } from "lucide-react";
+import { useState } from "react";
 import type { Member } from "@/features/members/services";
+import { DeleteMemberModal } from "./modals/delete-member-modal";
 
 function MemberCard({ member }: { member: Member }) {
+	const [isDeleteMemberModalOpen, setIsDeleteMemberModalOpen] = useState(false);
 	return (
 		<Card className="bg-primary/15 ring-primary/15 transition-shadow hover:shadow-md">
 			<CardContent className="flex items-start gap-4">
@@ -37,10 +40,21 @@ function MemberCard({ member }: { member: Member }) {
 					<Edit2 />
 					Edit
 				</Button>
-				<Button variant="destructive" className="flex-1">
+
+				<Button
+					variant="destructive"
+					className="flex-1"
+					onClick={() => setIsDeleteMemberModalOpen(true)}
+				>
 					<Trash2 />
 					Hapus
 				</Button>
+
+				<DeleteMemberModal
+					isModalOpen={isDeleteMemberModalOpen}
+					setIsModalOpen={setIsDeleteMemberModalOpen}
+					selectedData={member}
+				/>
 			</CardFooter>
 		</Card>
 	);
