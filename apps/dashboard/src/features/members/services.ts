@@ -100,7 +100,7 @@ export async function getAllMembers(
 				start_year: 2020,
 				end_year: 2025,
 			},
-			photo_url: "https://github.com/farh4nhanz.png",
+			photo_url: null,
 			created_at: new Date().toISOString(),
 			updated_at: new Date().toISOString(),
 		},
