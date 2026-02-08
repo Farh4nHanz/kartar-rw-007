@@ -5,17 +5,21 @@ import { Card, CardContent, CardHeader } from "@workspace/ui/components/card";
 import { DataTableSearchFilter } from "@workspace/ui/components/data-table";
 import { Plus } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { getAllMembersQueryOptions } from "@/features/members/hooks/query-options";
 import { getAllPeriodsQueryOptions } from "@/features/periods/hooks/query-options";
 import { getAllPositionsQueryOptions } from "@/features/positions/hooks/query-options";
 import { useDebounce } from "@/shared/hooks/use-debounce";
+import { MemberCard, MemberCardSkeleton } from "./member-card";
 import { AddMemberModal } from "./modals/add-member-modal";
 import { PeriodFilter } from "./period-filter";
 import { PositionFilter } from "./position-filter";
 
 export function MemberList() {
-	const { name, period, position } = useSearch({
+	const search = useSearch({
 		from: "/(app)/(organization)/anggota",
 	});
+
+	const { name, period, position } = search;
 
 	const navigate = useNavigate({
 		from: "/anggota",
@@ -35,6 +39,13 @@ export function MemberList() {
 		useQuery(getAllPositionsQueryOptions());
 
 	/* ===================
+	 * Members data fetch
+	 * =================== */
+	const { data: membersData, isLoading: isMembersDataFetchLoading } = useQuery(
+		getAllMembersQueryOptions(search),
+	);
+
+	/* ===================
 	 * Selected period
 	 * the return value is formatted as `${start_year}-${end_year}`
 	 * example: "2020-2025"
@@ -44,7 +55,7 @@ export function MemberList() {
 			(p) => `${p.start_year}-${p.end_year}` === period,
 		);
 
-		return `${selected?.start_year}-${selected?.end_year}`;
+		return selected ? `${selected.start_year}-${selected.end_year}` : undefined;
 	}, [periodsData?.data, period]);
 
 	/* ===================
@@ -117,7 +128,7 @@ export function MemberList() {
 					<PeriodFilter
 						isLoading={isPeriodsDataFetchLoading}
 						periodsData={periodsData?.data || []}
-						selectedPeriod={selectedPeriod}
+						selectedPeriod={selectedPeriod as string}
 					/>
 
 					{/* Filter by position */}
@@ -126,6 +137,16 @@ export function MemberList() {
 						positionsData={positionsData?.data || []}
 						selectedPosition={selectedPosition as string}
 					/>
+				</div>
+
+				<div className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
+					{isMembersDataFetchLoading ? (
+						<MemberCardSkeleton />
+					) : (
+						membersData?.data.map((member) => (
+							<MemberCard key={member.id} member={member} />
+						))
+					)}
 				</div>
 			</CardContent>
 		</Card>

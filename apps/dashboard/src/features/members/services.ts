@@ -70,7 +70,7 @@ export async function getAllMembers(
 				start_year: 2020,
 				end_year: 2025,
 			},
-			photo_url: "",
+			photo_url: null,
 			created_at: new Date().toISOString(),
 			updated_at: new Date().toISOString(),
 		},
@@ -85,7 +85,7 @@ export async function getAllMembers(
 				start_year: 2020,
 				end_year: 2025,
 			},
-			photo_url: "",
+			photo_url: null,
 			created_at: new Date().toISOString(),
 			updated_at: new Date().toISOString(),
 		},
@@ -100,11 +100,13 @@ export async function getAllMembers(
 				start_year: 2020,
 				end_year: 2025,
 			},
-			photo_url: "",
+			photo_url: "https://github.com/farh4nhanz.png",
 			created_at: new Date().toISOString(),
 			updated_at: new Date().toISOString(),
 		},
 	];
+
+	await new Promise((r) => setTimeout(r, 3000));
 
 	return {
 		success: true,
