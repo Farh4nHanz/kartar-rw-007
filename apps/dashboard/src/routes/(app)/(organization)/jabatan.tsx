@@ -4,8 +4,8 @@ import type { GetAllPositionsParams } from "@/features/positions/services";
 
 export const Route = createFileRoute("/(app)/(organization)/jabatan")({
 	validateSearch: (search: GetAllPositionsParams): GetAllPositionsParams => ({
-		page: search.page || undefined,
-		limit: search.limit || undefined,
+		page: search.page || 1,
+		limit: search.limit || 10,
 		sort: search.sort || undefined,
 		status: search.status || undefined,
 	}),

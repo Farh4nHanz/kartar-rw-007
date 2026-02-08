@@ -111,8 +111,8 @@ export function PeriodTable() {
 	 * =================== */
 	const pagination = useMemo<PaginationState>(
 		() => ({
-			pageIndex: page - 1,
-			pageSize: limit,
+			pageIndex: (page || 1) - 1,
+			pageSize: limit || 10,
 		}),
 		[page, limit],
 	);
@@ -215,7 +215,7 @@ export function PeriodTable() {
 				<div className="flex items-center gap-3">
 					{/* Page Limit */}
 					<DataTableRowLimit
-						current={limit}
+						current={limit || 10}
 						onLimitChange={(newLimit) =>
 							setPagination((p) => ({ ...p, pageSize: newLimit }))
 						}

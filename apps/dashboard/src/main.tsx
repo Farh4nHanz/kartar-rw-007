@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/noNonNullAssertion: true */
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { NotFound } from "@workspace/ui/components/404";
 import { RouteComponentLoader } from "@workspace/ui/components/loader";
