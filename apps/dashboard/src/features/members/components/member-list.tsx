@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader } from "@workspace/ui/components/card";
 import { DataTableSearchFilter } from "@workspace/ui/components/data-table";
 import { Plus } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 import { getAllMembersQueryOptions } from "@/features/members/hooks/query-options";
 import { getAllPeriodsQueryOptions } from "@/features/periods/hooks/query-options";
 import { getAllPositionsQueryOptions } from "@/features/positions/hooks/query-options";
@@ -28,22 +29,57 @@ export function MemberList() {
 	/* ===================
 	 * Periods data fetch
 	 * =================== */
-	const { data: periodsData, isLoading: isPeriodsDataFetchLoading } = useQuery(
-		getAllPeriodsQueryOptions(),
-	);
+	const {
+		data: periodsData,
+		isLoading: isPeriodsDataFetchLoading,
+		isError: isPeriodsDataFetchError,
+		error: periodsDataFetchError,
+	} = useQuery(getAllPeriodsQueryOptions());
 
 	/* ===================
 	 * Positions data fetch
 	 * =================== */
-	const { data: positionsData, isLoading: isPositionsDataFetchLoading } =
-		useQuery(getAllPositionsQueryOptions());
+	const {
+		data: positionsData,
+		isLoading: isPositionsDataFetchLoading,
+		isError: isPositionsDataFetchError,
+		error: positionsDataFetchError,
+	} = useQuery(getAllPositionsQueryOptions());
 
 	/* ===================
 	 * Members data fetch
 	 * =================== */
-	const { data: membersData, isLoading: isMembersDataFetchLoading } = useQuery(
-		getAllMembersQueryOptions(search),
-	);
+	const {
+		data: membersData,
+		isLoading: isMembersDataFetchLoading,
+		isError: isMembersDataFetchError,
+		error: membersDataFetchError,
+	} = useQuery(getAllMembersQueryOptions(search));
+
+	useEffect(() => {
+		const isError =
+			isPeriodsDataFetchError ||
+			isPositionsDataFetchError ||
+			isMembersDataFetchError;
+
+		const error =
+			periodsDataFetchError || positionsDataFetchError || membersDataFetchError;
+
+		if (isError) {
+			toast.error(error?.message, {
+				duration: 5000,
+				dismissible: true,
+				closeButton: true,
+			});
+		}
+	}, [
+		isPeriodsDataFetchError,
+		isPositionsDataFetchError,
+		isMembersDataFetchError,
+		periodsDataFetchError,
+		positionsDataFetchError,
+		membersDataFetchError,
+	]);
 
 	/* ===================
 	 * Selected period
@@ -139,15 +175,17 @@ export function MemberList() {
 					/>
 				</div>
 
-				<div className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
-					{isMembersDataFetchLoading ? (
+				{isMembersDataFetchLoading ? (
+					<div className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
 						<MemberCardSkeleton />
-					) : (
-						membersData?.data.map((member) => (
+					</div>
+				) : (
+					<div className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
+						{membersData?.data.map((member) => (
 							<MemberCard key={member.id} member={member} />
-						))
-					)}
-				</div>
+						))}
+					</div>
+				)}
 			</CardContent>
 		</Card>
 	);
