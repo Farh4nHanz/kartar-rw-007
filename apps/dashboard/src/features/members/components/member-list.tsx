@@ -10,6 +10,7 @@ import { getAllMembersQueryOptions } from "@/features/members/hooks/query-option
 import { getAllPeriodsQueryOptions } from "@/features/periods/hooks/query-options";
 import { getAllPositionsQueryOptions } from "@/features/positions/hooks/query-options";
 import { useDebounce } from "@/shared/hooks/use-debounce";
+import { useErrorToast } from "@/shared/hooks/use-error-toast";
 import { MemberCard, MemberCardSkeleton } from "./member-card";
 import { AddMemberModal } from "./modals/add-member-modal";
 import { PeriodFilter } from "./period-filter";
@@ -32,7 +33,6 @@ export function MemberList() {
 	const {
 		data: periodsData,
 		isLoading: isPeriodsDataFetchLoading,
-		isError: isPeriodsDataFetchError,
 		error: periodsDataFetchError,
 	} = useQuery(getAllPeriodsQueryOptions());
 
@@ -42,7 +42,6 @@ export function MemberList() {
 	const {
 		data: positionsData,
 		isLoading: isPositionsDataFetchLoading,
-		isError: isPositionsDataFetchError,
 		error: positionsDataFetchError,
 	} = useQuery(getAllPositionsQueryOptions());
 
@@ -52,34 +51,15 @@ export function MemberList() {
 	const {
 		data: membersData,
 		isLoading: isMembersDataFetchLoading,
-		isError: isMembersDataFetchError,
 		error: membersDataFetchError,
 	} = useQuery(getAllMembersQueryOptions(search));
 
-	useEffect(() => {
-		const isError =
-			isPeriodsDataFetchError ||
-			isPositionsDataFetchError ||
-			isMembersDataFetchError;
-
-		const error =
-			periodsDataFetchError || positionsDataFetchError || membersDataFetchError;
-
-		if (isError) {
-			toast.error(error?.message, {
-				duration: 5000,
-				dismissible: true,
-				closeButton: true,
-			});
-		}
-	}, [
-		isPeriodsDataFetchError,
-		isPositionsDataFetchError,
-		isMembersDataFetchError,
-		periodsDataFetchError,
-		positionsDataFetchError,
-		membersDataFetchError,
-	]);
+	/* ===================
+	 * Show an error when failed to retrieve data
+	 * =================== */
+	useErrorToast(
+		periodsDataFetchError || positionsDataFetchError || membersDataFetchError,
+	);
 
 	/* ===================
 	 * Selected period
