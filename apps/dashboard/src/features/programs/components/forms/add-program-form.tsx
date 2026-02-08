@@ -7,6 +7,7 @@ import { ComponentLoader } from "@workspace/ui/components/loader";
 import { SelectGroup, SelectItem } from "@workspace/ui/components/select";
 import { memo } from "react";
 import { toast } from "sonner";
+import type { Category } from "@/features/categories/services";
 import { addNewProgramMutationOptions } from "@/features/programs/hooks/mutation-options";
 import { getAllProgramsQueryOptions } from "@/features/programs/hooks/query-options";
 import {
@@ -16,20 +17,37 @@ import {
 import { useAppForm } from "@/shared/components/form/hooks";
 
 export const AddProgramForm = memo(
-	({ onSuccess }: { onSuccess?: () => void }) => {
+	({
+		categories,
+		onSuccess,
+	}: {
+		categories: Category[];
+		onSuccess?: () => void;
+	}) => {
 		const search = useSearch({
 			from: "/(app)/(publication)/program",
 		});
 
 		const { mutateAsync } = useMutation(addNewProgramMutationOptions());
 
-		const types = ["galeri", "program", "berita", "kolaborasi"] as const;
+		const schedule_types = [
+			"harian",
+			"mingguan",
+			"bulanan",
+			"tahunan",
+		] as const;
+
+		const statuses = ["rutin", "insidental"] as const;
 
 		const form = useAppForm({
 			formId: "add-program-form",
 			defaultValues: {
-				name: "",
-				type: "",
+				title: "",
+				description: "",
+				category_id: "",
+				schedule_type: "",
+				status: "",
+				is_active: false,
 			} satisfies ProgramFormValue as ProgramFormValue,
 			validators: {
 				onSubmit: programSchema,
@@ -42,6 +60,7 @@ export const AddProgramForm = memo(
 							dismissible: true,
 							closeButton: true,
 						});
+						console.log(value);
 
 						form.reset();
 						onSuccess?.();
@@ -72,28 +91,90 @@ export const AddProgramForm = memo(
 					{/* Input */}
 					<FieldGroup className="gap-5">
 						{/* Program name */}
-						<form.AppField name="name">
+						<form.AppField name="title">
+							{(field) => <field.Input label="Nama" placeholder="Keja Bakti" />}
+						</form.AppField>
+
+						{/* Program description */}
+						<form.AppField name="description">
 							{(field) => (
-								<field.Input label="Nama Kategori" placeholder="Sosial" />
+								<field.Textarea
+									label="Deskripsi"
+									placeholder="Berikan deskripsi singkat mengenai program atau kegiatan ini."
+								/>
 							)}
 						</form.AppField>
 
-						{/* Program type */}
-						<form.AppField name="type">
+						<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+							{/* Program category */}
+							<form.AppField name="category_id">
+								{(field) => (
+									<field.Select label="Kategori" placeholder="Kategori">
+										<SelectGroup>
+											{categories.map((category) => (
+												<SelectItem
+													key={category.id}
+													value={category.id}
+													className="capitalize"
+												>
+													{category.name}
+												</SelectItem>
+											))}
+										</SelectGroup>
+									</field.Select>
+								)}
+							</form.AppField>
+
+							{/* Program schedule */}
+							<form.AppField name="schedule_type">
+								{(field) => (
+									<field.Select label="Jadwal" placeholder="Jadwal">
+										<SelectGroup>
+											{schedule_types.map((schedule) => (
+												<SelectItem
+													key={schedule}
+													value={schedule}
+													className="capitalize"
+												>
+													{schedule}
+												</SelectItem>
+											))}
+										</SelectGroup>
+									</field.Select>
+								)}
+							</form.AppField>
+						</div>
+
+						{/* Program status */}
+						<form.AppField name="status">
 							{(field) => (
-								<field.Select label="Tipe Kategori" placeholder="Pilih tipe">
+								<field.Select
+									label="Status Pelaksanaan"
+									placeholder="Status"
+									description="Tentukan seberapa sering program atau kegiatan ini dilaksanakan."
+								>
 									<SelectGroup>
-										{types.map((type) => (
+										{statuses.map((status) => (
 											<SelectItem
-												key={type}
-												value={type}
+												key={status}
+												value={status}
 												className="capitalize"
 											>
-												{type}
+												{status}
 											</SelectItem>
 										))}
 									</SelectGroup>
 								</field.Select>
+							)}
+						</form.AppField>
+
+						{/* Program active status */}
+						<form.AppField name="is_active">
+							{(field) => (
+								<field.Checkbox
+									label="Jadikan aktif"
+									description="Dengan mencentang kotak ini, status keaktifan program atau kegiatan akan ditetapkan sebagai aktif."
+								/>
 							)}
 						</form.AppField>
 					</FieldGroup>

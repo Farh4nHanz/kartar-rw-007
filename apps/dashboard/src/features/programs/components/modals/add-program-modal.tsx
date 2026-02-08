@@ -5,6 +5,7 @@ import {
 	DialogTitle,
 } from "@workspace/ui/components/dialog";
 import { memo } from "react";
+import type { Category } from "@/features/categories/services";
 import type { Period } from "@/features/periods/services";
 import type { ModalProps } from "@/shared/types/props";
 import { AddProgramForm } from "../forms/add-program-form";
@@ -13,7 +14,10 @@ export const AddProgramModal = memo(
 	({
 		isModalOpen,
 		setIsModalOpen,
-	}: Omit<ModalProps<Period>, "selectedData">) => (
+		categories,
+	}: Omit<ModalProps<Period>, "selectedData"> & {
+		categories: Category[];
+	}) => (
 		<Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
 			<DialogContent
 				open={isModalOpen}
@@ -27,7 +31,10 @@ export const AddProgramModal = memo(
 					kegiatan baru.
 				</DialogDescription>
 
-				<AddProgramForm onSuccess={() => setIsModalOpen(false)} />
+				<AddProgramForm
+					categories={categories}
+					onSuccess={() => setIsModalOpen(false)}
+				/>
 			</DialogContent>
 		</Dialog>
 	),

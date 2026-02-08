@@ -214,11 +214,12 @@ export function ProgramTable() {
 					className="place-self-end"
 					onClick={() => setIsAddProgramModalOpen(true)}
 				>
-					<Plus /> Tambah Kategori
+					<Plus /> Tambah Program
 				</Button>
 
 				{/* Add Program Modal */}
 				<AddProgramModal
+					categories={categories?.data || []}
 					isModalOpen={isAddProgramModalOpen}
 					setIsModalOpen={setIsAddProgramModalOpen}
 				/>
