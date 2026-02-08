@@ -170,7 +170,12 @@ export function MemberList() {
 				) : (
 					<div className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
 						{membersData?.data.map((member) => (
-							<MemberCard key={member.id} member={member} />
+							<MemberCard
+								key={member.id}
+								member={member}
+								positions={positionsData?.data || []}
+								periods={periodsData?.data || []}
+							/>
 						))}
 					</div>
 				)}

@@ -9,10 +9,23 @@ import { Skeleton } from "@workspace/ui/components/skeleton";
 import { Edit2, Trash2, User } from "lucide-react";
 import { useState } from "react";
 import type { Member } from "@/features/members/services";
+import type { Period } from "@/features/periods/services";
+import type { Position } from "@/features/positions/services";
 import { DeleteMemberModal } from "./modals/delete-member-modal";
+import { EditMemberModal } from "./modals/edit-member-modal";
 
-function MemberCard({ member }: { member: Member }) {
+function MemberCard({
+	member,
+	positions,
+	periods,
+}: {
+	member: Member;
+	positions: Position[];
+	periods: Period[];
+}) {
 	const [isDeleteMemberModalOpen, setIsDeleteMemberModalOpen] = useState(false);
+	const [isEditMemberModalOpen, setIsEditMemberModalOpen] = useState(false);
+
 	return (
 		<Card className="bg-primary/15 ring-primary/15 transition-shadow hover:shadow-md">
 			<CardContent className="flex items-start gap-4">
@@ -36,10 +49,21 @@ function MemberCard({ member }: { member: Member }) {
 			</CardContent>
 
 			<CardFooter className="w-full items-center justify-center gap-2">
-				<Button className="flex-1">
+				<Button
+					className="flex-1"
+					onClick={() => setIsEditMemberModalOpen(true)}
+				>
 					<Edit2 />
 					Edit
 				</Button>
+
+				<EditMemberModal
+					isModalOpen={isEditMemberModalOpen}
+					setIsModalOpen={setIsEditMemberModalOpen}
+					selectedData={member}
+					positionsData={positions}
+					periodsData={periods}
+				/>
 
 				<Button
 					variant="destructive"

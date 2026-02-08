@@ -22,8 +22,7 @@ import {
 	DataTableSkeleton,
 } from "@workspace/ui/components/data-table";
 import { Plus } from "lucide-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { toast } from "sonner";
+import { useCallback, useMemo, useState } from "react";
 import { getAllPositionsQueryOptions } from "@/features/positions/hooks/query-options";
 import { useErrorToast } from "@/shared/hooks/use-error-toast";
 import { AddPositionModal } from "./modals/add-position-modal";

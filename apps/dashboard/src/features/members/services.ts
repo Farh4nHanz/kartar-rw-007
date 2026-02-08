@@ -12,8 +12,8 @@ export type Member = Omit<
 	Tables<"organization_members">,
 	"period_id" | "position_id" | "photo_path"
 > & {
-	periods: Pick<Tables<"periods">, "start_year" | "end_year">;
-	positions: Pick<Tables<"positions">, "name" | "sort_order">;
+	periods: Pick<Tables<"periods">, "id" | "start_year" | "end_year">;
+	positions: Pick<Tables<"positions">, "id" | "name" | "sort_order">;
 	photo_url: string | null;
 };
 
@@ -63,10 +63,12 @@ export async function getAllMembers(
 			id: "skqosko",
 			name: "Fajar Ramadhan",
 			positions: {
+				id: "okdowd1",
 				name: "Ketua",
 				sort_order: 1,
 			},
 			periods: {
+				id: "193928310981ooksqo",
 				start_year: 2020,
 				end_year: 2025,
 			},
@@ -75,13 +77,15 @@ export async function getAllMembers(
 			updated_at: new Date().toISOString(),
 		},
 		{
-			id: "skqosko",
+			id: "sqhsqu",
 			name: "Fajar Ramadhan",
 			positions: {
+				id: "okdowd1qokwoqk",
 				name: "Wakil Ketua",
 				sort_order: 2,
 			},
 			periods: {
+				id: "193928310981ooksqo",
 				start_year: 2020,
 				end_year: 2025,
 			},
@@ -90,13 +94,15 @@ export async function getAllMembers(
 			updated_at: new Date().toISOString(),
 		},
 		{
-			id: "skqosko",
+			id: "okoq",
 			name: "Fajar Ramadhan",
 			positions: {
-				name: "Sekretaris",
+				id: "okdowd1qokwoqk",
+				name: "Wakil Ketua",
 				sort_order: 3,
 			},
 			periods: {
+				id: "3",
 				start_year: 2020,
 				end_year: 2025,
 			},
