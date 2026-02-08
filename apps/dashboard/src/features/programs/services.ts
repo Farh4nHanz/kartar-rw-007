@@ -111,7 +111,7 @@ export async function getAllPrograms(
 				},
 				schedule_type: "bulanan",
 				status: "insidental",
-				is_active: true,
+				is_active: false,
 				created_at: new Date().toISOString(),
 				updated_at: new Date().toISOString(),
 			},

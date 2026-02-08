@@ -60,7 +60,6 @@ export const AddProgramForm = memo(
 							dismissible: true,
 							closeButton: true,
 						});
-						console.log(value);
 
 						form.reset();
 						onSuccess?.();

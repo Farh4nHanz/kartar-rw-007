@@ -31,7 +31,7 @@ import { getAllProgramsQueryOptions } from "@/features/programs/hooks/query-opti
 import { useDebounce } from "@/shared/hooks/use-debounce";
 import { useErrorToast } from "@/shared/hooks/use-error-toast";
 import { AddProgramModal } from "./modals/add-program-modal";
-import { columns } from "./program-table-column";
+import { getProgramTableColumns } from "./program-table-column";
 
 export function ProgramTable() {
 	const search = useSearch({
@@ -177,9 +177,10 @@ export function ProgramTable() {
 	/* ===================
 	 * Table
 	 * =================== */
+
 	const table = useReactTable({
 		data: programsData?.data || [],
-		columns,
+		columns: getProgramTableColumns(categories?.data || []),
 		getCoreRowModel: getCoreRowModel(),
 
 		state: {

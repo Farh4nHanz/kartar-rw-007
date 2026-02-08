@@ -18,6 +18,7 @@ export function FormCheckbox({ label, description }: FormControlProps) {
 				id={field.name}
 				name={field.name}
 				value={field.state.value}
+				checked={Boolean(field.state.value)}
 				onCheckedChange={(v) => field.handleChange(v as string)}
 				aria-invalid={isInvalid}
 			/>
