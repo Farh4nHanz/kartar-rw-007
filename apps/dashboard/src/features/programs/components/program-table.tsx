@@ -50,7 +50,7 @@ export function ProgramTable() {
 	 * Category Filter
 	 * =================== */
 	const { data: categories, isLoading: isCategoriesFetchLoading } = useQuery(
-		getAllCategoriesQueryOptions(),
+		getAllCategoriesQueryOptions({ type: "program" }),
 	);
 
 	/* ===================

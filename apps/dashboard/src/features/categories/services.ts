@@ -10,14 +10,15 @@ export type GetAllCategoriesParams = {
 	page?: number;
 	limit?: number;
 	sort?: string;
+	type?: string;
 };
 
 export type Category = Tables<"categories">;
 
 export async function getAllCategories(
-	_params?: GetAllCategoriesParams,
+	params?: GetAllCategoriesParams,
 ): Promise<SuccessResponseWithMeta<Category[], Meta>> {
-	// const { page, limit, sort } = params || {};
+	const { page, limit, sort, type } = params || {};
 
 	// let query = supabase.from("categories").select("*", { count: "exact" });
 
@@ -28,7 +29,45 @@ export async function getAllCategories(
 	// 	});
 	// }
 
-	// let data: Category[] = [];
+	// if (category) {
+	// 	query = query.eq("type", category);
+	// }
+
+	let data: Category[] = [
+		{
+			id: "1",
+			name: "Sosial",
+			type: "galeri",
+			created_at: new Date().toISOString(),
+			updated_at: new Date().toISOString(),
+		},
+		{
+			id: "2",
+			name: "Sosial 2",
+			type: "program",
+			created_at: new Date().toISOString(),
+			updated_at: new Date().toISOString(),
+		},
+		{
+			id: "3",
+			name: "Sosial 3",
+			type: "berita",
+			created_at: new Date().toISOString(),
+			updated_at: new Date().toISOString(),
+		},
+		{
+			id: "4",
+			name: "Sosial 4",
+			type: "kolaborasi",
+			created_at: new Date().toISOString(),
+			updated_at: new Date().toISOString(),
+		},
+	];
+
+	if (type) {
+		data = data.filter((d) => d.type === type);
+	}
+
 	// let count = 0;
 
 	// if (page && limit) {
@@ -58,36 +97,7 @@ export async function getAllCategories(
 		success: true,
 		message: "Data diambil dengan sukses.",
 		// data: data || [],
-		data: [
-			{
-				id: "1",
-				name: "Sosial",
-				type: "galeri",
-				created_at: new Date().toISOString(),
-				updated_at: new Date().toISOString(),
-			},
-			{
-				id: "2",
-				name: "Sosial 2",
-				type: "program",
-				created_at: new Date().toISOString(),
-				updated_at: new Date().toISOString(),
-			},
-			{
-				id: "3",
-				name: "Sosial 3",
-				type: "berita",
-				created_at: new Date().toISOString(),
-				updated_at: new Date().toISOString(),
-			},
-			{
-				id: "4",
-				name: "Sosial 4",
-				type: "kolaborasi",
-				created_at: new Date().toISOString(),
-				updated_at: new Date().toISOString(),
-			},
-		],
+		data,
 		meta: {
 			totalPages: 1,
 			currentPage: 1,

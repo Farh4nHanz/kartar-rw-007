@@ -24,7 +24,9 @@ export async function getAllPrograms(
 ): Promise<SuccessResponseWithMeta<Program[], Meta>> {
 	// const { page, limit, sort, category, status, name } = params || {};
 
-	// let query = supabase.from("programs").select("*", { count: "exact" });
+	// let query = supabase
+	// 	.from("programs")
+	// 	.select("*, category:categories(id, name, type)", { count: "exact" });
 
 	// if (sort) {
 	// 	const [field, direction] = sort.split(".");
@@ -34,18 +36,7 @@ export async function getAllPrograms(
 	// }
 
 	// if (category) {
-	// 	const { data: categoryData, error: categoryError } = await supabase
-	// 		.from("categories")
-	// 		.select("id")
-	// 		.eq("name", category)
-	// 		.single();
-
-	// 	if (categoryError)
-	// 		throw new ApiError(categoryError.message, categoryError.code);
-
-	// 	if (!categoryData) throw new ApiError("Kategori tidak ditemukan.");
-
-	// 	query = query.eq("category_id", categoryData.id);
+	// 	query = query.eq("category.type", category);
 	// }
 
 	// if (status) {
