@@ -166,7 +166,7 @@ export type Database = {
 					image_path: string | null;
 					is_published: boolean;
 					published_at: string | null;
-					slug: string | null;
+					slug: string;
 					title: string;
 					updated_at: string;
 				};
@@ -179,7 +179,7 @@ export type Database = {
 					image_path?: string | null;
 					is_published?: boolean;
 					published_at?: string | null;
-					slug?: string | null;
+					slug: string;
 					title: string;
 					updated_at?: string;
 				};
@@ -192,7 +192,7 @@ export type Database = {
 					image_path?: string | null;
 					is_published?: boolean;
 					published_at?: string | null;
-					slug?: string | null;
+					slug?: string;
 					title?: string;
 					updated_at?: string;
 				};

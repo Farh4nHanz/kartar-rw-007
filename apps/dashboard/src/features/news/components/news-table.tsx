@@ -1,12 +1,10 @@
 import type { Updater } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate, useSearch } from "@tanstack/react-router";
+import { Link, useNavigate, useSearch } from "@tanstack/react-router";
 import {
 	getCoreRowModel,
 	type PaginationState,
-	type SortingState,
 	useReactTable,
-	type VisibilityState,
 } from "@tanstack/react-table";
 import { Button } from "@workspace/ui/components/button";
 import {
@@ -18,7 +16,6 @@ import {
 import {
 	DataTable,
 	DataTableColumnFilter,
-	DataTableColumnVisibillityFilter,
 	DataTablePagination,
 	DataTableRowLimit,
 	DataTableSearchFilter,
@@ -27,30 +24,27 @@ import {
 import { Plus } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getAllCategoriesQueryOptions } from "@/features/categories/hooks/query-options";
-import { getAllProgramsQueryOptions } from "@/features/programs/hooks/query-options";
+import { getAllNewsQueryOptions } from "@/features/news/hooks/query-options";
 import { useDebounce } from "@/shared/hooks/use-debounce";
 import { useErrorToast } from "@/shared/hooks/use-error-toast";
-import { AddProgramModal } from "./modals/add-program-modal";
-import { getProgramTableColumns } from "./program-table-column";
+import { columns } from "./news-table-column";
 
-export function ProgramTable() {
+export function NewsTable() {
 	const search = useSearch({
-		from: "/(app)/(publication)/program",
+		from: "/(app)/(publication)/berita",
 	});
 
-	const { page, limit, sort, category, status, name } = search;
+	const { page, limit, category, status, title } = search;
 
 	const navigate = useNavigate({
-		from: "/program",
+		from: "/berita",
 	});
-
-	const [isAddProgramModalOpen, setIsAddProgramModalOpen] = useState(false);
 
 	/* ===================
 	 * Category Filter
 	 * =================== */
 	const { data: categories, isLoading: isCategoriesFetchLoading } = useQuery(
-		getAllCategoriesQueryOptions({ type: "program" }),
+		getAllCategoriesQueryOptions({ type: "berita" }),
 	);
 
 	/* ===================
@@ -58,40 +52,35 @@ export function ProgramTable() {
 	 * =================== */
 	const statuses = [
 		{
-			id: "rutin",
-			label: "rutin",
+			id: "published",
+			label: "published",
 		},
 		{
-			id: "insidental",
-			label: "insidental",
+			id: "draft",
+			label: "draft",
 		},
 	];
 
 	/* ===================
-	 * Sorting
+	 * Global search (debounced)
 	 * =================== */
-	const sorting = useMemo<SortingState>(() => {
-		if (!sort) return [];
-		const [id, dir] = sort.split(".");
-		return id ? [{ id, desc: dir === "desc" }] : [];
-	}, [sort]);
+	const globalFilter = title ?? "";
+	const [titleSearch, setTitleSearch] = useState(globalFilter);
 
-	const setSorting = useCallback(
-		(updater: Updater<SortingState, SortingState>) => {
-			const next = typeof updater === "function" ? updater(sorting) : updater;
+	useEffect(() => setTitleSearch(globalFilter), [globalFilter]);
 
-			navigate({
-				search: (prev) => ({
-					...prev,
-					sort: next.length
-						? `${next[0].id}.${next[0].desc ? "desc" : "asc"}`
-						: undefined,
-					page: 1,
-				}),
-			});
-		},
-		[navigate, sorting],
-	);
+	const debouncedSearch = useDebounce(titleSearch, 1000);
+
+	// Update the url only when the debounced search changes
+	useEffect(() => {
+		navigate({
+			search: (prev) => ({
+				...prev,
+				title: debouncedSearch || undefined,
+				page: 1,
+			}),
+		});
+	}, [debouncedSearch, navigate]);
 
 	/* ===================
 	 * Pagination (server-side)
@@ -124,126 +113,66 @@ export function ProgramTable() {
 	 * Fetch Data with React Query
 	 * =================== */
 	const {
-		data: programsData,
-		isLoading: isProgramsFetchLoading,
-		error: programsDataFetchError,
-	} = useQuery(getAllProgramsQueryOptions(search));
+		data: newsData,
+		isLoading: isNewsFetchLoading,
+		error: newsDataFetchError,
+	} = useQuery(getAllNewsQueryOptions(search));
 
 	/* ===================
 	 * Show toast on error
 	 * =================== */
-	useErrorToast(programsDataFetchError);
-
-	/* ===================
-	 * Global search (debounced)
-	 * =================== */
-	const globalFilter = name ?? "";
-	const [nameSearch, setNameSearch] = useState(globalFilter);
-
-	useEffect(() => setNameSearch(globalFilter), [globalFilter]);
-
-	const debouncedSearch = useDebounce(nameSearch, 1000);
-
-	// Update the url only when the debounced search changes
-	useEffect(() => {
-		navigate({
-			search: (prev) => ({
-				...prev,
-				name: debouncedSearch || undefined,
-			}),
-		});
-	}, [debouncedSearch, navigate]);
-
-	/* ===================
-	 * Column visibility
-	 * with local storage
-	 * =================== */
-	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
-		() => {
-			const saved = localStorage.getItem("program-table-columns");
-			return saved ? JSON.parse(saved) : { deskripsi: false };
-		},
-	);
-
-	// Store the column visibility to local storage
-	// whenever it changes
-	useEffect(() => {
-		localStorage.setItem(
-			"program-table-columns",
-			JSON.stringify(columnVisibility),
-		);
-	}, [columnVisibility]);
+	useErrorToast(newsDataFetchError);
 
 	/* ===================
 	 * Table
 	 * =================== */
-
 	const table = useReactTable({
-		data: programsData?.data || [],
-		columns: getProgramTableColumns(categories?.data || []),
+		data: newsData?.data || [],
+		columns,
 		getCoreRowModel: getCoreRowModel(),
 
 		state: {
-			sorting,
 			pagination,
-			columnVisibility,
 		},
 
-		onSortingChange: setSorting,
 		onPaginationChange: setPagination,
-		onColumnVisibilityChange: setColumnVisibility,
-
-		pageCount: programsData?.meta.totalPages || 0,
-		manualSorting: true,
+		pageCount: newsData?.meta.totalPages || 0,
 		manualPagination: true,
 	});
 
 	return (
 		<Card className="h-fit w-full">
 			<CardHeader className="flex flex-wrap justify-between gap-10 max-md:flex-col-reverse md:items-center">
-				{/* Search filter */}
+				{/* Search */}
 				<DataTableSearchFilter
-					id="name_search"
-					name="name_search"
-					placeholder="Cari program berdasarkan nama..."
-					value={nameSearch}
-					onChange={(e) => setNameSearch(e.target.value)}
+					id="title_search"
+					name="title_search"
+					placeholder="Cari berita berdasarkan judul berita..."
+					value={titleSearch}
+					onChange={(e) => setTitleSearch(e.target.value)}
 				/>
 
-				{/* Add Program Button */}
-				<Button
-					className="max-md:self-end"
-					onClick={() => setIsAddProgramModalOpen(true)}
-				>
-					<Plus /> Tambah Program
+				{/* Add News Button */}
+				<Button className="max-md:self-end" asChild>
+					<Link to="/berita/new">
+						<Plus /> Tambah Berita
+					</Link>
 				</Button>
-
-				{/* Add Program Modal */}
-				<AddProgramModal
-					categories={categories?.data || []}
-					isModalOpen={isAddProgramModalOpen}
-					setIsModalOpen={setIsAddProgramModalOpen}
-				/>
 			</CardHeader>
 
 			<CardContent className="grid auto-rows-auto gap-5">
-				<div className="flex items-center justify-between gap-3 max-md:flex-col max-md:items-end">
-					<div className="flex items-center gap-3">
-						{/* Page Limit */}
-						<DataTableRowLimit
-							current={limit || 10}
-							onLimitChange={(newLimit) =>
-								setPagination((p) => ({ ...p, pageSize: newLimit }))
-							}
-							disabled={!programsData?.data.length || isProgramsFetchLoading}
-						/>
+				<div className="flex items-start justify-between gap-3">
+					{/* Page Limit */}
+					<DataTableRowLimit
+						current={limit || 10}
+						onLimitChange={(newLimit) =>
+							setPagination((p) => ({ ...p, pageSize: newLimit }))
+						}
+						disabled={!newsData?.data.length || isNewsFetchLoading}
+					/>
 
-						{/* Column Visibility */}
-						<DataTableColumnVisibillityFilter table={table} />
-					</div>
-
-					<div className="flex items-center gap-3">
-						{/* Status Filter */}
+					<div className="flex flex-wrap items-end justify-end gap-3">
+						{/* Filter by Status */}
 						<DataTableColumnFilter
 							label="Status"
 							menuLabel="Filter berdasarkan status"
@@ -268,7 +197,7 @@ export function ProgramTable() {
 								});
 							}}
 							align="end"
-							disabled={isProgramsFetchLoading}
+							disabled={isNewsFetchLoading}
 						/>
 
 						{/* Category Filter */}
@@ -302,14 +231,14 @@ export function ProgramTable() {
 							}}
 							align="end"
 							onItemLoading={isCategoriesFetchLoading}
-							disabled={isProgramsFetchLoading || isCategoriesFetchLoading}
+							disabled={isNewsFetchLoading || isCategoriesFetchLoading}
 						/>
 					</div>
 				</div>
 
 				{/* Table */}
-				{isProgramsFetchLoading ? (
-					<DataTableSkeleton columnLength={6} rowLength={10} />
+				{isNewsFetchLoading ? (
+					<DataTableSkeleton columnLength={4} rowLength={10} />
 				) : (
 					<DataTable table={table} />
 				)}
@@ -319,7 +248,7 @@ export function ProgramTable() {
 			<CardFooter>
 				<DataTablePagination
 					currentPage={pagination.pageIndex + 1}
-					totalPages={programsData?.meta.totalPages || 1}
+					totalPages={newsData?.meta.totalPages || 1}
 					onPageChange={(page) =>
 						navigate({
 							search: (prev) => ({ ...prev, page }),

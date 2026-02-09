@@ -177,7 +177,7 @@ export function PeriodTable() {
 
 	return (
 		<Card className="h-fit w-full">
-			<CardHeader className="grid-cols-[1fr_auto] gap-10">
+			<CardHeader className="flex flex-wrap justify-between gap-10 max-md:flex-col-reverse md:items-center">
 				{/* Search */}
 				<DataTableSearchFilter
 					id="name_search"
@@ -189,10 +189,10 @@ export function PeriodTable() {
 
 				{/* Add Period Button */}
 				<Button
-					className="place-self-start"
+					className="max-md:self-end"
 					onClick={() => setIsAddPeriodModalOpen(true)}
 				>
-					<Plus /> Tambah periode
+					<Plus /> Tambah Periode
 				</Button>
 
 				{/* Add Period Modal */}

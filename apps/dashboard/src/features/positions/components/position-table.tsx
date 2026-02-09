@@ -153,8 +153,8 @@ export function PositionTable() {
 
 	return (
 		<Card className="h-fit w-full">
-			<CardHeader className="grid-cols-[auto_auto] justify-between gap-10">
-				<div className="flex items-center gap-3">
+			<CardHeader className="flex flex-row flex-wrap items-end justify-start gap-10 max-md:flex-col-reverse md:justify-between">
+				<div className="flex items-center gap-3 max-md:self-start">
 					{/* Page Limit */}
 					<DataTableRowLimit
 						current={limit || 10}
@@ -195,7 +195,7 @@ export function PositionTable() {
 
 				{/* Add Position Button */}
 				<Button
-					className="place-self-end"
+					className="w-fit"
 					onClick={() => setIsAddPositionModalOpen(true)}
 				>
 					<Plus /> Tambah Jabatan

@@ -1,5 +1,4 @@
 import { useMutation } from "@tanstack/react-query";
-import { useSearch } from "@tanstack/react-router";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -15,24 +14,20 @@ import { ComponentLoader } from "@workspace/ui/components/loader";
 import { BadgeQuestionMark } from "lucide-react";
 import { memo } from "react";
 import { toast } from "sonner";
-import { deleteProgramByIdMutationOptions } from "@/features/programs/hooks/mutation-options";
-import { getAllProgramsQueryOptions } from "@/features/programs/hooks/query-options";
-import type { Program } from "@/features/programs/services";
+import { updateNewsStatusByIdMutationOptions } from "@/features/news/hooks/mutation-options";
+import { getNewsDetailBySlugQueryOptions } from "@/features/news/hooks/query-options";
+import type { News } from "@/features/news/services";
 import type { ModalProps } from "@/shared/types/props";
 
-export const DeleteProgramModal = memo(
-	({ selectedData, isModalOpen, setIsModalOpen }: ModalProps<Program>) => {
-		const search = useSearch({
-			from: "/(app)/(publication)/program",
-		});
-
+export const SaveToDraftModal = memo(
+	({ selectedData, isModalOpen, setIsModalOpen }: ModalProps<News>) => {
 		/* ===================
-		 * Delete member mutation
+		 * Save to draft news mutation
 		 * =================== */
-		const { mutate, isPending: isDeleteProgramPending } = useMutation(
-			deleteProgramByIdMutationOptions(selectedData?.id as string, {
+		const { mutate, isPending: isSaveToDraftNewsPending } = useMutation(
+			updateNewsStatusByIdMutationOptions(selectedData?.id as string, {
 				onSuccess: (res, _variables, _onMutateResult, context) => {
-					toast.success(res.message ?? "Program berhasil dihapus.", {
+					toast.success(res.message ?? "Berita disimpan ke dalam draft.", {
 						dismissible: true,
 						closeButton: true,
 						duration: 5000,
@@ -40,7 +35,9 @@ export const DeleteProgramModal = memo(
 
 					setIsModalOpen(false);
 					context.client.invalidateQueries({
-						queryKey: getAllProgramsQueryOptions(search).queryKey,
+						queryKey: getNewsDetailBySlugQueryOptions(
+							selectedData?.slug as string,
+						).queryKey,
 					});
 				},
 				onError: (err) => {
@@ -63,24 +60,24 @@ export const DeleteProgramModal = memo(
 							<BadgeQuestionMark className="size-8" />
 						</AlertDialogMedia>
 
-						<AlertDialogTitle>Hapus program?</AlertDialogTitle>
+						<AlertDialogTitle>Simpan ke dalam draft?</AlertDialogTitle>
 						<AlertDialogDescription>
-							Apakah anda yakin ingin menghapus program atau kegiatan ini? Ini
-							akan menghapus data secara permanen.
+							Berita ini akan disimpan ke dalam draft. Status berita yang sudah
+							terpublish akan berubah menjadi draft.
 						</AlertDialogDescription>
 					</AlertDialogHeader>
 
 					<AlertDialogFooter>
-						<AlertDialogCancel>Batal</AlertDialogCancel>
+						<AlertDialogCancel variant="destructive">Batal</AlertDialogCancel>
 						<AlertDialogAction
-							variant="destructive"
+							className="bg-green-500 text-primary-foreground hover:bg-green-600"
 							onClick={(e) => {
 								e.preventDefault();
-								mutate(void selectedData?.id);
+								mutate(false);
 							}}
-							disabled={isDeleteProgramPending}
+							disabled={isSaveToDraftNewsPending}
 						>
-							{isDeleteProgramPending ? <ComponentLoader /> : "Hapus"}
+							{isSaveToDraftNewsPending ? <ComponentLoader /> : "Jadikan Draft"}
 						</AlertDialogAction>
 					</AlertDialogFooter>
 				</AlertDialogContent>

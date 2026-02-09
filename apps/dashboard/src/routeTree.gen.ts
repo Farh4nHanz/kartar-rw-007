@@ -13,9 +13,13 @@ import { Route as appRouteRouteImport } from './routes/(app)/route'
 import { Route as appmenuIndexRouteImport } from './routes/(app)/(menu)/index'
 import { Route as apppublicationProgramRouteImport } from './routes/(app)/(publication)/program'
 import { Route as apppublicationKategoriRouteImport } from './routes/(app)/(publication)/kategori'
+import { Route as apppublicationBeritaRouteImport } from './routes/(app)/(publication)/berita'
 import { Route as apporganizationPeriodeRouteImport } from './routes/(app)/(organization)/periode'
 import { Route as apporganizationJabatanRouteImport } from './routes/(app)/(organization)/jabatan'
 import { Route as apporganizationAnggotaRouteImport } from './routes/(app)/(organization)/anggota'
+import { Route as apppublicationBeritaNewRouteImport } from './routes/(app)/(publication)/berita_.new'
+import { Route as apppublicationBeritaEditSlugRouteImport } from './routes/(app)/(publication)/berita_.edit.$slug'
+import { Route as apppublicationBeritaDetailSlugRouteImport } from './routes/(app)/(publication)/berita_.detail.$slug'
 
 const appRouteRoute = appRouteRouteImport.update({
   id: '/(app)',
@@ -36,6 +40,11 @@ const apppublicationKategoriRoute = apppublicationKategoriRouteImport.update({
   path: '/kategori',
   getParentRoute: () => appRouteRoute,
 } as any)
+const apppublicationBeritaRoute = apppublicationBeritaRouteImport.update({
+  id: '/(publication)/berita',
+  path: '/berita',
+  getParentRoute: () => appRouteRoute,
+} as any)
 const apporganizationPeriodeRoute = apporganizationPeriodeRouteImport.update({
   id: '/(organization)/periode',
   path: '/periode',
@@ -51,22 +60,47 @@ const apporganizationAnggotaRoute = apporganizationAnggotaRouteImport.update({
   path: '/anggota',
   getParentRoute: () => appRouteRoute,
 } as any)
+const apppublicationBeritaNewRoute = apppublicationBeritaNewRouteImport.update({
+  id: '/(publication)/berita_/new',
+  path: '/berita/new',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const apppublicationBeritaEditSlugRoute =
+  apppublicationBeritaEditSlugRouteImport.update({
+    id: '/(publication)/berita_/edit/$slug',
+    path: '/berita/edit/$slug',
+    getParentRoute: () => appRouteRoute,
+  } as any)
+const apppublicationBeritaDetailSlugRoute =
+  apppublicationBeritaDetailSlugRouteImport.update({
+    id: '/(publication)/berita_/detail/$slug',
+    path: '/berita/detail/$slug',
+    getParentRoute: () => appRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/anggota': typeof apporganizationAnggotaRoute
   '/jabatan': typeof apporganizationJabatanRoute
   '/periode': typeof apporganizationPeriodeRoute
+  '/berita': typeof apppublicationBeritaRoute
   '/kategori': typeof apppublicationKategoriRoute
   '/program': typeof apppublicationProgramRoute
   '/': typeof appmenuIndexRoute
+  '/berita/new': typeof apppublicationBeritaNewRoute
+  '/berita/detail/$slug': typeof apppublicationBeritaDetailSlugRoute
+  '/berita/edit/$slug': typeof apppublicationBeritaEditSlugRoute
 }
 export interface FileRoutesByTo {
   '/anggota': typeof apporganizationAnggotaRoute
   '/jabatan': typeof apporganizationJabatanRoute
   '/periode': typeof apporganizationPeriodeRoute
+  '/berita': typeof apppublicationBeritaRoute
   '/kategori': typeof apppublicationKategoriRoute
   '/program': typeof apppublicationProgramRoute
   '/': typeof appmenuIndexRoute
+  '/berita/new': typeof apppublicationBeritaNewRoute
+  '/berita/detail/$slug': typeof apppublicationBeritaDetailSlugRoute
+  '/berita/edit/$slug': typeof apppublicationBeritaEditSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -74,9 +108,13 @@ export interface FileRoutesById {
   '/(app)/(organization)/anggota': typeof apporganizationAnggotaRoute
   '/(app)/(organization)/jabatan': typeof apporganizationJabatanRoute
   '/(app)/(organization)/periode': typeof apporganizationPeriodeRoute
+  '/(app)/(publication)/berita': typeof apppublicationBeritaRoute
   '/(app)/(publication)/kategori': typeof apppublicationKategoriRoute
   '/(app)/(publication)/program': typeof apppublicationProgramRoute
   '/(app)/(menu)/': typeof appmenuIndexRoute
+  '/(app)/(publication)/berita_/new': typeof apppublicationBeritaNewRoute
+  '/(app)/(publication)/berita_/detail/$slug': typeof apppublicationBeritaDetailSlugRoute
+  '/(app)/(publication)/berita_/edit/$slug': typeof apppublicationBeritaEditSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -84,20 +122,38 @@ export interface FileRouteTypes {
     | '/anggota'
     | '/jabatan'
     | '/periode'
+    | '/berita'
     | '/kategori'
     | '/program'
     | '/'
+    | '/berita/new'
+    | '/berita/detail/$slug'
+    | '/berita/edit/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/anggota' | '/jabatan' | '/periode' | '/kategori' | '/program' | '/'
+  to:
+    | '/anggota'
+    | '/jabatan'
+    | '/periode'
+    | '/berita'
+    | '/kategori'
+    | '/program'
+    | '/'
+    | '/berita/new'
+    | '/berita/detail/$slug'
+    | '/berita/edit/$slug'
   id:
     | '__root__'
     | '/(app)'
     | '/(app)/(organization)/anggota'
     | '/(app)/(organization)/jabatan'
     | '/(app)/(organization)/periode'
+    | '/(app)/(publication)/berita'
     | '/(app)/(publication)/kategori'
     | '/(app)/(publication)/program'
     | '/(app)/(menu)/'
+    | '/(app)/(publication)/berita_/new'
+    | '/(app)/(publication)/berita_/detail/$slug'
+    | '/(app)/(publication)/berita_/edit/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -134,6 +190,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof apppublicationKategoriRouteImport
       parentRoute: typeof appRouteRoute
     }
+    '/(app)/(publication)/berita': {
+      id: '/(app)/(publication)/berita'
+      path: '/berita'
+      fullPath: '/berita'
+      preLoaderRoute: typeof apppublicationBeritaRouteImport
+      parentRoute: typeof appRouteRoute
+    }
     '/(app)/(organization)/periode': {
       id: '/(app)/(organization)/periode'
       path: '/periode'
@@ -155,6 +218,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof apporganizationAnggotaRouteImport
       parentRoute: typeof appRouteRoute
     }
+    '/(app)/(publication)/berita_/new': {
+      id: '/(app)/(publication)/berita_/new'
+      path: '/berita/new'
+      fullPath: '/berita/new'
+      preLoaderRoute: typeof apppublicationBeritaNewRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/(publication)/berita_/edit/$slug': {
+      id: '/(app)/(publication)/berita_/edit/$slug'
+      path: '/berita/edit/$slug'
+      fullPath: '/berita/edit/$slug'
+      preLoaderRoute: typeof apppublicationBeritaEditSlugRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/(publication)/berita_/detail/$slug': {
+      id: '/(app)/(publication)/berita_/detail/$slug'
+      path: '/berita/detail/$slug'
+      fullPath: '/berita/detail/$slug'
+      preLoaderRoute: typeof apppublicationBeritaDetailSlugRouteImport
+      parentRoute: typeof appRouteRoute
+    }
   }
 }
 
@@ -162,18 +246,26 @@ interface appRouteRouteChildren {
   apporganizationAnggotaRoute: typeof apporganizationAnggotaRoute
   apporganizationJabatanRoute: typeof apporganizationJabatanRoute
   apporganizationPeriodeRoute: typeof apporganizationPeriodeRoute
+  apppublicationBeritaRoute: typeof apppublicationBeritaRoute
   apppublicationKategoriRoute: typeof apppublicationKategoriRoute
   apppublicationProgramRoute: typeof apppublicationProgramRoute
   appmenuIndexRoute: typeof appmenuIndexRoute
+  apppublicationBeritaNewRoute: typeof apppublicationBeritaNewRoute
+  apppublicationBeritaDetailSlugRoute: typeof apppublicationBeritaDetailSlugRoute
+  apppublicationBeritaEditSlugRoute: typeof apppublicationBeritaEditSlugRoute
 }
 
 const appRouteRouteChildren: appRouteRouteChildren = {
   apporganizationAnggotaRoute: apporganizationAnggotaRoute,
   apporganizationJabatanRoute: apporganizationJabatanRoute,
   apporganizationPeriodeRoute: apporganizationPeriodeRoute,
+  apppublicationBeritaRoute: apppublicationBeritaRoute,
   apppublicationKategoriRoute: apppublicationKategoriRoute,
   apppublicationProgramRoute: apppublicationProgramRoute,
   appmenuIndexRoute: appmenuIndexRoute,
+  apppublicationBeritaNewRoute: apppublicationBeritaNewRoute,
+  apppublicationBeritaDetailSlugRoute: apppublicationBeritaDetailSlugRoute,
+  apppublicationBeritaEditSlugRoute: apppublicationBeritaEditSlugRoute,
 }
 
 const appRouteRouteWithChildren = appRouteRoute._addFileChildren(

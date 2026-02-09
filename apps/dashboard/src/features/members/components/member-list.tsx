@@ -116,7 +116,7 @@ export function MemberList() {
 
 	return (
 		<Card className="h-fit w-full">
-			<CardHeader className="grid-cols-[auto_auto] gap-10">
+			<CardHeader className="flex flex-wrap justify-between gap-10 max-md:flex-col-reverse md:items-center">
 				{/* Search */}
 				<DataTableSearchFilter
 					id="name_search"
@@ -128,7 +128,7 @@ export function MemberList() {
 
 				{/* Add Member Button */}
 				<Button
-					className="place-self-end"
+					className="max-md:self-end"
 					onClick={() => setIsAddMemberModalOpen(true)}
 				>
 					<Plus /> Tambah Anggota
