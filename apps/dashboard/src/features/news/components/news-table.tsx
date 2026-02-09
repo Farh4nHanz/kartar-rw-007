@@ -31,7 +31,7 @@ import { columns } from "./news-table-column";
 
 export function NewsTable() {
 	const search = useSearch({
-		from: "/(app)/(publication)/berita",
+		from: "/(app)/(publication)/berita/_index",
 	});
 
 	const { page, limit, category, status, title } = search;

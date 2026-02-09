@@ -23,7 +23,7 @@ import type { ModalProps } from "@/shared/types/props";
 export const DeleteNewsModal = memo(
 	({ selectedData, isModalOpen, setIsModalOpen }: ModalProps<News>) => {
 		const search = useSearch({
-			from: "/(app)/(publication)/berita",
+			from: "/(app)/(publication)/berita/_index",
 		});
 
 		/* ===================
@@ -92,7 +92,7 @@ export const DeleteNewsModal = memo(
 export const DeleteNewsModalOnDetail = memo(
 	({ selectedData, isModalOpen, setIsModalOpen }: ModalProps<News>) => {
 		const navigate = useNavigate({
-			from: "/berita/detail/$slug",
+			from: "/berita/$slug/detail",
 		});
 
 		/* ===================

@@ -7,19 +7,17 @@ import { EditNewsForm } from "@/features/news/components/forms/edit-news-form";
 import { getNewsDetailBySlugQueryOptions } from "@/features/news/hooks/query-options";
 import type { News } from "@/features/news/services";
 
-export const Route = createFileRoute("/(app)/(publication)/berita_/edit/$slug")(
-	{
-		component: RouteComponent,
-		loader: ({ context: { queryClient } }) =>
-			queryClient.ensureQueryData(
-				getAllCategoriesQueryOptions({ type: "berita" }),
-			),
-	},
-);
+export const Route = createFileRoute("/(app)/(publication)/berita/$slug/edit")({
+	component: RouteComponent,
+	loader: ({ context: { queryClient } }) =>
+		queryClient.ensureQueryData(
+			getAllCategoriesQueryOptions({ type: "berita" }),
+		),
+});
 
 function RouteComponent() {
 	const { slug } = useParams({
-		from: "/(app)/(publication)/berita_/edit/$slug",
+		from: "/(app)/(publication)/berita/$slug/edit",
 	});
 
 	const { data: categories, isLoading: isCategoriesDataFetchLoading } =

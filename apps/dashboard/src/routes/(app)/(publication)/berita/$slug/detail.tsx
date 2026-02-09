@@ -31,18 +31,18 @@ import { SaveToDraftModal } from "@/features/news/components/modals/save-to-draf
 import { getNewsDetailBySlugQueryOptions } from "@/features/news/hooks/query-options";
 
 export const Route = createFileRoute(
-	"/(app)/(publication)/berita_/detail/$slug",
+	"/(app)/(publication)/berita/$slug/detail",
 )({
 	component: RouteComponent,
 });
 
 function RouteComponent() {
 	const { slug } = useParams({
-		from: "/(app)/(publication)/berita_/detail/$slug",
+		from: "/(app)/(publication)/berita/$slug/detail",
 	});
 
 	const navigate = useNavigate({
-		from: "/berita/detail/$slug",
+		from: "/berita/$slug/detail",
 	});
 
 	const { data: news, isLoading } = useQuery(
@@ -128,7 +128,7 @@ function RouteComponent() {
 				<Button
 					className="gap-2 justify-self-end bg-yellow-400 hover:bg-yellow-500"
 					onClick={() =>
-						navigate({ to: "/berita/edit/$slug", params: { slug: slug } })
+						navigate({ to: "/berita/$slug/edit", params: { slug: slug } })
 					}
 				>
 					<Pencil />

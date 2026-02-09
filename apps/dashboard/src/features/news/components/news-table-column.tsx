@@ -96,13 +96,13 @@ export const columns = [
 					<DataTableRowActions
 						onView={() =>
 							navigate({
-								to: "/berita/detail/$slug",
+								to: "$slug/detail",
 								params: { slug: news.slug },
 							})
 						}
 						onEdit={() =>
 							navigate({
-								to: "/berita/edit/$slug",
+								to: "$slug/edit",
 								params: { slug: news.slug },
 							})
 						}

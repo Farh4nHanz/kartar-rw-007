@@ -34,7 +34,7 @@ export const EditNewsForm = memo(
 		categories: Category[];
 	}) => {
 		const navigate = useNavigate({
-			from: "/berita/edit/$slug",
+			from: "/berita/$slug/edit",
 		});
 
 		const statuses = [true, false] as const;

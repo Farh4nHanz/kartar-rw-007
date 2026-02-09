@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { NewsTable } from "@/features/news/components/news-table";
 import type { GetAllNewsParams } from "@/features/news/services";
 
-export const Route = createFileRoute("/(app)/(publication)/berita")({
+export const Route = createFileRoute("/(app)/(publication)/berita/_index")({
 	validateSearch: (search: GetAllNewsParams): GetAllNewsParams => ({
 		page: search.page || 1,
 		limit: search.limit || 10,

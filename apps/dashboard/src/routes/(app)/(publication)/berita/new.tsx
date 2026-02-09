@@ -5,7 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { getAllCategoriesQueryOptions } from "@/features/categories/hooks/query-options";
 import { AddNewsForm } from "@/features/news/components/forms/add-news-form";
 
-export const Route = createFileRoute("/(app)/(publication)/berita_/new")({
+export const Route = createFileRoute("/(app)/(publication)/berita/new")({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) =>
 		queryClient.ensureQueryData(
