@@ -140,6 +140,8 @@ export async function getNewsDetailBySlug(
 	// 	? getPublicImageUrl("news", data.image_path)
 	// 	: null;
 
+	await new Promise((r) => setTimeout(r, 3000));
+
 	return {
 		success: true,
 		message: "Data diambil dengan sukses.",
@@ -157,7 +159,7 @@ export async function getNewsDetailBySlug(
 				"Lorem ipsum dolor sit amet consectetur adipisicing elit. A, dolore voluptate nobis nostrum veniam consequatur reprehenderit saepe. Esse tempora voluptatum tenetur voluptatem deserunt obcaecati repellat nemo et rerum itaque impedit quos, ipsa qui officia, asperiores minima nulla dolor corporis non. Debitis repellendus quo laboriosam quibusdam aut, veritatis facilis commodi architecto.",
 			thumbnail_url:
 				"https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-			is_published: false,
+			is_published: true,
 			published_at: "2022-07-01T12:34:56.789Z",
 			created_at: new Date().toISOString(),
 			updated_at: new Date().toISOString(),

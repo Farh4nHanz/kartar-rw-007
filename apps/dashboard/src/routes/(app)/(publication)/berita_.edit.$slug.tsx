@@ -22,10 +22,11 @@ function RouteComponent() {
 		from: "/(app)/(publication)/berita_/edit/$slug",
 	});
 
-	const { data: news } = useQuery(getNewsDetailBySlugQueryOptions(slug));
+	const { data: categories, isLoading: isCategoriesDataFetchLoading } =
+		useQuery(getAllCategoriesQueryOptions({ type: "berita" }));
 
-	const { data: categories } = useQuery(
-		getAllCategoriesQueryOptions({ type: "berita" }),
+	const { data: news, isLoading: isNewsDataFetchLoading } = useQuery(
+		getNewsDetailBySlugQueryOptions(slug),
 	);
 
 	return (
@@ -51,6 +52,7 @@ function RouteComponent() {
 			</div>
 
 			<EditNewsForm
+				isLoading={isCategoriesDataFetchLoading || isNewsDataFetchLoading}
 				selectedData={news?.data as News}
 				categories={categories?.data || []}
 			/>

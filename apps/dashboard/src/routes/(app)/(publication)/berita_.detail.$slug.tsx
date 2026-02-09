@@ -1,5 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { createFileRoute, Link, useParams } from "@tanstack/react-router";
+import {
+	createFileRoute,
+	Link,
+	useNavigate,
+	useParams,
+} from "@tanstack/react-router";
 import { Badge } from "@workspace/ui/components/badge";
 import { Button } from "@workspace/ui/components/button";
 import {
@@ -8,6 +13,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@workspace/ui/components/card";
+import { Skeleton } from "@workspace/ui/components/skeleton";
 import { cn } from "@workspace/ui/lib/utils";
 import {
 	ArrowLeft,
@@ -35,7 +41,13 @@ function RouteComponent() {
 		from: "/(app)/(publication)/berita_/detail/$slug",
 	});
 
-	const { data: news } = useQuery(getNewsDetailBySlugQueryOptions(slug));
+	const navigate = useNavigate({
+		from: "/berita/detail/$slug",
+	});
+
+	const { data: news, isLoading } = useQuery(
+		getNewsDetailBySlugQueryOptions(slug),
+	);
 
 	const [modalState, setModalState] = useState({
 		isSaveToDraftModalOpen: false,
@@ -65,6 +77,10 @@ function RouteComponent() {
 				: "Belum dipublikasi",
 		[news?.data.published_at],
 	);
+
+	if (isLoading) {
+		return <NewsDetailSkeleton />;
+	}
 
 	return (
 		<div className="h-full min-h-dvh w-full space-y-8 overflow-x-auto px-4 pt-20 pb-6">
@@ -109,15 +125,20 @@ function RouteComponent() {
 					</div>
 				</div>
 
-				<Button className="gap-2 justify-self-end bg-yellow-400 hover:bg-yellow-500">
+				<Button
+					className="gap-2 justify-self-end bg-yellow-400 hover:bg-yellow-500"
+					onClick={() =>
+						navigate({ to: "/berita/edit/$slug", params: { slug: slug } })
+					}
+				>
 					<Pencil />
 					Edit Berita
 				</Button>
 			</div>
 
-			<Card className="max-h-96 p-0">
+			<Card className="max-h-100 p-0">
 				<img
-					src={news?.data.thumbnail_url || "https://via.placeholder.com/150"}
+					src={news?.data.thumbnail_url || "https://placehold.net/600x400.png"}
 					alt="Thumbnail"
 					className="aspect-video h-full w-full object-cover object-center italic"
 				/>
@@ -238,6 +259,76 @@ function RouteComponent() {
 				}
 				selectedData={news?.data || null}
 			/>
+		</div>
+	);
+}
+
+export function NewsDetailSkeleton() {
+	return (
+		<div className="h-full min-h-dvh w-full space-y-8 overflow-x-auto px-4 pt-20 pb-6">
+			{/* Header */}
+			<div className="flex flex-nowrap items-center gap-4">
+				<Button variant="ghost" size="icon" className="shrink-0">
+					<ArrowLeft />
+				</Button>
+
+				<div className="flex flex-1 flex-col gap-3">
+					<div className="flex gap-2">
+						<Skeleton className="h-5 w-20 rounded-full" />
+						<Skeleton className="h-5 w-24 rounded-full" />
+					</div>
+
+					<Skeleton className="h-8 w-3/4" />
+
+					<div className="flex gap-6">
+						<Skeleton className="h-4 w-40" />
+						<Skeleton className="h-4 w-32" />
+					</div>
+				</div>
+
+				<Skeleton className="h-10 w-32" />
+			</div>
+
+			{/* Thumbnail */}
+			<Card className="overflow-hidden p-0">
+				<Skeleton className="aspect-video w-full" />
+			</Card>
+
+			{/* Content + Sidebar */}
+			<div className="grid grid-cols-1 gap-8 md:grid-cols-[1fr_auto] md:gap-10">
+				<Card>
+					<CardHeader>
+						<Skeleton className="h-5 w-24" />
+					</CardHeader>
+					<CardContent className="space-y-3">
+						<Skeleton className="h-4 w-full" />
+						<Skeleton className="h-4 w-full" />
+						<Skeleton className="h-4 w-5/6" />
+						<Skeleton className="h-4 w-4/6" />
+					</CardContent>
+				</Card>
+
+				<Card className="w-full md:w-70">
+					<CardHeader>
+						<Skeleton className="h-5 w-40" />
+					</CardHeader>
+					<CardContent className="space-y-4">
+						{Array.from({ length: 4 }).map((_, i) => (
+							<div key={i} className="space-y-2">
+								<Skeleton className="h-3 w-24" />
+								<Skeleton className="h-4 w-full" />
+							</div>
+						))}
+					</CardContent>
+				</Card>
+			</div>
+
+			{/* Footer Actions */}
+			<div className="flex gap-3">
+				<Skeleton className="h-10 w-28" />
+				<Skeleton className="h-10 w-36" />
+				<Skeleton className="h-10 w-24" />
+			</div>
 		</div>
 	);
 }

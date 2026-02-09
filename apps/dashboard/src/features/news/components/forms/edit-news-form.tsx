@@ -25,9 +25,11 @@ import { useAppForm } from "@/shared/components/form/hooks";
 
 export const EditNewsForm = memo(
 	({
+		isLoading,
 		selectedData,
 		categories,
 	}: {
+		isLoading: boolean;
 		selectedData: News;
 		categories: Category[];
 	}) => {
@@ -38,19 +40,19 @@ export const EditNewsForm = memo(
 		const statuses = [true, false] as const;
 
 		const { mutateAsync } = useMutation(
-			updateNewsBySlugMutationOptions(selectedData.slug),
+			updateNewsBySlugMutationOptions(selectedData?.slug),
 		);
 
 		const form = useAppForm({
 			formId: "edit-news-form",
 			defaultValues: {
-				title: selectedData.title,
-				slug: selectedData.slug,
-				category_id: selectedData.category.id,
-				content: selectedData.content,
-				excerpt: selectedData.excerpt,
-				is_published: selectedData.is_published,
-				published_at: selectedData.published_at,
+				title: selectedData?.title,
+				slug: selectedData?.slug,
+				category_id: selectedData?.category.id,
+				content: selectedData?.content,
+				excerpt: selectedData?.excerpt,
+				is_published: selectedData?.is_published,
+				published_at: selectedData?.published_at,
 				thumbnail: undefined,
 			} satisfies EditNewsFormValue as EditNewsFormValue,
 			validators: {
@@ -102,6 +104,10 @@ export const EditNewsForm = memo(
 				);
 			},
 		});
+
+		if (isLoading) {
+			return <ComponentLoader />;
+		}
 
 		return (
 			<form
