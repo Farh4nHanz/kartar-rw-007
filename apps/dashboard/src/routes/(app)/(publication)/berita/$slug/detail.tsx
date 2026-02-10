@@ -84,7 +84,7 @@ function RouteComponent() {
 
 	return (
 		<div className="h-full min-h-dvh w-full space-y-8 overflow-x-auto px-4 pt-20 pb-6">
-			<div className="flex flex-nowrap items-center gap-4">
+			<div className="flex items-center gap-4 max-md:flex-col">
 				<Button
 					variant="ghost"
 					size="icon"
@@ -126,7 +126,7 @@ function RouteComponent() {
 				</div>
 
 				<Button
-					className="gap-2 justify-self-end bg-yellow-400 hover:bg-yellow-500"
+					className="gap-2 bg-yellow-400 hover:bg-yellow-500 max-md:self-end"
 					onClick={() =>
 						navigate({ to: "/berita/$slug/edit", params: { slug: slug } })
 					}
@@ -179,52 +179,55 @@ function RouteComponent() {
 				</Card>
 			</div>
 
-			<div className="flex w-full items-center justify-start gap-3">
-				<Button variant="outline" className="me-auto" asChild>
+			<div className="flex w-full flex-wrap items-center justify-between gap-3">
+				<Button variant="outline" asChild>
 					<Link to="/berita">
 						<ArrowLeft />
 						Kembali
 					</Link>
 				</Button>
-				{getStatus().status === "Published" ? (
+
+				<div className="flex gap-3">
 					<Button
-						className="bg-amber-500 text-primary-foreground hover:bg-amber-600 dark:bg-amber-300 dark:hover:bg-amber-400"
+						variant="destructive"
 						onClick={() =>
 							setModalState((prev) => ({
 								...prev,
-								isSaveToDraftModalOpen: true,
+								isDeleteModalOpen: true,
 							}))
 						}
 					>
-						<Save />
-						Jadikan Draft
+						<Trash2 />
+						Hapus
 					</Button>
-				) : (
-					<Button
-						className="bg-emerald-500 text-primary-foreground hover:bg-emerald-600 dark:bg-emerald-300 dark:hover:bg-emerald-400"
-						onClick={() =>
-							setModalState((prev) => ({
-								...prev,
-								isPublishModalOpen: true,
-							}))
-						}
-					>
-						Publish
-						<ArrowRightToLine />
-					</Button>
-				)}
-				<Button
-					variant="destructive"
-					onClick={() =>
-						setModalState((prev) => ({
-							...prev,
-							isDeleteModalOpen: true,
-						}))
-					}
-				>
-					<Trash2 />
-					Hapus
-				</Button>
+					{getStatus().status === "Published" ? (
+						<Button
+							className="bg-amber-500 text-primary-foreground hover:bg-amber-600 dark:bg-amber-300 dark:hover:bg-amber-400"
+							onClick={() =>
+								setModalState((prev) => ({
+									...prev,
+									isSaveToDraftModalOpen: true,
+								}))
+							}
+						>
+							<Save />
+							Jadikan Draft
+						</Button>
+					) : (
+						<Button
+							className="bg-emerald-500 text-primary-foreground hover:bg-emerald-600 dark:bg-emerald-300 dark:hover:bg-emerald-400"
+							onClick={() =>
+								setModalState((prev) => ({
+									...prev,
+									isPublishModalOpen: true,
+								}))
+							}
+						>
+							Publish
+							<ArrowRightToLine />
+						</Button>
+					)}
+				</div>
 			</div>
 
 			<SaveToDraftModal

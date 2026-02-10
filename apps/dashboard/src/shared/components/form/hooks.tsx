@@ -4,6 +4,7 @@ import { FormDatePicker } from "./form-date-picker";
 import { FormFileInput } from "./form-file-input";
 import { FormInput } from "./form-input";
 import { FormInputNumber } from "./form-input-number";
+import { FormMultipleFileUpload } from "./form-multiple-file-upload";
 import { FormSelect } from "./form-select";
 import { FormTextarea } from "./form-textarea";
 
@@ -22,5 +23,6 @@ export const { useAppForm } = createFormHook({
 		Select: FormSelect,
 		Checkbox: FormCheckbox,
 		DatePicker: FormDatePicker,
+		MultipleFileUpload: FormMultipleFileUpload,
 	},
 });

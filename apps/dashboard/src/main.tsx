@@ -10,6 +10,7 @@ const router = createRouter({
 	defaultPreload: "intent",
 	defaultPendingComponent: () => <RouteComponentLoader />,
 	defaultNotFoundComponent: () => <NotFound />,
+	defaultErrorComponent: () => "Error",
 	context: undefined!,
 	scrollRestoration: true,
 });

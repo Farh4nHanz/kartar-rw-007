@@ -214,6 +214,13 @@ export const EditNewsForm = memo(
 					]}
 					children={([canSubmit, isSubmitting, values]) => (
 						<div className="flex items-start justify-end gap-2">
+							<Button
+								type="button"
+								variant="destructive"
+								onClick={() => navigate({ to: "/berita", replace: true })}
+							>
+								Batal
+							</Button>
 							{(values as EditNewsFormValue).is_published ? (
 								<Button
 									type="submit"
@@ -233,13 +240,6 @@ export const EditNewsForm = memo(
 									{isSubmitting ? <ComponentLoader /> : "Simpan sebagai Draft"}
 								</Button>
 							)}
-							<Button
-								type="button"
-								variant="destructive"
-								onClick={() => navigate({ to: "/berita", replace: true })}
-							>
-								Batal
-							</Button>
 						</div>
 					)}
 				/>

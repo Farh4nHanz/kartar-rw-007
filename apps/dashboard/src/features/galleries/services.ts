@@ -261,7 +261,7 @@ export async function addNewGallery(
 
 	return {
 		success: true,
-		message: "Galeri berhasil dibuat.",
+		message: "Galeri baru berhasil ditambahkan.",
 	};
 }
 

@@ -17,6 +17,7 @@ import { Route as apppartnershipKolaborasiRouteImport } from './routes/(app)/(pa
 import { Route as apporganizationPeriodeRouteImport } from './routes/(app)/(organization)/periode'
 import { Route as apporganizationJabatanRouteImport } from './routes/(app)/(organization)/jabatan'
 import { Route as apporganizationAnggotaRouteImport } from './routes/(app)/(organization)/anggota'
+import { Route as apppublicationGaleriNewRouteImport } from './routes/(app)/(publication)/galeri/new'
 import { Route as apppublicationGaleriIndexRouteImport } from './routes/(app)/(publication)/galeri/_index'
 import { Route as apppublicationBeritaNewRouteImport } from './routes/(app)/(publication)/berita/new'
 import { Route as apppublicationBeritaIndexRouteImport } from './routes/(app)/(publication)/berita/_index'
@@ -63,6 +64,11 @@ const apporganizationJabatanRoute = apporganizationJabatanRouteImport.update({
 const apporganizationAnggotaRoute = apporganizationAnggotaRouteImport.update({
   id: '/(organization)/anggota',
   path: '/anggota',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const apppublicationGaleriNewRoute = apppublicationGaleriNewRouteImport.update({
+  id: '/(publication)/galeri/new',
+  path: '/galeri/new',
   getParentRoute: () => appRouteRoute,
 } as any)
 const apppublicationGaleriIndexRoute =
@@ -118,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/berita': typeof apppublicationBeritaIndexRoute
   '/berita/new': typeof apppublicationBeritaNewRoute
   '/galeri': typeof apppublicationGaleriIndexRoute
+  '/galeri/new': typeof apppublicationGaleriNewRoute
   '/berita/$slug/detail': typeof apppublicationBeritaSlugDetailRoute
   '/berita/$slug/edit': typeof apppublicationBeritaSlugEditRoute
   '/galeri/$id/detail': typeof apppublicationGaleriIdDetailRoute
@@ -134,6 +141,7 @@ export interface FileRoutesByTo {
   '/berita': typeof apppublicationBeritaIndexRoute
   '/berita/new': typeof apppublicationBeritaNewRoute
   '/galeri': typeof apppublicationGaleriIndexRoute
+  '/galeri/new': typeof apppublicationGaleriNewRoute
   '/berita/$slug/detail': typeof apppublicationBeritaSlugDetailRoute
   '/berita/$slug/edit': typeof apppublicationBeritaSlugEditRoute
   '/galeri/$id/detail': typeof apppublicationGaleriIdDetailRoute
@@ -152,6 +160,7 @@ export interface FileRoutesById {
   '/(app)/(publication)/berita/_index': typeof apppublicationBeritaIndexRoute
   '/(app)/(publication)/berita/new': typeof apppublicationBeritaNewRoute
   '/(app)/(publication)/galeri/_index': typeof apppublicationGaleriIndexRoute
+  '/(app)/(publication)/galeri/new': typeof apppublicationGaleriNewRoute
   '/(app)/(publication)/berita/$slug/detail': typeof apppublicationBeritaSlugDetailRoute
   '/(app)/(publication)/berita/$slug/edit': typeof apppublicationBeritaSlugEditRoute
   '/(app)/(publication)/galeri/$id/detail': typeof apppublicationGaleriIdDetailRoute
@@ -170,6 +179,7 @@ export interface FileRouteTypes {
     | '/berita'
     | '/berita/new'
     | '/galeri'
+    | '/galeri/new'
     | '/berita/$slug/detail'
     | '/berita/$slug/edit'
     | '/galeri/$id/detail'
@@ -186,6 +196,7 @@ export interface FileRouteTypes {
     | '/berita'
     | '/berita/new'
     | '/galeri'
+    | '/galeri/new'
     | '/berita/$slug/detail'
     | '/berita/$slug/edit'
     | '/galeri/$id/detail'
@@ -203,6 +214,7 @@ export interface FileRouteTypes {
     | '/(app)/(publication)/berita/_index'
     | '/(app)/(publication)/berita/new'
     | '/(app)/(publication)/galeri/_index'
+    | '/(app)/(publication)/galeri/new'
     | '/(app)/(publication)/berita/$slug/detail'
     | '/(app)/(publication)/berita/$slug/edit'
     | '/(app)/(publication)/galeri/$id/detail'
@@ -271,6 +283,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof apporganizationAnggotaRouteImport
       parentRoute: typeof appRouteRoute
     }
+    '/(app)/(publication)/galeri/new': {
+      id: '/(app)/(publication)/galeri/new'
+      path: '/galeri/new'
+      fullPath: '/galeri/new'
+      preLoaderRoute: typeof apppublicationGaleriNewRouteImport
+      parentRoute: typeof appRouteRoute
+    }
     '/(app)/(publication)/galeri/_index': {
       id: '/(app)/(publication)/galeri/_index'
       path: '/galeri'
@@ -334,6 +353,7 @@ interface appRouteRouteChildren {
   apppublicationBeritaIndexRoute: typeof apppublicationBeritaIndexRoute
   apppublicationBeritaNewRoute: typeof apppublicationBeritaNewRoute
   apppublicationGaleriIndexRoute: typeof apppublicationGaleriIndexRoute
+  apppublicationGaleriNewRoute: typeof apppublicationGaleriNewRoute
   apppublicationBeritaSlugDetailRoute: typeof apppublicationBeritaSlugDetailRoute
   apppublicationBeritaSlugEditRoute: typeof apppublicationBeritaSlugEditRoute
   apppublicationGaleriIdDetailRoute: typeof apppublicationGaleriIdDetailRoute
@@ -351,6 +371,7 @@ const appRouteRouteChildren: appRouteRouteChildren = {
   apppublicationBeritaIndexRoute: apppublicationBeritaIndexRoute,
   apppublicationBeritaNewRoute: apppublicationBeritaNewRoute,
   apppublicationGaleriIndexRoute: apppublicationGaleriIndexRoute,
+  apppublicationGaleriNewRoute: apppublicationGaleriNewRoute,
   apppublicationBeritaSlugDetailRoute: apppublicationBeritaSlugDetailRoute,
   apppublicationBeritaSlugEditRoute: apppublicationBeritaSlugEditRoute,
   apppublicationGaleriIdDetailRoute: apppublicationGaleriIdDetailRoute,

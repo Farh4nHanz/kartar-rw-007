@@ -177,7 +177,7 @@ export const EditCollaborationForm = memo(
 										</Button>
 									</DialogClose>
 									<Button type="submit" disabled={!canSubmit || isSubmitting}>
-										{isSubmitting ? <ComponentLoader /> : "Tambah"}
+										{isSubmitting ? <ComponentLoader /> : "Simpan"}
 									</Button>
 								</>
 							)}

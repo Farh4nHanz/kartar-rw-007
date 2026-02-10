@@ -27,7 +27,7 @@ function RouteComponent() {
 		from: "/(app)/(publication)/galeri/$id/detail",
 	});
 
-	const _navigate = useNavigate({
+	const navigate = useNavigate({
 		from: "/galeri/$id/detail",
 	});
 
@@ -73,7 +73,7 @@ function RouteComponent() {
 
 				<Button
 					className="gap-2 justify-self-end bg-yellow-400 hover:bg-yellow-500"
-					// onClick={() => navigate({ to: "/berita/$slug/edit", params: { id } })}
+					onClick={() => navigate({ to: "/galeri/$id/edit", params: { id } })}
 				>
 					<Pencil />
 					Edit Galeri
