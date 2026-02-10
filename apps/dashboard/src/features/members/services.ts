@@ -233,6 +233,6 @@ export async function deleteMemberById(_id: string): Promise<SuccessResponse> {
 
 	return {
 		success: true,
-		message: "Data anggota berhasil diperbarui.",
+		message: "Data anggota berhasil dihapus.",
 	};
 }

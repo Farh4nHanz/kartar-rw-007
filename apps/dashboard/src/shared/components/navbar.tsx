@@ -1,16 +1,22 @@
+import { Button } from "@workspace/ui/components/button";
 import {
-	Avatar,
-	AvatarFallback,
-	AvatarImage,
-} from "@workspace/ui/components/avatar";
-import { ModeToggle } from "@workspace/ui/components/mode-toggle";
-import { Separator } from "@workspace/ui/components/separator";
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuGroup,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@workspace/ui/components/dropdown-menu";
 import { SidebarTrigger, useSidebar } from "@workspace/ui/components/sidebar";
 import { cn } from "@workspace/ui/lib/utils";
+import { Eclipse, LogOut, Menu, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 import { useMemo } from "react";
 
 export function Navbar() {
 	const { state, isMobile } = useSidebar();
+	const { setTheme } = useTheme();
 
 	// Handle the sidebar width
 	// If it's on mobile, the sidebar is full width
@@ -31,35 +37,57 @@ export function Navbar() {
 			)}
 		>
 			{/* Left */}
-			<div className="flex items-center gap-2">
-				<SidebarTrigger className="hover:cursor-pointer" />
-
-				<div className="mr-1 h-6">
-					<Separator orientation="vertical" />
-				</div>
-
-				<h1 className="font-heading font-semibold text-base">
-					Admin Dashboard
-				</h1>
-			</div>
+			<SidebarTrigger className="hover:cursor-pointer" />
 
 			{/* Right */}
-			<div className="flex items-center gap-1.5">
-				{/* Toggle Theme */}
-				<ModeToggle />
-
-				<div className="flex items-center gap-3">
-					{/* User Name */}
-					<h3 className="font-heading font-medium text-sm tracking-wide max-md:hidden">
-						Admin
-					</h3>
-
-					{/* User Avatar */}
-					<Avatar>
-						<AvatarImage src="https://example.com" />
-						<AvatarFallback>AD</AvatarFallback>
-					</Avatar>
+			<div className="flex items-center gap-3">
+				{/* User Info */}
+				<div className="space-y-1 text-end">
+					<h3 className="font-semibold text-xs">Admin Karang Taruna</h3>
+					<p className="text-[calc(var(--text-xs)-1px)] text-muted-foreground">
+						admin@gmail.com
+					</p>
 				</div>
+
+				<DropdownMenu>
+					<DropdownMenuTrigger asChild>
+						<Button
+							variant="ghost"
+							size="icon"
+							className="rounded-sm hover:cursor-pointer"
+						>
+							<Menu />
+						</Button>
+					</DropdownMenuTrigger>
+
+					<DropdownMenuContent align="end">
+						<DropdownMenuGroup>
+							<DropdownMenuLabel>Tema</DropdownMenuLabel>
+						</DropdownMenuGroup>
+
+						{/* Toggle Theme */}
+						<DropdownMenuItem onClick={() => setTheme("light")}>
+							<Sun className="size-[.9rem]" color="var(--primary)" />
+							Light
+						</DropdownMenuItem>
+						<DropdownMenuItem onClick={() => setTheme("dark")}>
+							<Moon className="size-[.9rem]" color="var(--primary)" />
+							Dark
+						</DropdownMenuItem>
+						<DropdownMenuItem onClick={() => setTheme("system")}>
+							<Eclipse className="size-[.9rem]" color="var(--primary)" />
+							System
+						</DropdownMenuItem>
+
+						<DropdownMenuSeparator />
+
+						{/* Logout Button */}
+						<DropdownMenuItem variant="destructive">
+							<LogOut />
+							Logout
+						</DropdownMenuItem>
+					</DropdownMenuContent>
+				</DropdownMenu>
 			</div>
 		</header>
 	);

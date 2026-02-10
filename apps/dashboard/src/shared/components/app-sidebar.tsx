@@ -1,8 +1,7 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useMatchRoute } from "@tanstack/react-router";
 import {
 	Sidebar,
 	SidebarContent,
-	SidebarFooter,
 	SidebarGroup,
 	SidebarGroupContent,
 	SidebarGroupLabel,
@@ -12,14 +11,13 @@ import {
 	SidebarSeparator,
 	useSidebar,
 } from "@workspace/ui/components/sidebar";
-import { footerItems, sidebarGroups } from "@/domain/navigation/groups";
+import { sidebarGroups } from "@/domain/navigation/groups";
 
 export function AppSidebar() {
 	return (
 		<Sidebar collapsible="icon" bgClassName="bg-background">
 			<Header />
 			<Content />
-			<Footer />
 		</Sidebar>
 	);
 }
@@ -36,7 +34,7 @@ function Header() {
 }
 
 function Content() {
-	const pathname = useRouterState().location.pathname;
+	const matchRoute = useMatchRoute();
 	const { state } = useSidebar();
 	const groups = Array.from(Object.values(sidebarGroups));
 
@@ -54,7 +52,7 @@ function Content() {
 									className="text-[calc(var(--text-sm)-1px)] transition-colors duration-150 ease-out hover:cursor-pointer data-[active=false]:bg-inherit data-[active=true]:bg-primary data-[active=true]:text-primary-foreground data-[active=false]:hover:bg-primary data-[active=false]:hover:text-primary-foreground"
 									data-label={item.label}
 									asChild
-									isActive={pathname === item.href}
+									isActive={!!matchRoute({ to: item.href, fuzzy: true })}
 								>
 									<Link to={item.href}>
 										{item.icon ? <item.icon size="16" /> : null}
@@ -69,34 +67,5 @@ function Content() {
 				</SidebarGroup>
 			))}
 		</SidebarContent>
-	);
-}
-
-function Footer() {
-	const pathname = useRouterState().location.pathname;
-	const { state } = useSidebar();
-
-	return (
-		<SidebarFooter className="pb-4">
-			<SidebarMenu>
-				{footerItems.map((item) => (
-					<SidebarMenuButton
-						key={item.id}
-						tooltip={state === "collapsed" ? item.label : undefined}
-						className="text-[calc(var(--text-sm)-1px)] transition-colors duration-150 ease-out hover:cursor-pointer data-[active=false]:bg-inherit data-[active=true]:bg-primary data-[active=true]:text-primary-foreground data-[label='Logout']:text-destructive data-[active=false]:hover:bg-primary data-[label='Logout']:hover:bg-destructive data-[active=false]:hover:text-primary-foreground data-[label='Logout']:focus-within:ring-destructive"
-						data-label={item.label}
-						asChild
-						isActive={pathname === item.href}
-					>
-						<Link to={item.href}>
-							{item.icon ? <item.icon size="16" /> : null}
-							<span className="group-data-[collapsible=icon]:hidden">
-								{item.label}
-							</span>
-						</Link>
-					</SidebarMenuButton>
-				))}
-			</SidebarMenu>
-		</SidebarFooter>
 	);
 }

@@ -23,5 +23,3 @@ export const sidebarGroups = {
 		items: [pages.collaborations],
 	},
 } as const satisfies Record<string, SidebarGroup>;
-
-export const footerItems = [pages.settings, pages.logout];

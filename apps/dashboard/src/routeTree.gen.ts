@@ -13,6 +13,7 @@ import { Route as appRouteRouteImport } from './routes/(app)/route'
 import { Route as appmenuIndexRouteImport } from './routes/(app)/(menu)/index'
 import { Route as apppublicationProgramRouteImport } from './routes/(app)/(publication)/program'
 import { Route as apppublicationKategoriRouteImport } from './routes/(app)/(publication)/kategori'
+import { Route as apppartnershipKolaborasiRouteImport } from './routes/(app)/(partnership)/kolaborasi'
 import { Route as apporganizationPeriodeRouteImport } from './routes/(app)/(organization)/periode'
 import { Route as apporganizationJabatanRouteImport } from './routes/(app)/(organization)/jabatan'
 import { Route as apporganizationAnggotaRouteImport } from './routes/(app)/(organization)/anggota'
@@ -40,6 +41,12 @@ const apppublicationKategoriRoute = apppublicationKategoriRouteImport.update({
   path: '/kategori',
   getParentRoute: () => appRouteRoute,
 } as any)
+const apppartnershipKolaborasiRoute =
+  apppartnershipKolaborasiRouteImport.update({
+    id: '/(partnership)/kolaborasi',
+    path: '/kolaborasi',
+    getParentRoute: () => appRouteRoute,
+  } as any)
 const apporganizationPeriodeRoute = apporganizationPeriodeRouteImport.update({
   id: '/(organization)/periode',
   path: '/periode',
@@ -83,6 +90,7 @@ export interface FileRoutesByFullPath {
   '/anggota': typeof apporganizationAnggotaRoute
   '/jabatan': typeof apporganizationJabatanRoute
   '/periode': typeof apporganizationPeriodeRoute
+  '/kolaborasi': typeof apppartnershipKolaborasiRoute
   '/kategori': typeof apppublicationKategoriRoute
   '/program': typeof apppublicationProgramRoute
   '/': typeof appmenuIndexRoute
@@ -95,6 +103,7 @@ export interface FileRoutesByTo {
   '/anggota': typeof apporganizationAnggotaRoute
   '/jabatan': typeof apporganizationJabatanRoute
   '/periode': typeof apporganizationPeriodeRoute
+  '/kolaborasi': typeof apppartnershipKolaborasiRoute
   '/kategori': typeof apppublicationKategoriRoute
   '/program': typeof apppublicationProgramRoute
   '/': typeof appmenuIndexRoute
@@ -109,6 +118,7 @@ export interface FileRoutesById {
   '/(app)/(organization)/anggota': typeof apporganizationAnggotaRoute
   '/(app)/(organization)/jabatan': typeof apporganizationJabatanRoute
   '/(app)/(organization)/periode': typeof apporganizationPeriodeRoute
+  '/(app)/(partnership)/kolaborasi': typeof apppartnershipKolaborasiRoute
   '/(app)/(publication)/kategori': typeof apppublicationKategoriRoute
   '/(app)/(publication)/program': typeof apppublicationProgramRoute
   '/(app)/(menu)/': typeof appmenuIndexRoute
@@ -123,6 +133,7 @@ export interface FileRouteTypes {
     | '/anggota'
     | '/jabatan'
     | '/periode'
+    | '/kolaborasi'
     | '/kategori'
     | '/program'
     | '/'
@@ -135,6 +146,7 @@ export interface FileRouteTypes {
     | '/anggota'
     | '/jabatan'
     | '/periode'
+    | '/kolaborasi'
     | '/kategori'
     | '/program'
     | '/'
@@ -148,6 +160,7 @@ export interface FileRouteTypes {
     | '/(app)/(organization)/anggota'
     | '/(app)/(organization)/jabatan'
     | '/(app)/(organization)/periode'
+    | '/(app)/(partnership)/kolaborasi'
     | '/(app)/(publication)/kategori'
     | '/(app)/(publication)/program'
     | '/(app)/(menu)/'
@@ -189,6 +202,13 @@ declare module '@tanstack/react-router' {
       path: '/kategori'
       fullPath: '/kategori'
       preLoaderRoute: typeof apppublicationKategoriRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/(partnership)/kolaborasi': {
+      id: '/(app)/(partnership)/kolaborasi'
+      path: '/kolaborasi'
+      fullPath: '/kolaborasi'
+      preLoaderRoute: typeof apppartnershipKolaborasiRouteImport
       parentRoute: typeof appRouteRoute
     }
     '/(app)/(organization)/periode': {
@@ -247,6 +267,7 @@ interface appRouteRouteChildren {
   apporganizationAnggotaRoute: typeof apporganizationAnggotaRoute
   apporganizationJabatanRoute: typeof apporganizationJabatanRoute
   apporganizationPeriodeRoute: typeof apporganizationPeriodeRoute
+  apppartnershipKolaborasiRoute: typeof apppartnershipKolaborasiRoute
   apppublicationKategoriRoute: typeof apppublicationKategoriRoute
   apppublicationProgramRoute: typeof apppublicationProgramRoute
   appmenuIndexRoute: typeof appmenuIndexRoute
@@ -260,6 +281,7 @@ const appRouteRouteChildren: appRouteRouteChildren = {
   apporganizationAnggotaRoute: apporganizationAnggotaRoute,
   apporganizationJabatanRoute: apporganizationJabatanRoute,
   apporganizationPeriodeRoute: apporganizationPeriodeRoute,
+  apppartnershipKolaborasiRoute: apppartnershipKolaborasiRoute,
   apppublicationKategoriRoute: apppublicationKategoriRoute,
   apppublicationProgramRoute: apppublicationProgramRoute,
   appmenuIndexRoute: appmenuIndexRoute,

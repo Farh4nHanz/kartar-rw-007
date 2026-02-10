@@ -5,9 +5,7 @@ import {
 	Handshake,
 	Images,
 	LayoutDashboard,
-	LogOut,
 	Newspaper,
-	Settings,
 	Users,
 } from "lucide-react";
 import type { SidebarItem } from "./types";
@@ -66,17 +64,5 @@ export const pages = {
 		label: "Kolaborasi",
 		href: "/kolaborasi",
 		icon: Handshake,
-	},
-	settings: {
-		id: "settings",
-		label: "Settings",
-		href: "/pengaturan",
-		icon: Settings,
-	},
-	logout: {
-		id: "logout",
-		label: "Logout",
-		href: "/logout",
-		icon: LogOut,
 	},
 } as const satisfies Record<string, SidebarItem>;
