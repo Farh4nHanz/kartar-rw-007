@@ -162,13 +162,13 @@ export function MemberList() {
 				</div>
 
 				{isMembersFetchLoading ? (
-					<div className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
+					<div className="mt-5 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4">
 						<MemberCardSkeleton />
 					</div>
 				) : !membersData?.data.length ? (
 					<MemberListEmpty />
 				) : (
-					<div className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
+					<div className="mt-5 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4">
 						{membersData?.data.map((member) => (
 							<MemberCard
 								key={member.id}

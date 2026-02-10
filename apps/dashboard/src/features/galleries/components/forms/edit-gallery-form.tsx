@@ -163,6 +163,7 @@ export const EditGalleryForm = memo(
 					<CardContent className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4 max-md:grid-cols-[repeat(auto-fill,minmax(150px,1fr))]">
 						{selectedData.images.map((image) => (
 							<form.Subscribe
+								key={image.id}
 								selector={(state) => state.values.deleted_image_ids}
 							>
 								{(deleteIds) => {
