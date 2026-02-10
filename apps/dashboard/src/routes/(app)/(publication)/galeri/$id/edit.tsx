@@ -3,29 +3,29 @@ import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { Button } from "@workspace/ui/components/button";
 import { ArrowLeft } from "lucide-react";
 import { getAllCategoriesQueryOptions } from "@/features/categories/hooks/query-options";
-import { EditNewsForm } from "@/features/news/components/forms/edit-news-form";
-import { getNewsDetailBySlugQueryOptions } from "@/features/news/hooks/query-options";
-import type { News } from "@/features/news/services";
+import { EditGalleryForm } from "@/features/galleries/components/forms/edit-gallery-form";
+import { getGalleryDetailByIdQueryOptions } from "@/features/galleries/hooks/query-options";
+import type { Gallery } from "@/features/galleries/services";
 
 export const Route = createFileRoute("/(app)/(publication)/galeri/$id/edit")({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) =>
 		queryClient.ensureQueryData(
-			getAllCategoriesQueryOptions({ type: "berita" }),
+			getAllCategoriesQueryOptions({ type: "galeri" }),
 		),
 });
 
 function RouteComponent() {
-	const { slug } = useParams({
-		from: "/(app)/(publication)/berita/$slug/edit",
+	const { id } = useParams({
+		from: "/(app)/(publication)/galeri/$id/edit",
 	});
 
-	const { data: categories, isLoading: isCategoriesDataFetchLoading } =
-		useQuery(getAllCategoriesQueryOptions({ type: "berita" }));
-
-	const { data: news, isLoading: isNewsDataFetchLoading } = useQuery(
-		getNewsDetailBySlugQueryOptions(slug),
+	const { data: gallery, isLoading: isGalleryDataFetchLoading } = useQuery(
+		getGalleryDetailByIdQueryOptions(id),
 	);
+
+	const { data: categories, isLoading: isCategoriesDataFetchLoading } =
+		useQuery(getAllCategoriesQueryOptions({ type: "galeri" }));
 
 	return (
 		<div className="h-full min-h-dvh w-full space-y-8 overflow-x-auto px-4 pt-20 pb-6">
@@ -36,22 +36,22 @@ function RouteComponent() {
 					className="shrink-0 self-start"
 					asChild
 				>
-					<Link to="/berita">
+					<Link to="/galeri">
 						<ArrowLeft />
 					</Link>
 				</Button>
 
 				<hgroup className="space-y-1">
-					<h1 className="font-bold text-2xl">Edit Berita</h1>
+					<h1 className="font-bold text-2xl">Edit Galeri</h1>
 					<h3 className="text-muted-foreground text-sm">
-						Ubah, simpan ke dalam draft atau publikasikan berita atau informasi.
+						{gallery?.data?.title}
 					</h3>
 				</hgroup>
 			</div>
 
-			<EditNewsForm
-				isLoading={isCategoriesDataFetchLoading || isNewsDataFetchLoading}
-				selectedData={news?.data as News}
+			<EditGalleryForm
+				isLoading={isCategoriesDataFetchLoading || isGalleryDataFetchLoading}
+				selectedData={gallery?.data as Gallery}
 				categories={categories?.data || []}
 			/>
 		</div>

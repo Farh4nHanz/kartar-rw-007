@@ -5,7 +5,7 @@ import { AlertTriangle, RefreshCcw } from "lucide-react";
 function GalleryGrid({ children, ...props }: React.ComponentProps<"div">) {
 	return (
 		<div
-			className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] items-center justify-center gap-5"
+			className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] items-center justify-center gap-5"
 			{...props}
 		>
 			{children}

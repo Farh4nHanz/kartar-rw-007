@@ -10,7 +10,7 @@ import type {
 	EditGalleryFormValues as EditGalleryPayload,
 } from "./schemas";
 
-export type GalleryDB = Omit<
+type GalleryDB = Omit<
 	Tables<"galleries">,
 	"category_id" | "created_at" | "updated_at"
 > & {

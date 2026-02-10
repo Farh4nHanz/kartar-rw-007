@@ -14,10 +14,7 @@ import type { Gallery } from "@/features/galleries/services";
 import { DeleteGalleryModal } from "./modals/delete-gallery-modal";
 
 function GalleryCard({ gallery }: { gallery: Gallery }) {
-	const [modalState, setModalState] = useState({
-		isAddModalOpen: false,
-		isDeleteModalOpen: false,
-	});
+	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
 	return (
 		<Card className="pt-0">
@@ -70,20 +67,18 @@ function GalleryCard({ gallery }: { gallery: Gallery }) {
 						variant="ghost"
 						className="bg-amber-500/20 text-amber-800 hover:bg-amber-500/30 hover:text-amber-800 dark:bg-amber-500 dark:text-amber-50 dark:hover:bg-amber-500/80"
 						size="icon"
-						onClick={() =>
-							setModalState((prev) => ({ ...prev, isAddModalOpen: true }))
-						}
+						asChild
 					>
-						<Edit />
+						<Link to="/galeri/$id/edit" params={{ id: gallery.id }}>
+							<Edit />
+						</Link>
 					</Button>
 
 					{/* Delete Action */}
 					<Button
 						variant="destructive"
 						size="icon"
-						onClick={() =>
-							setModalState((prev) => ({ ...prev, isDeleteModalOpen: true }))
-						}
+						onClick={() => setIsDeleteModalOpen((prev) => !prev)}
 					>
 						<Trash2 />
 					</Button>
@@ -91,10 +86,8 @@ function GalleryCard({ gallery }: { gallery: Gallery }) {
 					{/* Delete Modal */}
 					<DeleteGalleryModal
 						selectedData={gallery}
-						isModalOpen={modalState.isDeleteModalOpen}
-						setIsModalOpen={(open) =>
-							setModalState((prev) => ({ ...prev, isDeleteModalOpen: open }))
-						}
+						isModalOpen={isDeleteModalOpen}
+						setIsModalOpen={() => setIsDeleteModalOpen((prev) => !prev)}
 					/>
 				</div>
 			</CardFooter>

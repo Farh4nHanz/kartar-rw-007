@@ -6,7 +6,7 @@ import {
 	getGalleryDetailById,
 } from "@/features/galleries/services";
 
-export function getAllGalleriesQueryOptions(params: GetAllGalleriesParams) {
+export function getAllGalleriesQueryOptions(params?: GetAllGalleriesParams) {
 	return queryOptions({
 		queryKey: [...GALLERIES_QUERY_KEYS.all, params],
 		queryFn: () => getAllGalleries(params),

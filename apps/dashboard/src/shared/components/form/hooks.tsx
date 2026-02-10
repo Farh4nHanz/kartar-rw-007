@@ -1,5 +1,6 @@
 import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 import { FormCheckbox } from "./form-checkbox";
+import { FormDatePicker } from "./form-date-picker";
 import { FormFileInput } from "./form-file-input";
 import { FormInput } from "./form-input";
 import { FormInputNumber } from "./form-input-number";
@@ -20,5 +21,6 @@ export const { useAppForm } = createFormHook({
 		Textarea: FormTextarea,
 		Select: FormSelect,
 		Checkbox: FormCheckbox,
+		DatePicker: FormDatePicker,
 	},
 });

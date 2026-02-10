@@ -4,9 +4,7 @@ export const addGallerySchema = z.object({
 	title: z.string().min(1, "Mohon isi nama galeri."),
 	description: z.string().min(1, "Mohon isi deskripsi tentang galeri ini."),
 	category_id: z.string().min(1, "Pilih kategori terlebih dahulu."),
-	activity_date: z.date({
-		error: "Mohon isi tanggal kegiatan.",
-	}),
+	activity_date: z.string().min(1, "Mohon isi tanggal kegiatan."),
 	images: z
 		.array(
 			z
@@ -31,13 +29,13 @@ export const addGallerySchema = z.object({
 export type AddGalleryFormValues = z.infer<typeof addGallerySchema>;
 
 export const editGallerySchema = z.object({
-	title: z.string().min(1),
-	description: z.string().min(1),
-	category_id: z.string().min(1),
-	activity_date: z.coerce.date(),
+	title: z.string().min(1, "Mohon isi nama galeri."),
+	description: z.string().min(1, "Mohon isi deskripsi tentang galeri ini."),
+	category_id: z.string().min(1, "Pilih kategori terlebih dahulu."),
+	activity_date: z.string().min(1, "Mohon isi tanggal kegiatan."),
 });
 
-export const editGalleryImagesSchema = z.object({
+const editGalleryImagesSchema = z.object({
 	added_images: z
 		.array(
 			z
