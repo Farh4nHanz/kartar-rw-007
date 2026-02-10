@@ -1,5 +1,6 @@
 export const GALLERIES_QUERY_KEYS = {
 	all: ["galleries"],
+	byId: (id: string) => [...GALLERIES_QUERY_KEYS.all, id],
 } as const;
 
 export const GALLERIES_MUTATION_KEYS = {

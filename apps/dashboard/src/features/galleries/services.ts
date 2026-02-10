@@ -2,6 +2,7 @@ import type { Tables } from "@workspace/supabase/database.types";
 import type {
 	Meta,
 	SuccessResponse,
+	SuccessResponseWithData,
 	SuccessResponseWithMeta,
 } from "@/shared/types/api";
 import type {
@@ -45,14 +46,14 @@ export async function getAllGalleries(
 	// const { page, limit, name } = params || {};
 
 	// let query = supabase.from("galleries").select(
-	// 	`
-	// 		id,
-	// 		title,
-	// 		description,
-	// 		activity_date,
-	// 		category:categories(id, name, type),
-	// 		images:gallery_images(id, image_path)
-	// 		`,
+	// `
+	// 	id,
+	// 	title,
+	// 	description,
+	// 	activity_date,
+	// 	category:categories(id, name, type),
+	// 	images:gallery_images(id, image_path)
+	// 	`,
 	// 	{ count: "exact" },
 	// );
 
@@ -127,6 +128,62 @@ export async function getAllGalleries(
 		},
 	};
 }
+
+export const getGalleryDetailById = async (
+	_id: string,
+): Promise<SuccessResponseWithData<Gallery>> => {
+	// const { data, error } = await supabase
+	// 	.from("galleries")
+	// 	.select(
+	// 		`
+	// 		id,
+	// 		title,
+	// 		description,
+	// 		activity_date,
+	// 		category:categories(id, name, type),
+	// 		images:gallery_images(id, image_path)
+	// 		`,
+	// 	)
+	// 	.eq("id", id)
+	// 	.single();
+
+	// if (error) {
+	// 	throw new ApiError(error.message, error.code);
+	// }
+
+	// const images: Gallery["images"] = data.images.map((image) => ({
+	// 	id: image.id,
+	// 	image_url: getPublicImageUrl(GALLERY_BUCKET, image.image_path),
+	// }));
+
+	return {
+		success: true,
+		message: "Data diambil dengan sukses.",
+		data: {
+			id: "1",
+			title: "Galeri 1",
+			description: "Deskripsi galeri 1",
+			category: {
+				id: "1",
+				name: "galeri",
+				type: "galeri",
+			},
+			activity_date: new Date().toISOString(),
+			images: [
+				{
+					id: "1",
+					image_url: "https://placehold.co/600x400",
+				},
+			],
+			// id: data.id,
+			// title: data.title,
+			// description: data.description,
+			// activity_date: data.activity_date,
+			// category: data.category,
+			// images,
+		},
+	};
+};
 
 export async function addNewGallery(
 	_payload: AddGalleryPayload,
