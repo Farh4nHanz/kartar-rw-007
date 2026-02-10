@@ -12,12 +12,12 @@ export const addNewsSchema = z.object({
 	),
 	content: z.string().min(1, "Mohon isi konten berita."),
 	excerpt: z.string().readonly(),
-	category_id: z.string().min(1, "Silahkan pilih kategori."),
+	category_id: z.string().min(1, "Pilih kategori terlebih dahulu."),
 	is_published: z.boolean(),
 	published_at: z.string().nullable(),
 	thumbnail: z
 		.instanceof(File, {
-			error: "Silahkan upload thumbnail berita.",
+			error: "Mohon upload foto thumbnail berita.",
 		})
 		.refine(
 			(file) =>
@@ -46,7 +46,7 @@ export const editNewsSchema = z.object({
 	),
 	content: z.string().min(1, "Mohon isi konten berita."),
 	excerpt: z.string().readonly(),
-	category_id: z.string().min(1, "Silahkan pilih kategori."),
+	category_id: z.string().min(1, "Pilih kategori terlebih dahulu."),
 	is_published: z.boolean(),
 	published_at: z.string().nullable(),
 	thumbnail: z
