@@ -1,4 +1,6 @@
 import type { Tables } from "@workspace/supabase/database.types";
+import { supabase } from "@workspace/supabase/supabase";
+import { ApiError } from "@/shared/lib/api-error";
 import type {
 	Meta,
 	SuccessResponse,
@@ -16,94 +18,87 @@ export type GetAllPositionsParams = {
 };
 
 export async function getAllPositions(
-	_params?: GetAllPositionsParams,
+	params?: GetAllPositionsParams,
 ): Promise<SuccessResponseWithMeta<Position[], Meta>> {
-	// const { page, limit, sort, status } = params;
+	const { page, limit, sort, status } = params || {};
 
-	// let query = supabase.from("positions").select("*", { count: "exact" });
+	let query = supabase
+		.from("positions")
+		.select("*", { count: "exact" })
+		.order("sort_order", { ascending: true });
 
-	// // Status filter
-	// if (status) {
-	// 	const isActive = status === "active";
-	// 	query = query.eq("is_active", isActive);
-	// }
+	// Status filter
+	if (status) {
+		const isActive = status === "active";
+		query = query.eq("is_active", isActive);
+	}
 
-	// // Sorting
-	// if (sort) {
-	// 	const [field, direction] = sort.split(".");
-	// 	query = query.order(field, {
-	// 		ascending: direction === "asc",
-	// 	});
-	// } else {
-	// 	// Default sort by created_at descending
-	// 	query = query.order("sort_order", { ascending: false });
-	// }
+	// Sorting
+	if (sort) {
+		const [field, direction] = sort.split(".");
+		query = query.order(field, {
+			ascending: direction === "asc",
+		});
+	} else {
+		// Default sort by created_at descending
+		query = query.order("sort_order", { ascending: false });
+	}
 
-	// let data: Position[] = [];
-	// let count = 0;
+	let data: Position[] = [];
+	let count = 0;
 
-	// // Pagination
-	// if (page && limit) {
-	// const offset = (page - 1) * limit;
-	// const { data: paginatedData, error, count: countData } = await query.range(offset, offset + limit - 1);
+	// Pagination
+	if (page && limit) {
+		const offset = (page - 1) * limit;
+		const {
+			data: paginatedData,
+			error,
+			count: countData,
+		} = await query.range(offset, offset + limit - 1);
 
-	// if (error) throw new ApiError(error.message, error.code);
+		if (error) throw new ApiError(error.message, error.code);
 
-	// data = paginatedData || [];
-	// count = countData
-	// } else {
-	// const { data: allData, error, count: allCount } = await query;
+		data = paginatedData || [];
+		count = countData || 0;
+	} else {
+		const { data: allData, error, count: allCount } = await query;
 
-	// if (error) throw new ApiError(error.message, error.code);
+		if (error) throw new ApiError(error.message, error.code);
 
-	// data = paginatedData || [];
-	// count = countData
-	// }
+		data = allData || [];
+		count = allCount || 0;
+	}
 
-	await new Promise((r) => setTimeout(r, 3000));
 	return {
 		success: true,
 		message: "Data diambil dengan sukses.",
-		// data: data || [],
-		data: [
-			{
-				id: "okdowd1",
-				name: "Ketua",
-				description: "Pemimpin organisasi",
-				sort_order: 1,
-				is_active: true,
-				created_at: new Date().toISOString(),
-				updated_at: new Date().toISOString(),
-			},
-			{
-				id: "okdowd1qokwoqk",
-				name: "Wakil Ketua",
-				description: "Wakil pemimpin",
-				sort_order: 2,
-				is_active: true,
-				created_at: new Date().toISOString(),
-				updated_at: new Date().toISOString(),
-			},
-		],
+		data,
 		meta: {
-			totalPages: 1,
-			currentPage: 1,
-			pageSize: 1,
-			// totalPages: page && limit ? Math.ceil(count / limit) : 1,
-			// currentPage: page,
-			// pageSize: limit,
+			totalPages: page && limit ? Math.ceil(count / limit) : 1,
+			currentPage: page || 1,
+			pageSize: limit || 10,
 		},
 	};
 }
 
 export async function addNewPosition(
-	_payload: PositionPayload,
+	payload: PositionPayload,
 ): Promise<SuccessResponse> {
-	// const { error } = await supabase.from("positions").insert(payload);
+	const { data: existingData } = await supabase
+		.from("positions")
+		.select("sort_order")
+		.eq("sort_order", payload.sort_order)
+		.eq("is_active", true);
 
-	// if (error) throw new ApiError(error.message, error.code);
+	if (existingData)
+		throw new ApiError(
+			"Tingkat jabatan sudah dimiliki oleh jabatan lain dan tidak boleh sama.",
+		);
 
-	await new Promise((r) => setTimeout(r, 3000));
+	const { error } = await supabase.from("positions").insert(payload);
+
+	if (error) throw new ApiError(error.message, error.code);
+
 	return {
 		success: true,
 		message: "Jabatan baru berhasil ditambahkan.",
@@ -111,17 +106,26 @@ export async function addNewPosition(
 }
 
 export async function updatePositionById(
-	_id: string,
-	_payload: PositionPayload,
+	id: string,
+	payload: PositionPayload,
 ): Promise<SuccessResponse> {
-	// const { error } = await supabase
-	// 	.from("positions")
-	// 	.update(payload)
-	// 	.eq("id", id);
+	const { data: existingData } = await supabase
+		.from("positions")
+		.select("sort_order")
+		.eq("sort_order", payload.sort_order)
+		.eq("is_active", true);
 
-	// if (error) throw new ApiError(error.message, error.code);
+	if (existingData)
+		throw new ApiError(
+			"Tingkat jabatan sudah dimiliki oleh jabatan lain dan tidak boleh sama.",
+		);
 
-	await new Promise((r) => setTimeout(r, 3000));
+	const { error } = await supabase
+		.from("positions")
+		.update(payload)
+		.eq("id", id);
+
+	if (error) throw new ApiError(error.message, error.code);
 
 	return {
 		success: true,
@@ -129,14 +133,10 @@ export async function updatePositionById(
 	};
 }
 
-export async function deletePositionById(
-	_id: string,
-): Promise<SuccessResponse> {
-	// const { error } = await supabase.from("positions").delete().eq("id", id);
+export async function deletePositionById(id: string): Promise<SuccessResponse> {
+	const { error } = await supabase.from("positions").delete().eq("id", id);
 
-	// if (error) throw new ApiError(error.message, error.code);
-
-	await new Promise((r) => setTimeout(r, 3000));
+	if (error) throw new ApiError(error.message, error.code);
 
 	return {
 		success: true,

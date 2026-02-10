@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSearch } from "@tanstack/react-router";
 import { Button } from "@workspace/ui/components/button";
 import { DialogClose, DialogFooter } from "@workspace/ui/components/dialog";
@@ -7,6 +7,7 @@ import { ComponentLoader } from "@workspace/ui/components/loader";
 import { SelectGroup, SelectItem } from "@workspace/ui/components/select";
 import { memo } from "react";
 import { toast } from "sonner";
+import { getAllCategoriesQueryOptions } from "@/features/categories/hooks/query-options";
 import type { Category } from "@/features/categories/services";
 import { addNewProgramMutationOptions } from "@/features/programs/hooks/mutation-options";
 import { getAllProgramsQueryOptions } from "@/features/programs/hooks/query-options";
@@ -110,15 +111,26 @@ export const AddProgramForm = memo(
 								{(field) => (
 									<field.Select label="Kategori" placeholder="Kategori">
 										<SelectGroup>
-											{categories.map((category) => (
+											{!categories?.length ? (
 												<SelectItem
-													key={category.id}
-													value={category.id}
-													className="capitalize"
+													value="empty"
+													className="text-muted-foreground"
+													disabled
 												>
-													{category.name}
+													Tidak ada kategori
 												</SelectItem>
-											))}
+											) : (
+												categories?.map((category) => (
+													<SelectItem
+														key={category.id}
+														value={category.id}
+														className="capitalize"
+														disabled={!categories.length}
+													>
+														{category.name}
+													</SelectItem>
+												))
+											)}
 										</SelectGroup>
 									</field.Select>
 								)}

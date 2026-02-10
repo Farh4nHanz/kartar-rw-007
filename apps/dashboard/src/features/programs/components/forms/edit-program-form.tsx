@@ -115,15 +115,26 @@ export const EditProgramForm = memo(
 								{(field) => (
 									<field.Select label="Kategori" placeholder="Kategori">
 										<SelectGroup>
-											{categories.map((category) => (
+											{!categories?.length ? (
 												<SelectItem
-													key={category.id}
-													value={category.id}
-													className="capitalize"
+													value="empty"
+													className="text-muted-foreground"
+													disabled
 												>
-													{category.name}
+													Tidak ada kategori
 												</SelectItem>
-											))}
+											) : (
+												categories?.map((category) => (
+													<SelectItem
+														key={category.id}
+														value={category.id}
+														className="capitalize"
+														disabled={!categories.length}
+													>
+														{category.name}
+													</SelectItem>
+												))
+											)}
 										</SelectGroup>
 									</field.Select>
 								)}

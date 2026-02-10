@@ -1,4 +1,5 @@
-import type { Tables } from "@workspace/supabase";
+import { supabase, type Tables } from "@workspace/supabase";
+import { ApiError } from "@/shared/lib/api-error";
 import type {
 	Meta,
 	SuccessResponse,
@@ -17,95 +18,77 @@ export type GetAllPeriodsParams = {
 };
 
 export async function getAllPeriods(
-	_params?: GetAllPeriodsParams,
+	params?: GetAllPeriodsParams,
 ): Promise<SuccessResponseWithMeta<Period[], Meta>> {
-	// const { page, limit, sort, name, status } = params;
+	const { page, limit, sort, name, status } = params || {};
 
-	// let query = supabase.from("periods").select("*", { count: "exact" });
+	let query = supabase.from("periods").select("*", { count: "exact" });
 
-	// // Search filter
-	// if (name) {
-	// 	query = query.ilike("name", `%${name}%`);
-	// }
+	// Search filter
+	if (name) {
+		query = query.ilike("name", `%${name}%`);
+	}
 
-	// // Status filter
-	// if (status) {
-	// 	const isActive = status === "active";
-	// 	query = query.eq("is_active", isActive);
-	// }
+	// Status filter
+	if (status) {
+		const isActive = status === "active";
+		query = query.eq("is_active", isActive);
+	}
 
-	// // Sorting
-	// if (sort) {
-	// 	const [field, direction] = sort.split(".");
-	// 	query = query.order(field, {
-	// 		ascending: direction === "asc",
-	// 	});
-	// } else {
-	// 	// Default sort by created_at descending
-	// 	query = query.order("created_at", { ascending: false });
-	// }
+	// Sorting
+	if (sort) {
+		const [field, direction] = sort.split(".");
+		query = query.order(field, {
+			ascending: direction === "asc",
+		});
+	} else {
+		// Default sort by created_at descending
+		query = query.order("created_at", { ascending: false });
+	}
 
-	// let data: Period[] = [];
-	// let count = 0;
+	let data: Period[] = [];
+	let count = 0;
 
-	// // Pagination
-	// if (page && limit) {
-	// 	const offset = (page - 1) * limit;
-	// 	const {
-	// 		data: paginatedData,
-	// 		error,
-	// 		count: countData,
-	// 	} = await query.range(offset, offset + limit - 1);
+	// Pagination
+	if (page && limit) {
+		const offset = (page - 1) * limit;
+		const {
+			data: paginatedData,
+			error,
+			count: countData,
+		} = await query.range(offset, offset + limit - 1);
 
-	// 	if (error) throw new ApiError(error.message, error.code);
+		if (error) throw new ApiError(error.message, error.code);
 
-	// 	data = paginatedData || [];
-	// 	count = countData;
-	// } else {
-	// 	const { data: allData, error, count: allCount } = await query;
+		data = paginatedData || [];
+		count = countData || 0;
+	} else {
+		const { data: allData, error, count: allCount } = await query;
 
-	// 	if (error) throw new ApiError(error.message, error.code);
+		if (error) throw new ApiError(error.message, error.code);
 
-	// 	data = allData || [];
-	// 	count = allCount;
-	// }
-
-	await new Promise((r) => setTimeout(r, 3000));
+		data = allData || [];
+		count = allCount || 0;
+	}
 
 	return {
 		success: true,
 		message: "Data diambil dengan sukses.",
-		// data: data || [],
-		data: [
-			{
-				id: "193928310981ooksqo",
-				created_at: new Date().toISOString(),
-				end_year: new Date().getFullYear(),
-				is_active: true,
-				name: "Kepengurusan 2024-2026",
-				start_year: new Date().getFullYear() - 2,
-				updated_at: new Date().toISOString(),
-			},
-		],
+		data,
 		meta: {
-			// totalPages: page && limit ? Math.ceil(count / limit) : 1,
-			// currentPage: page,
-			// pageSize: limit,
-			totalPages: 1,
-			currentPage: 1,
-			pageSize: 1,
+			totalPages: page && limit ? Math.ceil(count / limit) : 1,
+			currentPage: page || 1,
+			pageSize: limit || 10,
 		},
 	};
 }
 
 export async function addNewPeriod(
-	_payload: PeriodPayload,
+	payload: PeriodPayload,
 ): Promise<SuccessResponse> {
-	// const { error } = await supabase.from("periods").insert(payload);
+	const { error } = await supabase.from("periods").insert(payload);
 
-	// if (error) throw new ApiError(error.message, error.code);
-
-	await new Promise((r) => setTimeout(r, 3000));
+	if (error) throw new ApiError(error.message, error.code);
 
 	return {
 		success: true,
@@ -114,14 +97,12 @@ export async function addNewPeriod(
 }
 
 export async function updatePeriodById(
-	_id: string,
-	_payload: PeriodPayload,
+	id: string,
+	payload: PeriodPayload,
 ): Promise<SuccessResponse> {
-	// const { error } = await supabase.from("periods").update(payload).eq("id", id);
+	const { error } = await supabase.from("periods").update(payload).eq("id", id);
 
-	// if (error) throw new ApiError(error.message, error.code);
-
-	await new Promise((r) => setTimeout(r, 3000));
+	if (error) throw new ApiError(error.message, error.code);
 
 	return {
 		success: true,
@@ -129,12 +110,10 @@ export async function updatePeriodById(
 	};
 }
 
-export async function deletePeriodById(_id: string): Promise<SuccessResponse> {
-	// const { error } = await supabase.from("periods").delete().eq("id", id);
+export async function deletePeriodById(id: string): Promise<SuccessResponse> {
+	const { error } = await supabase.from("periods").delete().eq("id", id);
 
-	// if (error) throw new ApiError(error.message, error.code);
-
-	await new Promise((r) => setTimeout(r, 3000));
+	if (error) throw new ApiError(error.message, error.code);
 
 	return {
 		success: true,

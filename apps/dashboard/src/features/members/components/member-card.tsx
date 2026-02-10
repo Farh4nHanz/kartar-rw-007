@@ -25,6 +25,7 @@ function MemberCard({
 }) {
 	const [isDeleteMemberModalOpen, setIsDeleteMemberModalOpen] = useState(false);
 	const [isEditMemberModalOpen, setIsEditMemberModalOpen] = useState(false);
+	console.log(member);
 
 	return (
 		<Card className="bg-primary/15 ring-primary/15 transition-shadow hover:shadow-md">
@@ -37,12 +38,12 @@ function MemberCard({
 				</Avatar>
 
 				<div className="flex-1 space-y-0.5">
-					<h4 className="mb-2 font-bold text-sm">{member.name}</h4>
+					<h4 className="mb-2 font-bold text-sm capitalize">{member.name}</h4>
 
-					<p className="font-semibold text-muted-foreground text-xs">
+					<p className="font-semibold text-muted-foreground text-xs capitalize">
 						{member.positions.name}
 					</p>
-					<p className="text-muted-foreground text-xs">
+					<p className="text-muted-foreground text-xs capitalize">
 						Periode {member.periods.start_year}-{member.periods.end_year}
 					</p>
 				</div>

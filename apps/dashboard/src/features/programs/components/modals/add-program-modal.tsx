@@ -32,7 +32,7 @@ export const AddProgramModal = memo(
 				</DialogDescription>
 
 				<AddProgramForm
-					categories={categories}
+					categories={categories || []}
 					onSuccess={() => setIsModalOpen(false)}
 				/>
 			</DialogContent>
