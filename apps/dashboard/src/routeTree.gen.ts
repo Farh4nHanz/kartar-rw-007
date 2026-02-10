@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as appRouteRouteImport } from './routes/(app)/route'
+import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as appmenuIndexRouteImport } from './routes/(app)/(menu)/index'
 import { Route as apppublicationProgramRouteImport } from './routes/(app)/(publication)/program'
 import { Route as apppublicationKategoriRouteImport } from './routes/(app)/(publication)/kategori'
@@ -28,6 +29,11 @@ import { Route as apppublicationBeritaSlugDetailRouteImport } from './routes/(ap
 
 const appRouteRoute = appRouteRouteImport.update({
   id: '/(app)',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authLoginRoute = authLoginRouteImport.update({
+  id: '/(auth)/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const appmenuIndexRoute = appmenuIndexRouteImport.update({
@@ -114,6 +120,7 @@ const apppublicationBeritaSlugDetailRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
+  '/login': typeof authLoginRoute
   '/anggota': typeof apporganizationAnggotaRoute
   '/jabatan': typeof apporganizationJabatanRoute
   '/periode': typeof apporganizationPeriodeRoute
@@ -131,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/galeri/$id/edit': typeof apppublicationGaleriIdEditRoute
 }
 export interface FileRoutesByTo {
+  '/login': typeof authLoginRoute
   '/anggota': typeof apporganizationAnggotaRoute
   '/jabatan': typeof apporganizationJabatanRoute
   '/periode': typeof apporganizationPeriodeRoute
@@ -150,6 +158,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(app)': typeof appRouteRouteWithChildren
+  '/(auth)/login': typeof authLoginRoute
   '/(app)/(organization)/anggota': typeof apporganizationAnggotaRoute
   '/(app)/(organization)/jabatan': typeof apporganizationJabatanRoute
   '/(app)/(organization)/periode': typeof apporganizationPeriodeRoute
@@ -169,6 +178,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/login'
     | '/anggota'
     | '/jabatan'
     | '/periode'
@@ -186,6 +196,7 @@ export interface FileRouteTypes {
     | '/galeri/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/login'
     | '/anggota'
     | '/jabatan'
     | '/periode'
@@ -204,6 +215,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/(app)'
+    | '/(auth)/login'
     | '/(app)/(organization)/anggota'
     | '/(app)/(organization)/jabatan'
     | '/(app)/(organization)/periode'
@@ -223,6 +235,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   appRouteRoute: typeof appRouteRouteWithChildren
+  authLoginRoute: typeof authLoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -232,6 +245,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof appRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/login': {
+      id: '/(auth)/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof authLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(app)/(menu)/': {
@@ -384,6 +404,7 @@ const appRouteRouteWithChildren = appRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   appRouteRoute: appRouteRouteWithChildren,
+  authLoginRoute: authLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
