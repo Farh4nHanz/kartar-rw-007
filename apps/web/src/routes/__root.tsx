@@ -23,13 +23,44 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 				title: "Karang Taruna RW 07",
 			},
 			{
+				name: "keywords",
+				content:
+					"Karang Taruna, RW 07, Pembinaan, Pemberdayaan, Pemuda, Organisasi, Sosial, Masyarakat",
+			},
+			{
+				name: "author",
+				content: "Karang Taruna RW 07",
+			},
+			{
 				name: "description",
-				content: "kartar-rw-007 is a web application",
+				content:
+					"Karang Taruna RW 07 merupakan wadah pembinaan dan pemberdayaan pemuda tingkat RW yang berfokus pada pengembangan kreativitas, kepedulian sosial, dan partisipasi aktif dalam masyarakat.",
 			},
 		],
 		links: [
 			{
 				rel: "icon",
+				href: "/favicon.ico",
+			},
+			{
+				rel: "apple-touch-icon",
+				sizes: "180x180",
+				href: "/apple-touch-icon.png",
+			},
+			{
+				rel: "icon",
+				type: "image/png",
+				sizes: "32x32",
+				href: "/favicon-32x32.png",
+			},
+			{
+				rel: "icon",
+				type: "image/png",
+				sizes: "16x16",
+				href: "/favicon-16x16.png",
+			},
+			{
+				rel: "shortcut icon",
 				href: "/favicon.ico",
 			},
 		],
