@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import { Button } from "@workspace/ui/components/button";
 import { Card, CardContent } from "@workspace/ui/components/card";
 import { FieldGroup, FieldSet } from "@workspace/ui/components/field";
@@ -27,6 +27,10 @@ export const AddGalleryForm = memo(
 	}) => {
 		const navigate = useNavigate({
 			from: "/galeri/new",
+		});
+
+		const search = useSearch({
+			from: "/(app)/(publication)/galeri/new",
 		});
 
 		const { mutateAsync } = useMutation(addGalleryMutationOptions());
@@ -59,8 +63,9 @@ export const AddGalleryForm = memo(
 						console.log(payload);
 
 						form.reset();
+
 						context.client.invalidateQueries({
-							queryKey: getAllGalleriesQueryOptions().queryKey,
+							queryKey: getAllGalleriesQueryOptions(search).queryKey,
 						});
 
 						navigate({ to: "/galeri", replace: true });

@@ -28,8 +28,10 @@ export function RecentNews({ data }: RecentNewsProps) {
 							<Newspaper size={20} className="text-primary" />
 						</div>
 						<div className="flex-1">
-							<p className="truncate font-medium text-sm">{news.title}</p>
-							<div className="mt-1 flex items-center gap-2">
+							<p className="truncate font-medium text-sm capitalize">
+								{news.title}
+							</p>
+							<div className="mt-1 flex items-center justify-between gap-2">
 								<small className="text-muted-foreground text-xs">
 									{new Intl.DateTimeFormat("id-ID", {
 										day: "numeric",
@@ -39,7 +41,7 @@ export function RecentNews({ data }: RecentNewsProps) {
 										new Date((news.published_at as string) || Date.now()),
 									)}
 								</small>
-								<Badge className="bg-secondary px-2 py-0.5 text-xs">
+								<Badge className="bg-gray-200 px-2 py-0.5 text-gray-700 text-xs capitalize dark:bg-gray-500 dark:text-gray-50">
 									{news.categories.name}
 								</Badge>
 							</div>

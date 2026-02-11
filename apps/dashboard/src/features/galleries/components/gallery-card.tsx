@@ -41,7 +41,7 @@ function GalleryCard({ gallery }: { gallery: Gallery }) {
 						}).format(new Date(gallery.activity_date))}
 					</p>
 					<p className="text-muted-foreground text-xs">
-						{gallery.images.length} foto
+						{gallery.images.length} Foto
 					</p>
 				</div>
 

@@ -105,22 +105,22 @@ function RouteComponent() {
 		() => [
 			{
 				label: "Total Anggota Aktif",
-				value: statisticsData?.totalActiveMembers || 0,
+				value: statisticsData?.data.totalActiveMembers,
 				icon: Users,
 			},
 			{
 				label: "Total Program & Kegiatan",
-				value: statisticsData?.totalPrograms || 0,
+				value: statisticsData?.data.totalPrograms,
 				icon: FileText,
 			},
 			{
 				label: "Total Galeri",
-				value: statisticsData?.totalGalleries || 0,
+				value: statisticsData?.data.totalGalleries,
 				icon: Images,
 			},
 			{
 				label: "Total Berita",
-				value: statisticsData?.totalNews || 0,
+				value: statisticsData?.data.totalNews,
 				icon: Newspaper,
 			},
 		],
@@ -139,7 +139,7 @@ function RouteComponent() {
 					<StatisticCard
 						key={stat.value}
 						title={stat.label}
-						metric={stat.value}
+						metric={stat.value || 0}
 						icon={stat.icon}
 					/>
 				))}
@@ -149,19 +149,19 @@ function RouteComponent() {
 				{/* Recent News */}
 				{isRecentNewsDataFetchLoading ? (
 					<RecentNewsSkeleton />
-				) : !recentNewsData?.length ? (
+				) : !recentNewsData?.data.length ? (
 					<RecentNewsEmpty />
 				) : (
-					<RecentNews data={recentNewsData || []} />
+					<RecentNews data={recentNewsData.data || []} />
 				)}
 
 				{/* Recent Galleries */}
 				{isRecentGalleriesDataFetchLoading ? (
 					<RecentGalleriesSkeleton />
-				) : !recentGalleriesData?.length ? (
+				) : !recentGalleriesData?.data.length ? (
 					<RecentGalleriesEmpty />
 				) : (
-					<RecentGalleries data={recentGalleriesData || []} />
+					<RecentGalleries data={recentGalleriesData.data || []} />
 				)}
 			</div>
 		</div>
