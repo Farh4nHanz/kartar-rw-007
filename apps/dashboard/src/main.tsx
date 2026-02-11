@@ -4,12 +4,14 @@ import { NotFound } from "@workspace/ui/components/404";
 import { RouteComponentLoader } from "@workspace/ui/components/loader";
 import ReactDOM from "react-dom/client";
 import { routeTree } from "./routeTree.gen";
+import { RouteError } from "./shared/components/error";
 
 const router = createRouter({
 	routeTree,
 	defaultPreload: "intent",
 	defaultPendingComponent: () => <RouteComponentLoader />,
 	defaultNotFoundComponent: () => <NotFound />,
+	defaultErrorComponent: ({ error }) => <RouteError error={error} />,
 	context: undefined!,
 	scrollRestoration: true,
 });
