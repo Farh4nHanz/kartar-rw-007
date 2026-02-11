@@ -38,7 +38,7 @@ function CollaborationCard({
 					</AvatarFallback>
 				</Avatar>
 
-				<div className="flex-1 space-y-0.5 [&_*]:capitalize">
+				<div className="flex-1 space-y-0.5 **:capitalize">
 					<h4 className="mb-2 font-bold text-sm">
 						{collaboration.partner_name}
 					</h4>
