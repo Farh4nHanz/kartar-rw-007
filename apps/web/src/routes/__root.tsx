@@ -1,4 +1,6 @@
 /** biome-ignore-all lint/complexity/noBannedTypes: true */
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
 	createRootRouteWithContext,
 	HeadContent,
@@ -13,7 +15,9 @@ import "@workspace/ui/index.css";
 import "../index.css";
 import Footer from "@/components/footer";
 
-export type RouterAppContext = {};
+export type RouterAppContext = {
+	queryClient: QueryClient;
+};
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
 	component: RootComponent,
@@ -65,9 +69,23 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 			},
 		],
 	}),
+	context: () => ({
+		queryClient: new QueryClient({
+			defaultOptions: {
+				queries: {
+					retry: 2,
+					retryDelay: 1000,
+					staleTime: 1000 * 60 * 60,
+					refetchOnWindowFocus: false,
+				},
+			},
+		}),
+	}),
 });
 
 function RootComponent() {
+	const { queryClient } = Route.useRouteContext();
+
 	return (
 		<>
 			<HeadContent />
@@ -77,11 +95,13 @@ function RootComponent() {
 				disableTransitionOnChange
 				storageKey="vite-ui-theme"
 			>
-				<div className="grid h-fit min-h-svh grid-rows-[auto_1fr_auto]">
-					<Header />
-					<Outlet />
-					<Footer />
-				</div>
+				<QueryClientProvider client={queryClient}>
+					<div className="grid h-fit min-h-svh grid-rows-[auto_1fr_auto]">
+						<Header />
+						<Outlet />
+						<Footer />
+					</div>
+				</QueryClientProvider>
 				<Toaster richColors />
 			</ThemeProvider>
 			<TanStackRouterDevtools position="bottom-left" />

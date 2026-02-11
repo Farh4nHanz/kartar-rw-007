@@ -1,7 +1,9 @@
+/** biome-ignore-all lint/style/noNonNullAssertion: true */
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { NotFound } from "@workspace/ui/components/404";
 import { ComponentLoader } from "@workspace/ui/components/loader";
 import ReactDOM from "react-dom/client";
+import { RouteError } from "@/components/error";
 import { routeTree } from "./routeTree.gen";
 
 const router = createRouter({
@@ -9,7 +11,8 @@ const router = createRouter({
 	defaultPreload: "intent",
 	defaultPendingComponent: () => <ComponentLoader />,
 	defaultNotFoundComponent: () => <NotFound />,
-	context: {},
+	defaultErrorComponent: ({ error }) => <RouteError error={error} />,
+	context: undefined!,
 	scrollRestoration: true,
 });
 

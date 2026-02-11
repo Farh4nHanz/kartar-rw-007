@@ -12,9 +12,10 @@
 		"rootDirs": ["."],
 		"paths": {
 			"@/*": ["./src/*"],
-			"@workspace/ui/*": ["../../packages/ui/src/*"]
+			"@workspace/ui/*": ["../../packages/ui/src/*"],
+			"@workspace/supabase/*": ["../../packages/supabase/src/*"]
 		}
 	},
-	"include": ["**/*.ts", "**/*.tsx", "../dashboard/src/shared/use-mobile.ts"],
+	"include": ["**/*.ts", "**/*.tsx"],
 	"exclude": ["node_modules"]
 }
