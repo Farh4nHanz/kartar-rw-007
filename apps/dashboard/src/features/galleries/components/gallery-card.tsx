@@ -15,6 +15,7 @@ import { DeleteGalleryModal } from "./modals/delete-gallery-modal";
 
 function GalleryCard({ gallery }: { gallery: Gallery }) {
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+	console.log(gallery.images);
 
 	return (
 		<Card className="pt-0">

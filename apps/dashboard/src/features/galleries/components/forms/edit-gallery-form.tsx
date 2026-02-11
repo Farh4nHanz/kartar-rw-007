@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import { Button } from "@workspace/ui/components/button";
 import {
 	Card,
@@ -16,7 +16,10 @@ import { memo } from "react";
 import { toast } from "sonner";
 import type { Category } from "@/features/categories/services";
 import { updateGalleryByIdMutationOptions } from "@/features/galleries/hooks/mutation-options";
-import { getAllGalleriesQueryOptions } from "@/features/galleries/hooks/query-options";
+import {
+	getAllGalleriesQueryOptions,
+	getGalleryDetailByIdQueryOptions,
+} from "@/features/galleries/hooks/query-options";
 import {
 	type EditGalleryFormValues,
 	editGallerySchema,
@@ -36,6 +39,10 @@ export const EditGalleryForm = memo(
 	}) => {
 		const navigate = useNavigate({
 			from: "/galeri/$id/edit",
+		});
+
+		const search = useSearch({
+			from: "/(app)/(publication)/galeri/$id/edit",
 		});
 
 		const { mutateAsync } = useMutation(
@@ -70,8 +77,13 @@ export const EditGalleryForm = memo(
 						});
 
 						form.reset();
+
 						context.client.invalidateQueries({
-							queryKey: getAllGalleriesQueryOptions().queryKey,
+							queryKey: getGalleryDetailByIdQueryOptions(selectedData?.id)
+								.queryKey,
+						});
+						context.client.invalidateQueries({
+							queryKey: getAllGalleriesQueryOptions(search).queryKey,
 						});
 
 						navigate({ to: "/galeri", replace: true });

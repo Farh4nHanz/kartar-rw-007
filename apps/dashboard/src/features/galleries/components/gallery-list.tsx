@@ -15,6 +15,7 @@ import {
 } from "@/features/galleries/components/gallery-card";
 import {
 	GalleryGrid,
+	GalleryGridEmpty,
 	GalleryGridError,
 } from "@/features/galleries/components/gallery-grid";
 import { getAllGalleriesQueryOptions } from "@/features/galleries/hooks/query-options";
@@ -140,6 +141,9 @@ export function GalleryList() {
 					message={galleriesFetchError.message}
 					onRetry={refetch}
 				/>
+			) : !galleries?.data.length ? (
+				// Empty UI
+				<GalleryGridEmpty />
 			) : (
 				// Actual Content
 				<GalleryGrid>

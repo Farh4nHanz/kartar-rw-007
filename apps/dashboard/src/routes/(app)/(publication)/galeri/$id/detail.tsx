@@ -65,7 +65,9 @@ function RouteComponent() {
 				</Button>
 
 				<div className="flex-1">
-					<h1 className="font-bold text-2xl">{gallery?.data.title}</h1>
+					<h1 className="font-bold text-2xl capitalize">
+						{gallery?.data.title}
+					</h1>
 					<p className="text-muted-foreground text-sm">
 						Detail galeri kegiatan
 					</p>

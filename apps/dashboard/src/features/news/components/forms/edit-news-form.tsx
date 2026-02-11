@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import { Button } from "@workspace/ui/components/button";
 import { Card, CardContent } from "@workspace/ui/components/card";
 import {
@@ -15,7 +15,10 @@ import slugify from "slugify";
 import { toast } from "sonner";
 import type { Category } from "@/features/categories/services";
 import { updateNewsBySlugMutationOptions } from "@/features/news/hooks/mutation-options";
-import { getAllNewsQueryOptions } from "@/features/news/hooks/query-options";
+import {
+	getAllNewsQueryOptions,
+	getNewsDetailBySlugQueryOptions,
+} from "@/features/news/hooks/query-options";
 import {
 	type EditNewsFormValue,
 	editNewsSchema,
@@ -35,6 +38,10 @@ export const EditNewsForm = memo(
 	}) => {
 		const navigate = useNavigate({
 			from: "/berita/$slug/edit",
+		});
+
+		const search = useSearch({
+			from: "/(app)/(publication)/berita/$slug/edit",
 		});
 
 		const statuses = [true, false] as const;
@@ -87,8 +94,14 @@ export const EditNewsForm = memo(
 							});
 
 							form.reset();
+
 							context.client.invalidateQueries({
-								queryKey: getAllNewsQueryOptions().queryKey,
+								queryKey: getNewsDetailBySlugQueryOptions(selectedData?.id)
+									.queryKey,
+							});
+
+							context.client.invalidateQueries({
+								queryKey: getAllNewsQueryOptions(search).queryKey,
 							});
 
 							navigate({ to: "/berita", replace: true });
@@ -139,7 +152,7 @@ export const EditNewsForm = memo(
 									{(field) => (
 										<field.Select label="Kategori" placeholder="Kategori">
 											<SelectGroup>
-												{categories.map((category) => (
+												{categories?.map((category) => (
 													<SelectItem
 														key={category.id}
 														value={category.id}
@@ -153,7 +166,7 @@ export const EditNewsForm = memo(
 									)}
 								</form.AppField>
 
-								{/* News category */}
+								{/* News status */}
 								<form.AppField name="is_published">
 									{(field) => (
 										<field.Select
@@ -177,7 +190,7 @@ export const EditNewsForm = memo(
 									)}
 								</form.AppField>
 
-								{/* News schedule */}
+								{/* News thumbnail */}
 								<form.AppField name="thumbnail">
 									{(field) => (
 										<field.FileInput label="Thumbnail" accept="image/*" />

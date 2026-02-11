@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import { Button } from "@workspace/ui/components/button";
 import { Card, CardContent } from "@workspace/ui/components/card";
 import {
@@ -23,6 +23,10 @@ export const AddNewsForm = memo(
 	({ categories }: { categories: Category[] }) => {
 		const navigate = useNavigate({
 			from: "/berita/new",
+		});
+
+		const search = useSearch({
+			from: "/(app)/(publication)/berita/new",
 		});
 
 		const statuses = [true, false] as const;
@@ -74,7 +78,7 @@ export const AddNewsForm = memo(
 
 							form.reset();
 							context.client.invalidateQueries({
-								queryKey: getAllNewsQueryOptions().queryKey,
+								queryKey: getAllNewsQueryOptions(search).queryKey,
 							});
 
 							navigate({ to: "/berita", replace: true });

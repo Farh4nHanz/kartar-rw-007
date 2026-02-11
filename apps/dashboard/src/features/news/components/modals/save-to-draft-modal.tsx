@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
+import { useSearch } from "@tanstack/react-router";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -15,12 +16,19 @@ import { BadgeQuestionMark } from "lucide-react";
 import { memo } from "react";
 import { toast } from "sonner";
 import { updateNewsStatusByIdMutationOptions } from "@/features/news/hooks/mutation-options";
-import { getNewsDetailBySlugQueryOptions } from "@/features/news/hooks/query-options";
+import {
+	getAllNewsQueryOptions,
+	getNewsDetailBySlugQueryOptions,
+} from "@/features/news/hooks/query-options";
 import type { News } from "@/features/news/services";
 import type { ModalProps } from "@/shared/types/props";
 
 export const SaveToDraftModal = memo(
 	({ selectedData, isModalOpen, setIsModalOpen }: ModalProps<News>) => {
+		const search = useSearch({
+			from: "/(app)/(publication)/berita/$slug/detail",
+		});
+
 		/* ===================
 		 * Save to draft news mutation
 		 * =================== */
@@ -38,6 +46,9 @@ export const SaveToDraftModal = memo(
 						queryKey: getNewsDetailBySlugQueryOptions(
 							selectedData?.slug as string,
 						).queryKey,
+					});
+					context.client.invalidateQueries({
+						queryKey: getAllNewsQueryOptions(search).queryKey,
 					});
 				},
 				onError: (err) => {

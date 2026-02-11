@@ -1,6 +1,13 @@
 import { Button } from "@workspace/ui/components/button";
 import { Card } from "@workspace/ui/components/card";
-import { AlertTriangle, RefreshCcw } from "lucide-react";
+import {
+	Empty,
+	EmptyDescription,
+	EmptyHeader,
+	EmptyMedia,
+	EmptyTitle,
+} from "@workspace/ui/components/empty";
+import { AlertTriangle, Images, RefreshCcw } from "lucide-react";
 
 function GalleryGrid({ children, ...props }: React.ComponentProps<"div">) {
 	return (
@@ -49,4 +56,21 @@ function GalleryGridError({
 	);
 }
 
-export { GalleryGrid, GalleryGridError };
+function GalleryGridEmpty() {
+	return (
+		<Empty>
+			<EmptyHeader>
+				<EmptyMedia variant="icon">
+					<Images />
+				</EmptyMedia>
+				<EmptyTitle className="text-base">Tidak Ada Galeri</EmptyTitle>
+				<EmptyDescription className="text-sm">
+					Galeri tidak ditemukan atau organisasi Karang Taruna RW 07 belum
+					memiliki galeri.
+				</EmptyDescription>
+			</EmptyHeader>
+		</Empty>
+	);
+}
+
+export { GalleryGrid, GalleryGridError, GalleryGridEmpty };
