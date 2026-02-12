@@ -1,6 +1,7 @@
 /** biome-ignore-all lint/complexity/noBannedTypes: true */
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
 	createRootRouteWithContext,
 	HeadContent,
@@ -101,6 +102,7 @@ function RootComponent() {
 						<Outlet />
 						<Footer />
 					</div>
+					<ReactQueryDevtools position="right" />
 				</QueryClientProvider>
 				<Toaster richColors />
 			</ThemeProvider>

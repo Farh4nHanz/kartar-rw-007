@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@workspace/ui/components/button";
 import {
@@ -7,14 +8,26 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@workspace/ui/components/card";
+import { Skeleton } from "@workspace/ui/components/skeleton";
 import { ArrowRight, Award, Lightbulb, Target, Users } from "lucide-react";
-import { news, organizationInfo, programs } from "@/data/mock";
+import {
+	getLatestNewsQueryOptions,
+	getLatestProgramsQueryOptions,
+} from "@/hooks/query-options";
 
 export const Route = createFileRoute("/")({
 	component: HomeComponent,
 });
 
 function HomeComponent() {
+	const { data: programs, isLoading: isProgramsFetchLoading } = useQuery(
+		getLatestProgramsQueryOptions(),
+	);
+
+	const { data: news, isLoading: isNewsFetchLoading } = useQuery(
+		getLatestNewsQueryOptions(),
+	);
+
 	return (
 		<main className="flex h-fit min-h-screen w-full flex-col items-center *:px-6 *:not-first:py-16">
 			{/* Hero Section */}
@@ -24,10 +37,12 @@ function HomeComponent() {
 						Karang Taruna RW 07
 					</h1>
 					<p className="mb-8 font-medium text-gray-700 text-xl md:text-2xl">
-						{organizationInfo.tagline}
+						Muda, Kreatif, Peduli, Berbagi, Maju
 					</p>
 					<p className="mb-10 text-base text-gray-600 leading-relaxed">
-						{organizationInfo.shortDescription}
+						Karang Taruna RW 07 adalah organisasi kepemudaan yang berperan aktif
+						dalam pengembangan potensi generasi muda serta mendukung kegiatan
+						sosial, kemasyarakatan, dan pembangunan lingkungan di wilayah RW 07.
 					</p>
 
 					{/* CTA Buttons */}
@@ -62,7 +77,7 @@ function HomeComponent() {
 				<div className="container grid w-full grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-6">
 					<div className="rounded-lg bg-blue-50 p-6 text-center transition-transform duration-300 hover:scale-105">
 						<Users className="mx-auto mb-3 size-12 text-blue-900" />
-						<div className="mb-1 font-bold text-3xl text-blue-900">150+</div>
+						<div className="mb-1 font-bold text-3xl text-blue-900">30+</div>
 						<div className="text-gray-600">Anggota Aktif</div>
 					</div>
 
@@ -80,7 +95,9 @@ function HomeComponent() {
 
 					<div className="rounded-lg bg-blue-50 p-6 text-center transition-transform duration-300 hover:scale-105">
 						<Award className="mx-auto mb-3 size-12 text-blue-900" />
-						<div className="mb-1 font-bold text-3xl text-blue-900">7</div>
+						<div className="mb-1 font-bold text-3xl text-blue-900">
+							{new Date().getFullYear() - new Date("2010-01-01").getFullYear()}
+						</div>
 						<div className="text-gray-600">Tahun Berdiri</div>
 					</div>
 				</div>
@@ -98,40 +115,68 @@ function HomeComponent() {
 						</p>
 					</div>
 
-					{/* Activity Cards */}
-					<div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-3">
-						{programs.slice(0, 3).map((program) => (
-							<Card
-								key={program.id}
-								className="rounded-md transition-shadow duration-300 hover:shadow-lg"
-							>
-								<CardHeader>
-									<div className="mb-2 inline-block w-fit rounded-full bg-blue-900 px-3 py-1 font-semibold text-white text-xs">
-										{program.category}
-									</div>
-									<CardTitle className="font-semibold text-blue-900 text-lg">
-										{program.title}
-									</CardTitle>
-									<CardDescription>{program.schedule}</CardDescription>
-								</CardHeader>
+					{/* Program Cards */}
+					<div className="mb-8 grid w-full grid-cols-[repeat(auto-fit,minmax(350px,1fr))] items-center justify-center gap-6">
+						{isProgramsFetchLoading
+							? Array.from({ length: 3 }, () => (
+									<Card className="w-full rounded-md">
+										<CardHeader className="space-y-3">
+											{/* Category badge */}
+											<Skeleton className="h-5 w-24 rounded-full" />
 
-								<CardContent>
-									<p className="text-gray-600 text-sm">{program.description}</p>
-								</CardContent>
-							</Card>
-						))}
+											{/* Title */}
+											<Skeleton className="h-5 w-4/5" />
+
+											{/* Schedule type */}
+											<Skeleton className="h-4 w-1/3" />
+										</CardHeader>
+
+										<CardContent>
+											{/* Description */}
+											<div className="space-y-2">
+												<Skeleton className="h-4 w-full" />
+												<Skeleton className="h-4 w-11/12" />
+												<Skeleton className="h-4 w-3/4" />
+											</div>
+										</CardContent>
+									</Card>
+								))
+							: programs?.data.map((program) => (
+									<Card
+										key={program.id}
+										className="w-full rounded-md transition-shadow duration-300 hover:shadow-lg"
+									>
+										<CardHeader>
+											<div className="mb-2 inline-block w-fit rounded-full bg-blue-900 px-3 py-1 font-semibold text-white text-xs capitalize">
+												{program.category.name}
+											</div>
+											<CardTitle className="font-semibold text-blue-900 text-lg capitalize">
+												{program.title}
+											</CardTitle>
+											<CardDescription>{program.schedule_type}</CardDescription>
+										</CardHeader>
+
+										<CardContent>
+											<p className="text-gray-600 text-sm">
+												{program.description}
+											</p>
+										</CardContent>
+									</Card>
+								))}
 					</div>
 
 					{/* All Programs CTA */}
-					<Link to="/program">
-						<Button
-							variant="outline"
-							className="rounded-md border-blue-900 p-4 font-[550] text-blue-900 text-sm capitalize hover:cursor-pointer hover:bg-blue-50 hover:text-blue-900"
-						>
-							Lihat semua program
-							<ArrowRight className="ml-2 size-4" />
-						</Button>
-					</Link>
+					{!isProgramsFetchLoading && programs?.data.length ? (
+						<Link to="/program">
+							<Button
+								variant="outline"
+								className="rounded-md border-blue-900 p-4 font-[550] text-blue-900 text-sm capitalize hover:cursor-pointer hover:bg-blue-50 hover:text-blue-900"
+							>
+								Lihat semua program
+								<ArrowRight className="ml-2 size-4" />
+							</Button>
+						</Link>
+					) : null}
 				</div>
 			</section>
 
@@ -148,42 +193,77 @@ function HomeComponent() {
 					</div>
 
 					{/* News Cards */}
-					<div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-3">
-						{news.slice(0, 3).map((item) => (
-							<Card
-								key={item.id}
-								className="rounded-md transition-shadow duration-300 hover:shadow-lg"
-							>
-								<CardHeader>
-									<div className="mb-2 flex items-center justify-between gap-4">
-										<span className="rounded-full bg-blue-100 px-3 py-1 font-semibold text-blue-900 text-xs">
-											{item.category}
-										</span>
-										<span className="text-gray-500 text-xs">{item.date}</span>
-									</div>
+					<div className="mb-8 grid w-full grid-cols-[repeat(auto-fill,minmax(350px,1fr))] items-center justify-center gap-6">
+						{isNewsFetchLoading
+							? Array.from({ length: 3 }, () => (
+									<Card key={Math.random()} className="w-full rounded-md">
+										<CardHeader>
+											{/* Category + Date */}
+											<div className="mb-2 flex items-center justify-between gap-4">
+												<Skeleton className="h-5 w-20 rounded-full" />
+												<Skeleton className="h-4 w-28" />
+											</div>
 
-									<CardTitle className="font-semibold text-blue-900 text-lg leading-snug">
-										{item.title}
-									</CardTitle>
-								</CardHeader>
+											{/* Title */}
+											<div className="space-y-2">
+												<Skeleton className="h-5 w-full" />
+												<Skeleton className="h-5 w-4/5" />
+											</div>
+										</CardHeader>
 
-								<CardContent>
-									<p className="text-gray-600 text-sm">{item.excerpt}</p>
-								</CardContent>
-							</Card>
-						))}
+										<CardContent>
+											{/* Excerpt */}
+											<div className="space-y-2">
+												<Skeleton className="h-4 w-full" />
+												<Skeleton className="h-4 w-11/12" />
+												<Skeleton className="h-4 w-3/4" />
+											</div>
+										</CardContent>
+									</Card>
+								))
+							: news?.data.map((item) => (
+									<Card
+										key={item.id}
+										className="w-full rounded-md transition-shadow duration-300 hover:shadow-lg"
+									>
+										<CardHeader>
+											<div className="mb-2 flex items-center justify-between gap-4">
+												<span className="rounded-full bg-blue-100 px-3 py-1 font-semibold text-blue-900 text-xs capitalize">
+													{item.category.name}
+												</span>
+												<span className="text-gray-500 text-xs">
+													{new Intl.DateTimeFormat("id-ID", {
+														dateStyle: "long",
+													}).format(new Date(item.published_at as string))}
+												</span>
+											</div>
+
+											<CardTitle className="font-semibold text-blue-900 text-lg capitalize leading-snug">
+												{item.title}
+											</CardTitle>
+										</CardHeader>
+
+										<CardContent>
+											<p className="text-gray-600 text-sm first-letter:capitalize">
+												{item.excerpt}
+											</p>
+										</CardContent>
+									</Card>
+								))}
 					</div>
 
 					{/* All News CTA */}
-					<Link to="/berita">
-						<Button
-							variant="outline"
-							className="rounded-md border-blue-900 p-4 font-[550] text-blue-900 text-sm capitalize hover:cursor-pointer hover:bg-blue-50 hover:text-blue-900"
-						>
-							Lihat Semua Berita
-							<ArrowRight className="ml-2 size-4" />
-						</Button>
-					</Link>
+					{!isNewsFetchLoading && news?.data.length ? (
+						<Link to="/berita">
+							<Button
+								variant="outline"
+								className="rounded-md border-blue-900 p-4 font-[550] text-blue-900 text-sm capitalize hover:cursor-pointer hover:bg-blue-50 hover:text-blue-900"
+							>
+								Lihat Semua Berita
+								<ArrowRight className="ml-2 size-4" />
+							</Button>
+						</Link>
+					) : null}
 				</div>
 			</section>
 

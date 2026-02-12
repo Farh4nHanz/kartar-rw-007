@@ -113,7 +113,7 @@ export async function getAllNews(
 				content: news.content,
 				is_published: news.is_published,
 				published_at: news.published_at,
-				thumbnail_url: getPublicImageUrl("news", news.image_path),
+				thumbnail_url: getPublicImageUrl(BUCKET_NAME, news.image_path),
 			})),
 		],
 		meta: {
@@ -152,7 +152,7 @@ export async function getNewsDetailBySlug(
 	if (error) throw new ApiError(error.message, error.code);
 
 	const thumbnailUrl = newsData?.image_path
-		? getPublicImageUrl("news", newsData.image_path)
+		? getPublicImageUrl(BUCKET_NAME, newsData.image_path)
 		: null;
 
 	return {
