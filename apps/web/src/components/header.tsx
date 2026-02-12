@@ -31,9 +31,11 @@ export default function Header() {
 			<div className="flex h-20 items-center justify-between">
 				{/* Logo */}
 				<Link to="/" className="group flex items-center space-x-3">
-					<div className="flex size-12 items-center justify-center rounded-lg bg-blue-900 font-bold text-white text-xl transition-transform duration-300 group-hover:scale-110">
-						KT
-					</div>
+					<img
+						className="size-10 rounded-full object-cover object-center italic"
+						src="/android-chrome-512x512.png"
+						alt="Logo Karang Taruna"
+					/>
 
 					<div className="flex flex-col">
 						<span className="font-bold text-blue-900 text-lg leading-tight">

@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { contactInfo } from "@/data/mock";
+import { Button } from "@workspace/ui/components/button";
+import { contactInfo } from "@/data";
 import type { FileRoutesByFullPath } from "@/routeTree.gen";
 
 const quickLinks: {
@@ -19,17 +20,28 @@ export default function Footer() {
 			<div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
 				{/* About */}
 				<div className="flex flex-col">
-					<div className="mb-4 flex items-center space-x-2">
-						<div className="flex size-10 items-center justify-center rounded-lg bg-white font-bold text-blue-900 text-sm">
-							KT
-						</div>
+					<div className="mb-4 flex items-center space-x-3">
+						<img
+							className="size-10 rounded-full object-cover object-center italic"
+							src="/android-chrome-512x512.png"
+							alt="Logo Karang Taruna"
+						/>
 
-						<div className="flex flex-col">
-							<span className="font-bold text-lg leading-tight">
-								Karang Taruna
-							</span>
-							<span className="text-blue-200 text-sm">RW 07</span>
-						</div>
+						<span className="font-bold text-base leading-tight">
+							Karang Taruna RW 07
+						</span>
+					</div>
+
+					<div className="mb-4 flex items-center space-x-3">
+						<img
+							className="size-10 rounded-full object-cover object-center italic"
+							src="/logo_uta.png"
+							alt="Logo UTA'45 Jakarta"
+						/>
+
+						<span className="font-bold text-base leading-tight">
+							Universitas 17 Agustus 1945 Jakarta
+						</span>
 					</div>
 
 					<p className="text-blue-100 text-sm leading-relaxed">
@@ -80,15 +92,16 @@ export default function Footer() {
 					<h3 className="mb-4 font-bold text-lg">Media Sosial</h3>
 					<ul className="flex space-x-3">
 						{contactInfo.socialMedia.map((item) => (
-							<Link
+							<Button
+								variant="link"
 								key={item.label}
-								to={item.link}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-800 transition-all duration-300 hover:bg-white hover:text-blue-900"
+								onClick={() => {
+									window.open(item.link, "_blank", "noopener,noreferrer");
+								}}
+								className="flex size-10 items-center justify-center rounded-lg bg-blue-800 text-white transition-all duration-300 hover:cursor-pointer hover:bg-white hover:text-blue-900"
 							>
 								<item.icon />
-							</Link>
+							</Button>
 						))}
 					</ul>
 
@@ -103,8 +116,8 @@ export default function Footer() {
 			{/* Copyright */}
 			<div className="mt-8 border-blue-800 border-t pt-8 text-center">
 				<p className="text-blue-100 text-sm">
-					&copy; {new Date().getFullYear()} Komunitas Hub Karang Taruna RW 07.
-					Semua hak cipta dilindungi.
+					&copy; {new Date().getFullYear()} Karang Taruna RW 07 bersama dengan
+					Universitas 17 Agustus 1945 Jakarta. Semua hak cipta dilindungi.
 				</p>
 			</div>
 		</footer>

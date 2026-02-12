@@ -15,7 +15,8 @@ import {
 	UserPlus,
 } from "lucide-react";
 import { useMemo } from "react";
-import { contactInfo, membershipInfo } from "@/data/mock";
+import { contactInfo } from "@/data";
+import { membershipInfo } from "@/data/mock";
 
 export const Route = createFileRoute("/gabung")({
 	component: RouteComponent,

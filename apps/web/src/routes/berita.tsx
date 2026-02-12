@@ -9,7 +9,8 @@ import {
 } from "@workspace/ui/components/card";
 import { cn } from "@workspace/ui/lib/utils";
 import { ArrowRight, Calendar, Tag } from "lucide-react";
-import { contactInfo, news } from "@/data/mock";
+import { contactInfo } from "@/data";
+import { news } from "@/data/mock";
 import { useFilter } from "@/hooks/use-filter";
 
 export const Route = createFileRoute("/berita")({
