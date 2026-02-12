@@ -16,7 +16,6 @@ import {
 } from "lucide-react";
 import { useMemo } from "react";
 import { contactInfo } from "@/data";
-import { membershipInfo } from "@/data/mock";
 
 export const Route = createFileRoute("/gabung")({
 	component: RouteComponent,
@@ -63,7 +62,13 @@ function RouteComponent() {
 						</CardHeader>
 
 						<CardContent className="grid grid-cols-1 gap-4 md:grid-cols-2">
-							{membershipInfo.requirements.map((requirement) => (
+							{[
+								"Berusia 17 - 35 tahun",
+								"Berdomisili di lingkungan RW 007",
+								"Memiliki KTP atau kartu identitas yang masih berlaku",
+								"Bersedia aktif mengikuti kegiatan organisasi",
+								"Memiliki komitmen untuk berkontribusi bagi masyarakat",
+							].map((requirement) => (
 								<div
 									key={requirement}
 									className="flex items-center gap-3 rounded-lg bg-blue-50 p-4"
@@ -87,7 +92,14 @@ function RouteComponent() {
 						</CardHeader>
 
 						<CardContent className="grid grid-cols-1 gap-5 [counter-reset:benefit] md:grid-cols-2">
-							{membershipInfo.benefits.map((benefit) => (
+							{[
+								"Meningkatkan keterampilan dan pengetahuan melalui pelatihan dan kegiatan pengembangan diri",
+								"Memperluas jaringan dan hubungan dengan orang-orang yang memiliki minat dan tujuan yang sama",
+								"Berpartisipasi dalam kegiatan sosial dan kemasyarakatan yang bermanfaat",
+								"Meningkatkan rasa percaya diri dan kepemimpinan",
+								"Mendapatkan pengalaman dan referensi yang berharga untuk masa depan",
+								"Berkontribusi dalam membangun masyarakat yang lebih baik",
+							].map((benefit) => (
 								<div
 									key={benefit}
 									className="flex items-center gap-3 rounded-lg py-1 [&::before]:flex [&::before]:size-8 [&::before]:shrink-0 [&::before]:items-center [&::before]:justify-center [&::before]:rounded-full [&::before]:bg-blue-900 [&::before]:font-semibold [&::before]:text-white [&::before]:leading-none [&::before]:[content:counter(benefit)] [&::before]:[counter-increment:benefit]"
@@ -110,7 +122,11 @@ function RouteComponent() {
 						</CardHeader>
 
 						<CardContent className="grid grid-cols-1 gap-6 [counter-reset:process]">
-							{membershipInfo.registrationProcess.map((process) => (
+							{[
+								"Datang langsung ke sekretariat RW 07",
+								"Serahkan fotokopi KTP dan pas foto 3x4 (2 lembar)",
+								"Ikuti sesi orientasi anggota baru",
+							].map((process) => (
 								<div
 									key={process}
 									className="flex items-center gap-3 rounded-lg py-1 [&::before]:flex [&::before]:size-10 [&::before]:shrink-0 [&::before]:items-center [&::before]:justify-center [&::before]:rounded-full [&::before]:bg-blue-900 [&::before]:font-semibold [&::before]:text-sm [&::before]:text-white [&::before]:leading-none [&::before]:[content:counter(process)] [&::before]:[counter-increment:process]"
@@ -129,7 +145,7 @@ function RouteComponent() {
 							</h3>
 							<p className="mb-6 text-blue-100 text-sm leading-relaxed">
 								Jangan ragu untuk menjadi bagian dari keluarga besar Karang
-								Taruna RW 007. Hubungi kami untuk informasi lebih lanjut atau
+								Taruna RW 07. Hubungi kami untuk informasi lebih lanjut atau
 								datang langsung ke sekretariat.
 							</p>
 
