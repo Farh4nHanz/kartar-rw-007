@@ -17,6 +17,10 @@ import {
 
 export const Route = createFileRoute("/")({
 	component: HomeComponent,
+	loader: ({ context: { queryClient } }) => {
+		queryClient.ensureQueryData(getLatestProgramsQueryOptions());
+		queryClient.ensureQueryData(getLatestProgramsQueryOptions());
+	},
 });
 
 function HomeComponent() {
@@ -119,7 +123,7 @@ function HomeComponent() {
 					<div className="mb-8 grid w-full grid-cols-[repeat(auto-fit,minmax(350px,1fr))] items-center justify-center gap-6">
 						{isProgramsFetchLoading
 							? Array.from({ length: 3 }, () => (
-									<Card className="w-full rounded-md">
+									<Card key={Math.random()} className="w-full rounded-md">
 										<CardHeader className="space-y-3">
 											{/* Category badge */}
 											<Skeleton className="h-5 w-24 rounded-full" />

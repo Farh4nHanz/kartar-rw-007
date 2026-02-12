@@ -6,7 +6,6 @@ import {
 	CardTitle,
 } from "@workspace/ui/components/card";
 import { BookOpen, Briefcase, Heart, Info, Target } from "lucide-react";
-import { organizationInfo } from "@/data/mock";
 
 export const Route = createFileRoute("/tentang-kami")({
 	component: RouteComponent,
@@ -22,8 +21,8 @@ function RouteComponent() {
 						Tentang Kami
 					</h1>
 					<p className="mx-auto max-w-3xl text-gray-600 text-lg">
-						Mengenal lebih dekat Karang Taruna RW 007, organisasi kepemudaan
-						yang berkomitmen untuk pemberdayaan dan pengembangan generasi muda.
+						Mengenal lebih dekat Karang Taruna RW 07, organisasi kepemudaan yang
+						berkomitmen untuk pemberdayaan dan pengembangan generasi muda.
 					</p>
 				</div>
 
@@ -39,7 +38,9 @@ function RouteComponent() {
 
 						<CardContent>
 							<p className="text-gray-700 text-sm leading-relaxed">
-								{organizationInfo.shortDescription}
+								Karang Taruna RW 07 merupakan wadah pembinaan dan pemberdayaan
+								pemuda tingkat RW yang berfokus pada pengembangan kreativitas,
+								kepedulian sosial, dan partisipasi aktif dalam masyarakat.
 							</p>
 						</CardContent>
 					</Card>
@@ -55,7 +56,8 @@ function RouteComponent() {
 
 						<CardContent>
 							<p className="text-gray-700 text-sm leading-relaxed">
-								{organizationInfo.vision}
+								Mewujdukan pemuda yang aktif, kreatif, mandiri, dan
+								berkontribusi positif bagi lingkungan masyarakat RW 07.
 							</p>
 						</CardContent>
 					</Card>
@@ -70,18 +72,17 @@ function RouteComponent() {
 						</CardHeader>
 
 						<CardContent>
-							<ul className="space-y-4">
-								{organizationInfo.mission.map((mission, i) => (
+							<ul className="space-y-4 [counter-reset:mission] *:[&::before]:mr-4 *:[&::before]:flex *:[&::before]:size-8 *:[&::before]:shrink-0 *:[&::before]:items-center *:[&::before]:justify-center *:[&::before]:rounded-full *:[&::before]:bg-blue-900 *:[&::before]:font-semibold *:[&::before]:text-white *:[&::before]:[content:counter(mission)] *:[&::before]:[counter-increment:mission]">
+								{[
+									"Menumbuhkan rasa kepedulian sosial",
+									"Mendukung kegiatan kemasyarakatan",
+									"Menjalin kerja sama dengan berbagai pihak",
+								].map((mission) => (
 									<li
-										key={Math.floor(Math.random() * 100)}
-										className="flex items-center"
+										key={mission}
+										className="flex items-center text-gray-700 text-sm"
 									>
-										<span className="mr-4 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-900 font-semibold text-white">
-											{i + 1}
-										</span>
-										<span className="pt-1 text-gray-700 text-sm">
-											{mission}
-										</span>
+										{mission}
 									</li>
 								))}
 							</ul>
@@ -98,16 +99,19 @@ function RouteComponent() {
 						</CardHeader>
 
 						<CardContent>
-							<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-								{organizationInfo.goals.map((goal, i) => (
+							<div className="grid grid-cols-1 gap-6 [counter-reset:goal] md:grid-cols-2">
+								{[
+									"Memberdayakan pemuda secara keberlanjutan",
+									"Menjadi mitra masyarakat dan pemerintah setempat",
+									"Menciptakan lingkungan nyaman dan harmonis",
+								].map((goal) => (
 									<div
-										key={Math.floor(Math.random() * 100)}
-										className="flex items-start space-x-3 rounded-lg bg-blue-50 p-4"
+										key={goal}
+										className="rounded-lg bg-blue-50 p-4 *:[&::before]:mr-4 *:[&::before]:flex *:[&::before]:size-8 *:[&::before]:shrink-0 *:[&::before]:items-center *:[&::before]:justify-center *:[&::before]:rounded-sm *:[&::before]:bg-blue-900 *:[&::before]:font-semibold *:[&::before]:text-white *:[&::before]:[content:counter(goal)] *:[&::before]:[counter-increment:goal]"
 									>
-										<span className="flex h-6 w-6 shrink-0 items-center justify-center rounded bg-blue-900 font-semibold text-sm text-white">
-											{i + 1}
-										</span>
-										<p className="text-gray-700 text-sm">{goal}</p>
+										<p className="flex items-center text-gray-700 text-sm">
+											{goal}
+										</p>
 									</div>
 								))}
 							</div>
@@ -125,7 +129,9 @@ function RouteComponent() {
 
 						<CardContent>
 							<p className="text-gray-700 text-sm leading-relaxed">
-								{organizationInfo.history}
+								Karang Taruna RW 07 dibentuk sebagai respon atas kebutuhan wadah
+								kepemudaan yang mampu menggerakan pemuda untuk berperan aktif
+								dalam kegiatan sosial dan pembangunan lingkungan.
 							</p>
 						</CardContent>
 					</Card>
