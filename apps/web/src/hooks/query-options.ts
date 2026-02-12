@@ -79,7 +79,7 @@ export function getAllGalleriesQueryOptions() {
 	});
 }
 
-export function getAllGalleryDetailByIdQueryOptions(id: string) {
+export function getGalleryDetailByIdQueryOptions(id: string) {
 	return queryOptions({
 		queryKey: GALLERIES_QUERY_KEYS.byId(id),
 		queryFn: () => getGalleryDetailById(id),

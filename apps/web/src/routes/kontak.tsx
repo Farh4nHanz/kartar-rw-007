@@ -75,7 +75,7 @@ function RouteComponent() {
 					</p>
 				</div>
 
-				<div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+				<div className="grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-8">
 					{/* Contact Information */}
 					<Card>
 						<CardHeader>

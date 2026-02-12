@@ -49,7 +49,7 @@ function RouteComponent() {
 						<Button
 							key={category}
 							className={cn(
-								"rounded-full px-5 py-2 font-[550] text-sm capitalize transition-all duration-300",
+								"rounded-full px-5 py-2 font-[550] text-sm capitalize transition-all duration-300 hover:cursor-pointer",
 								filter === category.toLowerCase()
 									? "scale-105 bg-blue-900 text-white shadow-md hover:bg-blue-800"
 									: "border border-gray-200 bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-900",
@@ -112,9 +112,9 @@ function RouteComponent() {
 												<span
 													className={cn(
 														"rounded-full px-3 py-1 font-medium text-xs capitalize",
-														program.status === "Rutin"
-															? "bg-green-100 text-green-800"
-															: "bg-yellow-100 text-yellow-800",
+														program.status.toLowerCase() === "rutin"
+															? "bg-violet-200 text-violet-800 dark:bg-violet-500 dark:text-violet-50"
+															: "bg-fuchsia-200 text-fuchsia-800 dark:bg-fuchsia-500 dark:text-fuchsia-50",
 													)}
 												>
 													{program.status}

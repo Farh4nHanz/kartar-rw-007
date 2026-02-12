@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@workspace/ui/components/button";
 import { Card, CardContent } from "@workspace/ui/components/card";
 import { Skeleton } from "@workspace/ui/components/skeleton";
@@ -8,7 +8,7 @@ import { ImageIcon } from "lucide-react";
 import { getAllGalleriesQueryOptions } from "@/hooks/query-options";
 import { useFilter } from "@/hooks/use-filter";
 
-export const Route = createFileRoute("/galeri")({
+export const Route = createFileRoute("/galeri/_index")({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) =>
 		queryClient.ensureQueryData(getAllGalleriesQueryOptions()),
@@ -43,7 +43,7 @@ function RouteComponent() {
 						<Button
 							key={category}
 							className={cn(
-								"rounded-full px-5 py-2 font-[550] text-sm capitalize transition-all duration-300",
+								"rounded-full px-5 py-2 font-[550] text-sm capitalize transition-all duration-300 hover:cursor-pointer",
 								filter === category.toLowerCase()
 									? "scale-105 bg-blue-900 text-white shadow-md hover:bg-blue-800"
 									: "border border-gray-200 bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-900",
@@ -87,42 +87,45 @@ function RouteComponent() {
 								</Card>
 							))
 						: filteredData?.map((gallery) => (
-								<Card
+								<Link
 									key={gallery.id}
-									className="overflow-hidden rounded-lg p-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+									to="/galeri/$id/detail"
+									params={{ id: gallery.id }}
 								>
-									{gallery.images.length ? (
-										<img
-											src={gallery.images.at(0)?.image_url || ""}
-											alt={gallery.title}
-											className="aspect-video h-full w-full rounded-lg object-cover object-center"
-										/>
-									) : (
-										<div className="flex aspect-video items-center justify-center bg-linear-to-br from-blue-100 to-gray-100">
-											<ImageIcon className="size-16 text-blue-600" />
-										</div>
-									)}
+									<Card className="overflow-hidden rounded-lg p-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+										{gallery.images.length ? (
+											<img
+												src={gallery.images.at(0)?.image_url || ""}
+												alt={gallery.title}
+												className="aspect-video h-full w-full rounded-lg object-cover object-center"
+											/>
+										) : (
+											<div className="flex aspect-video items-center justify-center bg-linear-to-br from-blue-100 to-gray-100">
+												<ImageIcon className="size-16 text-blue-600" />
+											</div>
+										)}
 
-									<CardContent className="flex flex-col gap-3 p-5">
-										<span className="w-fit rounded-full bg-blue-900 px-3 py-1 font-semibold text-white text-xs capitalize">
-											{gallery.category.name}
-										</span>
+										<CardContent className="flex flex-col gap-3 p-5">
+											<span className="w-fit rounded-full bg-blue-900 px-3 py-1 font-semibold text-white text-xs capitalize">
+												{gallery.category.name}
+											</span>
 
-										<div className="space-y-3">
-											<h3 className="font-bold text-blue-900 text-lg capitalize">
-												{gallery.title}
-											</h3>
-											<p className="text-gray-600 text-sm first-letter:capitalize">
-												{gallery.description}
-											</p>
-											<p className="text-gray-500 text-xs">
-												{new Intl.DateTimeFormat("id-ID", {
-													dateStyle: "long",
-												}).format(new Date(gallery.activity_date))}
-											</p>
-										</div>
-									</CardContent>
-								</Card>
+											<div className="space-y-3">
+												<h3 className="font-bold text-blue-900 text-lg capitalize">
+													{gallery.title}
+												</h3>
+												<p className="text-gray-600 text-sm first-letter:capitalize">
+													{gallery.description}
+												</p>
+												<p className="text-gray-500 text-xs">
+													{new Intl.DateTimeFormat("id-ID", {
+														dateStyle: "long",
+													}).format(new Date(gallery.activity_date))}
+												</p>
+											</div>
+										</CardContent>
+									</Card>
+								</Link>
 							))}
 				</div>
 			</div>

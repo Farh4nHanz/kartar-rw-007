@@ -50,7 +50,7 @@ function RouteComponent() {
 						<Button
 							key={category}
 							className={cn(
-								"rounded-full px-5 py-2 font-[550] text-sm capitalize transition-all duration-300",
+								"rounded-full px-5 py-2 font-[550] text-sm capitalize transition-all duration-300 hover:cursor-pointer",
 								filter === category.toLowerCase()
 									? "scale-105 bg-blue-900 text-white shadow-md hover:bg-blue-800"
 									: "border border-gray-200 bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-900",
