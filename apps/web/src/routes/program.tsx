@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@workspace/ui/components/button";
 import {
@@ -7,17 +8,26 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@workspace/ui/components/card";
+import { Skeleton } from "@workspace/ui/components/skeleton";
 import { cn } from "@workspace/ui/lib/utils";
 import { Calendar, Info } from "lucide-react";
-import { programs } from "@/data/mock";
+import { getAllProgramsQueryOptions } from "@/hooks/query-options";
 import { useFilter } from "@/hooks/use-filter";
 
 export const Route = createFileRoute("/program")({
 	component: RouteComponent,
+	loader: ({ context: { queryClient } }) =>
+		queryClient.ensureQueryData(getAllProgramsQueryOptions()),
 });
 
 function RouteComponent() {
-	const { filter, setFilter, categories, filteredData } = useFilter(programs);
+	const { data: programs, isLoading: isProgramsFetchLoading } = useQuery(
+		getAllProgramsQueryOptions(),
+	);
+
+	const { filter, setFilter, categories, filteredData } = useFilter(
+		programs?.data || [],
+	);
 
 	return (
 		<main className="flex h-fit min-h-screen w-full justify-center bg-gray-50 py-16">
@@ -29,7 +39,7 @@ function RouteComponent() {
 					</h1>
 					<p className="text-gray-600 text-lg">
 						Berbagai program unggulan yang dirancang untuk pemberdayaan
-						masyarakat dan pengembangan potensi pemuda di lingkungan RW 007.
+						masyarakat dan pengembangan potensi pemuda di lingkungan RW 07.
 					</p>
 				</div>
 
@@ -39,12 +49,12 @@ function RouteComponent() {
 						<Button
 							key={category}
 							className={cn(
-								"rounded-full px-5 py-2 font-[550] text-sm transition-all duration-300",
-								filter === category
-									? "scale-105 bg-blue-900 text-white shadow-md"
+								"rounded-full px-5 py-2 font-[550] text-sm capitalize transition-all duration-300",
+								filter === category.toLowerCase()
+									? "scale-105 bg-blue-900 text-white shadow-md hover:bg-blue-800"
 									: "border border-gray-200 bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-900",
 							)}
-							onClick={() => setFilter(category)}
+							onClick={() => setFilter(category.toLowerCase())}
 						>
 							{category}
 						</Button>
@@ -53,46 +63,80 @@ function RouteComponent() {
 
 				{/* Programs Grid */}
 				<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-					{filteredData.map((program) => (
-						<Card
-							key={program.id}
-							className="overflow-hidden rounded-lg px-2 py-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-						>
-							<CardHeader>
-								<div className="mb-3 flex items-center justify-between">
-									<span className="w-fit rounded-full bg-blue-900 px-3 py-1 font-semibold text-white text-xs">
-										{program.category}
-									</span>
-									<span
-										className={cn(
-											"rounded-full px-3 py-1 font-medium text-xs",
-											program.status === "Rutin"
-												? "bg-green-100 text-green-800"
-												: "bg-yellow-100 text-yellow-800",
-										)}
-									>
-										{program.status}
-									</span>
-								</div>
+					{isProgramsFetchLoading
+						? Array.from({ length: 6 }, () => (
+								<Card
+									key={Math.random()}
+									className="overflow-hidden rounded-lg px-2 py-5"
+								>
+									<CardHeader className="space-y-3">
+										{/* Category + Status badges */}
+										<div className="mb-3 flex items-center justify-between">
+											<Skeleton className="h-5 w-24 rounded-full" />
+											<Skeleton className="h-5 w-20 rounded-full" />
+										</div>
 
-								<CardTitle className="font-bold text-blue-900 text-lg">
-									{program.title}
-								</CardTitle>
-								<CardDescription className="flex items-center">
-									<Calendar className="mr-2 size-4 shrink-0" />
-									<span className="text-muted-foreground text-xs">
-										{program.schedule}
-									</span>
-								</CardDescription>
-							</CardHeader>
+										{/* Title */}
+										<Skeleton className="h-5 w-4/5" />
 
-							<CardContent className="flex flex-col gap-3">
-								<p className="line-clamp-5 text-gray-700 text-smleading-relaxed">
-									{program.description}
-								</p>
-							</CardContent>
-						</Card>
-					))}
+										{/* Schedule row */}
+										<div className="flex items-center gap-2">
+											<Skeleton className="size-4 rounded-full" />
+											<Skeleton className="h-3 w-1/2" />
+										</div>
+									</CardHeader>
+
+									<CardContent className="flex flex-col gap-3">
+										{/* Description */}
+										<div className="space-y-2">
+											<Skeleton className="h-4 w-full" />
+											<Skeleton className="h-4 w-11/12" />
+											<Skeleton className="h-4 w-10/12" />
+											<Skeleton className="h-4 w-3/4" />
+										</div>
+									</CardContent>
+								</Card>
+							))
+						: filteredData.map((program) => (
+								<Card
+									key={program.id}
+									className="overflow-hidden rounded-lg px-2 py-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+								>
+									<CardHeader>
+										<div className="mb-3 flex items-center justify-between">
+											<span className="w-fit rounded-full bg-blue-900 px-3 py-1 font-semibold text-white text-xs capitalize">
+												{program.category.name}
+											</span>
+											<span
+												className={cn(
+													"rounded-full px-3 py-1 font-medium text-xs capitalize",
+													program.status === "Rutin"
+														? "bg-green-100 text-green-800"
+														: "bg-yellow-100 text-yellow-800",
+												)}
+											>
+												{program.status}
+											</span>
+										</div>
+
+										<CardTitle className="font-bold text-blue-900 text-lg capitalize">
+											{program.title}
+										</CardTitle>
+										<CardDescription className="flex items-center">
+											<Calendar className="mr-2 size-4 shrink-0" />
+											<span className="text-muted-foreground text-xs">
+												{program.schedule_type}
+											</span>
+										</CardDescription>
+									</CardHeader>
+
+									<CardContent className="flex flex-col gap-3">
+										<p className="line-clamp-5 text-gray-700 text-smleading-relaxed first-letter:capitalize">
+											{program.description}
+										</p>
+									</CardContent>
+								</Card>
+							))}
 				</div>
 
 				{/* Info Section */}

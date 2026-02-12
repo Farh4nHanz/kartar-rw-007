@@ -74,9 +74,11 @@ function RouteComponent() {
 						<CardContent>
 							<ul className="space-y-4 [counter-reset:mission] *:[&::before]:mr-4 *:[&::before]:flex *:[&::before]:size-8 *:[&::before]:shrink-0 *:[&::before]:items-center *:[&::before]:justify-center *:[&::before]:rounded-full *:[&::before]:bg-blue-900 *:[&::before]:font-semibold *:[&::before]:text-white *:[&::before]:[content:counter(mission)] *:[&::before]:[counter-increment:mission]">
 								{[
-									"Menumbuhkan rasa kepedulian sosial",
-									"Mendukung kegiatan kemasyarakatan",
-									"Menjalin kerja sama dengan berbagai pihak",
+									"Mengembangkan potensi dan kreativitas pemuda melalui berbagai program pemberdayaan",
+									"Menumbuhkan jiwa kepemimpinan dan kewirausahaan di kalangan generasi muda",
+									"Membangun solidaritas dan kerjasama antar pemuda dalam lingkungan RW 007",
+									"Melaksanakan kegiatan sosial kemasyarakatan yang bermanfaat bagi lingkungan",
+									"Menjadi mitra strategis dalam pembangunan masyarakat yang lebih baik",
 								].map((mission) => (
 									<li
 										key={mission}

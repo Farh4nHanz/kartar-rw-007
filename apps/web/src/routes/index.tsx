@@ -19,7 +19,7 @@ export const Route = createFileRoute("/")({
 	component: HomeComponent,
 	loader: ({ context: { queryClient } }) => {
 		queryClient.ensureQueryData(getLatestProgramsQueryOptions());
-		queryClient.ensureQueryData(getLatestProgramsQueryOptions());
+		queryClient.ensureQueryData(getLatestNewsQueryOptions());
 	},
 });
 

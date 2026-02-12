@@ -27,10 +27,10 @@ export default function Header() {
 	const isActive = (path: string) => location.pathname === path;
 
 	return (
-		<header className="sticky top-0 z-50 bg-white shadow-md *:not-last:px-6 lg:px-8">
-			<div className="flex h-20 items-center justify-between">
+		<header className="sticky top-0 z-50 bg-white py-4 shadow-md *:not-last:px-6 lg:px-8">
+			<div className="flex h-fit min-h-20 items-center justify-between gap-16">
 				{/* Logo */}
-				<Link to="/" className="group flex items-center space-x-3">
+				<Link to="/" className="group flex shrink-0 items-center space-x-3">
 					<img
 						className="size-10 rounded-full object-cover object-center italic"
 						src="/android-chrome-512x512.png"
@@ -46,33 +46,21 @@ export default function Header() {
 				</Link>
 
 				{/* Desktop Navigation */}
-				<nav className="hidden items-center space-x-3 lg:flex">
-					{links
-						.filter((item) => {
-							const desktopLink = [
-								"Beranda",
-								"Tentang Kami",
-								"Struktur Organisasi",
-								"Galeri",
-								"Kolaborasi",
-								"Kontak",
-							];
-							return desktopLink.includes(item.label);
-						})
-						.map((item) => (
-							<Link
-								key={item.label}
-								to={item.to}
-								className={cn(
-									"rounded-md px-3 py-2 font-medium text-sm transition-colors duration-200",
-									isActive(item.to)
-										? "bg-blue-900 text-white"
-										: "text-gray-700 hover:bg-blue-50 hover:text-blue-900",
-								)}
-							>
-								{item.label}
-							</Link>
-						))}
+				<nav className="hidden basis-8/12 flex-wrap items-end justify-end gap-3 lg:flex">
+					{links.map((item) => (
+						<Link
+							key={item.label}
+							to={item.to}
+							className={cn(
+								"rounded-md px-3 py-2 font-medium text-sm transition-colors duration-200",
+								isActive(item.to)
+									? "bg-blue-900 text-white"
+									: "text-gray-700 hover:bg-blue-50 hover:text-blue-900",
+							)}
+						>
+							{item.label}
+						</Link>
+					))}
 				</nav>
 
 				{/* Mobile Menu Button */}
@@ -89,7 +77,7 @@ export default function Header() {
 
 			{/* Mobile Navigation */}
 			<Activity mode={isOpen ? "visible" : "hidden"}>
-				<nav className="border-gray-200 border-t lg:hidden">
+				<nav className="mb-5 border-gray-200 border-t lg:hidden">
 					{links.map((item) => (
 						<Link
 							key={item.label}
