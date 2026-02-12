@@ -1,4 +1,4 @@
-import { Link, useLocation } from "@tanstack/react-router";
+import { Link, useMatchRoute } from "@tanstack/react-router";
 import { Button } from "@workspace/ui/components/button";
 import { cn } from "@workspace/ui/lib/utils";
 import { Menu, X } from "lucide-react";
@@ -22,9 +22,7 @@ const links: {
 
 export default function Header() {
 	const [isOpen, setIsOpen] = useState(false);
-	const location = useLocation();
-
-	const isActive = (path: string) => location.pathname === path;
+	const matchRoute = useMatchRoute();
 
 	return (
 		<header className="sticky top-0 z-50 bg-white py-4 shadow-md *:not-last:px-6 lg:px-8">
@@ -53,7 +51,7 @@ export default function Header() {
 							to={item.to}
 							className={cn(
 								"rounded-md px-3 py-2 font-medium text-sm transition-colors duration-200",
-								isActive(item.to)
+								matchRoute({ to: item.to, fuzzy: true })
 									? "bg-blue-900 text-white"
 									: "text-gray-700 hover:bg-blue-50 hover:text-blue-900",
 							)}
@@ -84,7 +82,7 @@ export default function Header() {
 							to={item.to}
 							className={cn(
 								"block px-4 py-3 font-medium text-sm transition-colors duration-200",
-								isActive(item.to)
+								matchRoute({ to: item.to, fuzzy: true })
 									? "bg-blue-900 text-white"
 									: "text-gray-700 hover:bg-blue-50 hover:text-blue-900",
 							)}

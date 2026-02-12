@@ -68,7 +68,7 @@
       "dependencies": {
         "@hookform/resolvers": "catalog:",
         "@tailwindcss/vite": "catalog:",
-        "@tanstack/react-form": "catalog:",
+        "@tanstack/react-query": "catalog:",
         "@tanstack/react-router": "catalog:",
         "@workspace/env": "workspace:*",
         "@workspace/supabase": "workspace:*",
@@ -89,6 +89,7 @@
         "zod": "catalog:",
       },
       "devDependencies": {
+        "@tanstack/react-query-devtools": "catalog:",
         "@tanstack/react-router-devtools": "catalog:",
         "@tanstack/router-plugin": "catalog:",
         "@types/node": "catalog:",

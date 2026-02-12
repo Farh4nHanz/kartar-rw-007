@@ -12,18 +12,18 @@ import { Skeleton } from "@workspace/ui/components/skeleton";
 import { cn } from "@workspace/ui/lib/utils";
 import { ArrowRight, Calendar, Tag } from "lucide-react";
 import { contactInfo } from "@/data";
-import { getLatestNewsQueryOptions } from "@/hooks/query-options";
+import { getAllNewsQueryOptions } from "@/hooks/query-options";
 import { useFilter } from "@/hooks/use-filter";
 
-export const Route = createFileRoute("/berita")({
+export const Route = createFileRoute("/berita/_index")({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) =>
-		queryClient.ensureQueryData(getLatestNewsQueryOptions()),
+		queryClient.ensureQueryData(getAllNewsQueryOptions()),
 });
 
 function RouteComponent() {
 	const { data: news, isLoading: isNewsFetchLoading } = useQuery(
-		getLatestNewsQueryOptions(),
+		getAllNewsQueryOptions(),
 	);
 
 	const { filter, setFilter, categories, filteredData } = useFilter(
@@ -127,7 +127,10 @@ function RouteComponent() {
 									</CardContent>
 
 									<CardFooter>
-										<Link to=".">
+										<Link
+											to="/berita/$slug/detail"
+											params={{ slug: news.slug }}
+										>
 											<Button
 												variant="link"
 												className="px-0 text-blue-900 hover:cursor-pointer"
