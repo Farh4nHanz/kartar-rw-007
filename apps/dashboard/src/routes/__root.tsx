@@ -25,13 +25,8 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 				title: "Dashboard | Karang Taruna RW 07",
 			},
 			{
-				name: "keywords",
-				content:
-					"Karang Taruna, RW 07, Pembinaan, Pemberdayaan, Pemuda, Organisasi, Sosial, Masyarakat",
-			},
-			{
 				name: "author",
-				content: "Karang Taruna RW 07",
+				content: "Admin Karang Taruna RW 07",
 			},
 			{
 				name: "description",
