@@ -120,7 +120,7 @@ function HomeComponent() {
 					</div>
 
 					{/* Program Cards */}
-					<div className="mb-8 grid w-full grid-cols-[repeat(auto-fit,minmax(350px,1fr))] items-center justify-center gap-6">
+					<div className="mb-8 grid w-full grid-cols-[repeat(auto-fill,minmax(350px,1fr))] items-center justify-center gap-6">
 						{isProgramsFetchLoading
 							? Array.from({ length: 3 }, () => (
 									<Card key={Math.random()} className="w-full rounded-md">
@@ -146,26 +146,31 @@ function HomeComponent() {
 									</Card>
 								))
 							: programs?.data.map((program) => (
-									<Card
+									<Link
 										key={program.id}
-										className="w-full rounded-md transition-shadow duration-300 hover:shadow-lg"
+										to="/program/$id/detail"
+										params={{ id: program.id }}
 									>
-										<CardHeader>
-											<div className="mb-2 inline-block w-fit rounded-full bg-blue-900 px-3 py-1 font-semibold text-white text-xs capitalize">
-												{program.category.name}
-											</div>
-											<CardTitle className="font-semibold text-blue-900 text-lg capitalize">
-												{program.title}
-											</CardTitle>
-											<CardDescription>{program.schedule_type}</CardDescription>
-										</CardHeader>
+										<Card className="w-full rounded-md transition-shadow duration-300 hover:shadow-lg">
+											<CardHeader>
+												<div className="mb-2 inline-block w-fit rounded-full bg-blue-900 px-3 py-1 font-semibold text-white text-xs capitalize">
+													{program.category.name}
+												</div>
+												<CardTitle className="font-semibold text-blue-900 text-lg capitalize">
+													{program.title}
+												</CardTitle>
+												<CardDescription>
+													{program.schedule_type}
+												</CardDescription>
+											</CardHeader>
 
-										<CardContent>
-											<p className="text-gray-600 text-sm">
-												{program.description}
-											</p>
-										</CardContent>
-									</Card>
+											<CardContent>
+												<p className="text-gray-600 text-sm first-letter:capitalize">
+													{program.description}
+												</p>
+											</CardContent>
+										</Card>
+									</Link>
 								))}
 					</div>
 
@@ -226,33 +231,36 @@ function HomeComponent() {
 									</Card>
 								))
 							: news?.data.map((item) => (
-									<Card
+									<Link
 										key={item.id}
-										className="w-full rounded-md transition-shadow duration-300 hover:shadow-lg"
+										to="/berita/$slug/detail"
+										params={{ slug: item.slug }}
 									>
-										<CardHeader>
-											<div className="mb-2 flex items-center justify-between gap-4">
-												<span className="rounded-full bg-blue-100 px-3 py-1 font-semibold text-blue-900 text-xs capitalize">
-													{item.category.name}
-												</span>
-												<span className="text-gray-500 text-xs">
-													{new Intl.DateTimeFormat("id-ID", {
-														dateStyle: "long",
-													}).format(new Date(item.published_at as string))}
-												</span>
-											</div>
+										<Card className="w-full rounded-md transition-shadow duration-300 hover:shadow-lg">
+											<CardHeader>
+												<div className="mb-2 flex items-center justify-between gap-4">
+													<span className="rounded-full bg-blue-100 px-3 py-1 font-semibold text-blue-900 text-xs capitalize">
+														{item.category.name}
+													</span>
+													<span className="text-gray-500 text-xs">
+														{new Intl.DateTimeFormat("id-ID", {
+															dateStyle: "long",
+														}).format(new Date(item.published_at as string))}
+													</span>
+												</div>
 
-											<CardTitle className="font-semibold text-blue-900 text-lg capitalize leading-snug">
-												{item.title}
-											</CardTitle>
-										</CardHeader>
+												<CardTitle className="font-semibold text-blue-900 text-lg capitalize leading-snug">
+													{item.title}
+												</CardTitle>
+											</CardHeader>
 
-										<CardContent>
-											<p className="text-gray-600 text-sm first-letter:capitalize">
-												{item.excerpt}
-											</p>
-										</CardContent>
-									</Card>
+											<CardContent>
+												<p className="text-gray-600 text-sm first-letter:capitalize">
+													{item.excerpt}
+												</p>
+											</CardContent>
+										</Card>
+									</Link>
 								))}
 					</div>
 

@@ -1,8 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { NotFound } from "@workspace/ui/components/404";
 import { Badge } from "@workspace/ui/components/badge";
 import { Button } from "@workspace/ui/components/button";
-import { Card, CardContent } from "@workspace/ui/components/card";
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle,
+} from "@workspace/ui/components/card";
 import { Separator } from "@workspace/ui/components/separator";
 import { Skeleton } from "@workspace/ui/components/skeleton";
 import { ArrowLeft, Calendar } from "lucide-react";
@@ -19,7 +25,8 @@ function RouteComponent() {
 		getNewsBySlugQueryOptions(slug),
 	);
 
-	if (isNewsDataFetchLoading) return <SkeletonUI />;
+	if (isNewsDataFetchLoading) return <NewsDetailSkeleton />;
+	if (!news?.data) return <NotFound />;
 
 	return (
 		<section className="container mx-auto px-4 py-10">
@@ -74,7 +81,10 @@ function RouteComponent() {
 
 			{/* Content */}
 			<Card>
-				<CardContent className="prose prose-blue max-w-none py-8">
+				<CardHeader>
+					<CardTitle>Isi Berita</CardTitle>
+				</CardHeader>
+				<CardContent className="prose prose-blue max-w-none py-4">
 					<p className="whitespace-pre-line first-letter:capitalize">
 						{news?.data.content}
 					</p>
@@ -84,7 +94,7 @@ function RouteComponent() {
 	);
 }
 
-function SkeletonUI() {
+function NewsDetailSkeleton() {
 	return (
 		<section className="container mx-auto px-4 py-10">
 			{/* Back button */}
@@ -123,6 +133,12 @@ function SkeletonUI() {
 
 			{/* Content */}
 			<Card>
+				<CardHeader>
+					<CardTitle>
+						<Skeleton className="h-5 w-56" />
+					</CardTitle>
+				</CardHeader>
+
 				<CardContent className="space-y-4 py-8">
 					{Array.from({ length: 8 }).map((_, i) => (
 						<Skeleton

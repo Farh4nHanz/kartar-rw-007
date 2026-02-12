@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@workspace/ui/components/button";
 import {
 	Card,
@@ -14,7 +14,7 @@ import { Calendar, Info } from "lucide-react";
 import { getAllProgramsQueryOptions } from "@/hooks/query-options";
 import { useFilter } from "@/hooks/use-filter";
 
-export const Route = createFileRoute("/program")({
+export const Route = createFileRoute("/program/_index")({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) =>
 		queryClient.ensureQueryData(getAllProgramsQueryOptions()),
@@ -98,44 +98,47 @@ function RouteComponent() {
 								</Card>
 							))
 						: filteredData.map((program) => (
-								<Card
+								<Link
 									key={program.id}
-									className="overflow-hidden rounded-lg px-2 py-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+									to="/program/$id/detail"
+									params={{ id: program.id }}
 								>
-									<CardHeader>
-										<div className="mb-3 flex items-center justify-between">
-											<span className="w-fit rounded-full bg-blue-900 px-3 py-1 font-semibold text-white text-xs capitalize">
-												{program.category.name}
-											</span>
-											<span
-												className={cn(
-													"rounded-full px-3 py-1 font-medium text-xs capitalize",
-													program.status === "Rutin"
-														? "bg-green-100 text-green-800"
-														: "bg-yellow-100 text-yellow-800",
-												)}
-											>
-												{program.status}
-											</span>
-										</div>
+									<Card className="overflow-hidden rounded-lg px-2 py-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+										<CardHeader>
+											<div className="mb-3 flex items-center justify-between">
+												<span className="w-fit rounded-full bg-blue-900 px-3 py-1 font-semibold text-white text-xs capitalize">
+													{program.category.name}
+												</span>
+												<span
+													className={cn(
+														"rounded-full px-3 py-1 font-medium text-xs capitalize",
+														program.status === "Rutin"
+															? "bg-green-100 text-green-800"
+															: "bg-yellow-100 text-yellow-800",
+													)}
+												>
+													{program.status}
+												</span>
+											</div>
 
-										<CardTitle className="font-bold text-blue-900 text-lg capitalize">
-											{program.title}
-										</CardTitle>
-										<CardDescription className="flex items-center">
-											<Calendar className="mr-2 size-4 shrink-0" />
-											<span className="text-muted-foreground text-xs">
-												{program.schedule_type}
-											</span>
-										</CardDescription>
-									</CardHeader>
+											<CardTitle className="font-bold text-blue-900 text-lg capitalize">
+												{program.title}
+											</CardTitle>
+											<CardDescription className="flex items-center">
+												<Calendar className="mr-2 size-4 shrink-0" />
+												<span className="text-muted-foreground text-xs">
+													{program.schedule_type}
+												</span>
+											</CardDescription>
+										</CardHeader>
 
-									<CardContent className="flex flex-col gap-3">
-										<p className="line-clamp-5 text-gray-700 text-smleading-relaxed first-letter:capitalize">
-											{program.description}
-										</p>
-									</CardContent>
-								</Card>
+										<CardContent className="flex flex-col gap-3">
+											<p className="line-clamp-5 text-gray-700 text-smleading-relaxed first-letter:capitalize">
+												{program.description}
+											</p>
+										</CardContent>
+									</Card>
+								</Link>
 							))}
 				</div>
 
