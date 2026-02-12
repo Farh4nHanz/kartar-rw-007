@@ -1,5 +1,10 @@
 import { queryOptions } from "@tanstack/react-query";
-import { NEWS_QUERY_KEYS, PROGRAMS_QUERY_KEYS } from "@/constants";
+import {
+	MEMBERS_QUERY_KEYS,
+	NEWS_QUERY_KEYS,
+	PROGRAMS_QUERY_KEYS,
+} from "@/constants";
+import { getAllMembers } from "@/services/member-service";
 import {
 	getAllNews,
 	getLatestNews,
@@ -50,5 +55,12 @@ export function getNewsBySlugQueryOptions(slug: string) {
 	return queryOptions({
 		queryKey: NEWS_QUERY_KEYS.bySlug(slug),
 		queryFn: () => getNewsDetailBySlug(slug),
+	});
+}
+
+export function getAllMembersQueryOptions() {
+	return queryOptions({
+		queryKey: MEMBERS_QUERY_KEYS.all,
+		queryFn: getAllMembers,
 	});
 }

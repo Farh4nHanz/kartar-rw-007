@@ -24,6 +24,8 @@ export type GetAllMembersParams = {
 	position?: string;
 };
 
+const BUCKET_NAME = "profiles";
+
 export async function getAllMembers(
 	params?: GetAllMembersParams,
 ): Promise<SuccessResponseWithData<Member[]>> {
@@ -55,7 +57,7 @@ export async function getAllMembers(
 
 	const members = data.map((member) => ({
 		...member,
-		photo_url: getPublicImageUrl("profiles", member.photo_path),
+		photo_url: getPublicImageUrl(BUCKET_NAME, member.photo_path),
 	}));
 
 	const res: Member[] = members.map((member) => ({
@@ -79,7 +81,7 @@ export async function addNewMember(
 	const photoPath = generateFilePath(payload.photo);
 
 	const { error: uploadError } = await supabase.storage
-		.from("profiles")
+		.from(BUCKET_NAME)
 		.upload(photoPath, payload.photo);
 
 	if (uploadError) throw new ApiError(uploadError.message, uploadError.name);
@@ -117,14 +119,14 @@ export async function updateMemberById(
 		newPhotoPath = generateFilePath(payload.photo);
 
 		const { error: uploadError } = await supabase.storage
-			.from("profiles")
+			.from(BUCKET_NAME)
 			.upload(newPhotoPath, payload.photo);
 
 		if (uploadError) throw new ApiError(uploadError.message, uploadError.name);
 
 		if (existing.photo_path) {
 			const { error: deleteError } = await supabase.storage
-				.from("profiles")
+				.from(BUCKET_NAME)
 				.remove([existing.photo_path]);
 
 			if (deleteError)
@@ -169,7 +171,7 @@ export async function deleteMemberById(id: string): Promise<SuccessResponse> {
 
 	if (existing.photo_path) {
 		const { error: deleteFileError } = await supabase.storage
-			.from("profiles")
+			.from(BUCKET_NAME)
 			.remove([existing.photo_path]);
 
 		if (deleteFileError)

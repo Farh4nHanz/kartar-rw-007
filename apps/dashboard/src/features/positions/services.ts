@@ -88,9 +88,9 @@ export async function addNewPosition(
 		.from("positions")
 		.select("sort_order")
 		.eq("sort_order", payload.sort_order)
-		.eq("is_active", true);
+		.is("is_active", true);
 
-	if (existingData)
+	if (existingData?.length)
 		throw new ApiError(
 			"Tingkat jabatan sudah dimiliki oleh jabatan lain dan tidak boleh sama.",
 		);
