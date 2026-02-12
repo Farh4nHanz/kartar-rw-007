@@ -1,9 +1,14 @@
 import { queryOptions } from "@tanstack/react-query";
 import {
+	GALLERIES_QUERY_KEYS,
 	MEMBERS_QUERY_KEYS,
 	NEWS_QUERY_KEYS,
 	PROGRAMS_QUERY_KEYS,
 } from "@/constants";
+import {
+	getAllGalleries,
+	getGalleryDetailById,
+} from "@/services/gallery-service";
 import { getAllMembers } from "@/services/member-service";
 import {
 	getAllNews,
@@ -62,5 +67,19 @@ export function getAllMembersQueryOptions() {
 	return queryOptions({
 		queryKey: MEMBERS_QUERY_KEYS.all,
 		queryFn: getAllMembers,
+	});
+}
+
+export function getAllGalleriesQueryOptions() {
+	return queryOptions({
+		queryKey: GALLERIES_QUERY_KEYS.all,
+		queryFn: getAllGalleries,
+	});
+}
+
+export function getAllGalleryDetailByIdQueryOptions(id: string) {
+	return queryOptions({
+		queryKey: GALLERIES_QUERY_KEYS.byId(id),
+		queryFn: () => getGalleryDetailById(id),
 	});
 }

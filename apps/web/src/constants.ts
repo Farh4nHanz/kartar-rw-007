@@ -13,3 +13,8 @@ export const NEWS_QUERY_KEYS = {
 export const MEMBERS_QUERY_KEYS = {
 	all: ["members"],
 } as const;
+
+export const GALLERIES_QUERY_KEYS = {
+	all: ["galleries"],
+	byId: (id: string) => [...GALLERIES_QUERY_KEYS.all, id],
+} as const;

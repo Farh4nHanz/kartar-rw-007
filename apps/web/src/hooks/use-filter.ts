@@ -1,13 +1,25 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: true */
 import { useState } from "react";
 
-export function useFilter(data: Record<string, any>[]) {
-	const [filter, setFilter] = useState("Semua");
+export function useFilter<T extends { category: { name: string } }>(
+	data: T[],
+): {
+	filter: string;
+	setFilter: React.Dispatch<React.SetStateAction<string>>;
+	categories: string[];
+	filteredData: T[];
+} {
+	const [filter, setFilter] = useState<string>("semua");
 
-	const categories = ["Semua", ...new Set(data.map((d) => d.category))];
+	const categories = [
+		"semua",
+		...new Set(data.map((d) => d.category.name.toLowerCase())),
+	];
 
 	const filteredData =
-		filter === "Semua" ? data : data.filter((d) => d.category === filter);
+		filter === "semua"
+			? data
+			: data.filter((d) => d.category.name.toLowerCase() === filter);
 
 	return {
 		filter,

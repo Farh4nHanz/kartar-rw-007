@@ -97,8 +97,6 @@ export async function getAllGalleries(
 		})),
 	}));
 
-	console.log("galeri", galleries);
-
 	return {
 		success: true,
 		message: "Data diambil dengan sukses.",
