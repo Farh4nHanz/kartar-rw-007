@@ -1,10 +1,12 @@
 import { queryOptions } from "@tanstack/react-query";
 import {
+	COLLABORATIONS_QUERY_KEYS,
 	GALLERIES_QUERY_KEYS,
 	MEMBERS_QUERY_KEYS,
 	NEWS_QUERY_KEYS,
 	PROGRAMS_QUERY_KEYS,
 } from "@/constants";
+import { getAllCollaborations } from "@/services/collaboration-service";
 import {
 	getAllGalleries,
 	getGalleryDetailById,
@@ -83,3 +85,10 @@ export function getAllGalleryDetailByIdQueryOptions(id: string) {
 		queryFn: () => getGalleryDetailById(id),
 	});
 }
+
+export const getAllCollaborationsQueryOptions = () => {
+	return queryOptions({
+		queryKey: COLLABORATIONS_QUERY_KEYS.all,
+		queryFn: getAllCollaborations,
+	});
+};

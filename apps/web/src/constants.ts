@@ -18,3 +18,7 @@ export const GALLERIES_QUERY_KEYS = {
 	all: ["galleries"],
 	byId: (id: string) => [...GALLERIES_QUERY_KEYS.all, id],
 } as const;
+
+export const COLLABORATIONS_QUERY_KEYS = {
+	all: ["collaborations"],
+} as const;
