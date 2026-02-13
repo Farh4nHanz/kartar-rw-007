@@ -197,8 +197,7 @@ create table public.positions (
   is_active boolean not null default true,
   created_at timestamp without time zone not null default now(),
   updated_at timestamp without time zone not null default now(),
-  constraint positions_pkey primary key (id),
-  constraint positions_name_key unique (name)
+  constraint positions_pkey primary key (id)
 ) TABLESPACE pg_default;
 
 -- ============================================================
@@ -320,7 +319,7 @@ create table public.collaborations (
 
 </details>
 
-#### 2. Database Functions
+#### 2. Database Functions & Triggers
 
 <details>
 <summary><b>⚙️ Lihat SQL untuk membuat functions</b></summary>
@@ -334,12 +333,13 @@ CREATE OR REPLACE FUNCTION public.is_admin()
 RETURNS boolean
 LANGUAGE sql
 SECURITY DEFINER
+SET search_path = public
 AS $$
-  select exists (
-    select 1
-    from public.profiles
-    where id = auth.uid()
-      and role = 'admin'
+  SELECT EXISTS (
+    SELECT 1
+    FROM public.profiles
+    WHERE id = auth.uid()
+      AND role = 'admin'
   );
 $$;
 
@@ -351,10 +351,11 @@ CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS trigger
 LANGUAGE plpgsql
 SECURITY DEFINER
+SET search_path = public
 AS $$
 BEGIN
-  insert into public.profiles (id, email, role)
-  values (new.id, new.email, 'user');
+  INSERT INTO public.profiles (id, email, role)
+  VALUES (NEW.id, NEW.email, 'user');
   RETURN NEW;
 END;
 $$;
@@ -366,12 +367,19 @@ $$;
 CREATE OR REPLACE FUNCTION public.handle_updated_at()
 RETURNS trigger
 LANGUAGE plpgsql
+SET search_path = public
 AS $$
 BEGIN
   NEW.updated_at = NOW();
   RETURN NEW;
 END;
 $$;
+
+-- Buat trigger untuk insert pengguna setelah mendaftar
+CREATE TRIGGER on_auth_user_created
+AFTER INSERT ON auth.users
+FOR EACH ROW
+EXECUTE FUNCTION public.handle_new_user();
 
 -- Buat trigger untuk semua table yang memiliki kolom (updated_at)
 DO $$
@@ -396,11 +404,33 @@ BEGIN
   END LOOP;
 END;
 $$;
+
 ```
 
 </details>
 
-#### 3. Row Level Security (RLS) Policies
+#### 3. Database Indexes
+<details>
+<summary><b>🗝️ Lihat SQL untuk Database Indexes</b></summary>
+
+```sql
+-- ============================================
+-- Index untuk tabel periods
+-- ============================================
+CREATE UNIQUE INDEX unique_active_period ON public.periods USING btree (is_active) WHERE (is_active = true);
+
+CREATE UNIQUE INDEX unique_period_year_range ON public.periods USING btree (start_year, end_year);
+
+-- ============================================
+-- Index untuk tabel positions
+-- ============================================
+CREATE UNIQUE INDEX unique_active_sort_order ON public.positions USING btree (sort_order) WHERE (is_active = true);
+
+```
+
+</details>
+
+#### 4. Row Level Security (RLS) Policies
 
 <details>
 <summary><b>🔒 Lihat SQL untuk RLS Policies</b></summary>
@@ -795,7 +825,7 @@ USING (
 
 </details>
 
-#### 4. Storage Buckets & Policies
+#### 5. Storage Buckets & Policies
 
 <details>
 <summary><b>🗂️ Lihat SQL untuk Storage Buckets & Policies</b></summary>
