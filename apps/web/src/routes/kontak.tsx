@@ -52,11 +52,11 @@ function RouteComponent() {
 
 	const markerLocation = {
 		latitude: -6.1317342,
-		longitude: 106.8525953,
+		longitude: 106.8548806,
 	};
 
 	const openGoogleMaps = useCallback(() => {
-		const url = `https://www.google.com/maps/?q=${markerLocation.latitude},${markerLocation.longitude}`;
+		const url = `https://www.google.com/maps/place/Sekretariat+RW.+07+Sunter+Agung/@${markerLocation.latitude},${markerLocation.longitude},17z/data=!3m1!4b1!4m6!3m5!1s0x2e6a1e290ba29e8b:0xf4f348536bba5e28!8m2!3d-6.1317342!4d106.8574609!16s%2Fg%2F11byyddyv1?entry=ttu&g_ep=EgoyMDI2MDIxMC4wIKXMDSoASAFQAw%3D%3D`;
 
 		window.open(url, "_blank");
 	}, []);
