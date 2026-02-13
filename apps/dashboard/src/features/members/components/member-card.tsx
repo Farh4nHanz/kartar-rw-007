@@ -25,7 +25,6 @@ function MemberCard({
 }) {
 	const [isDeleteMemberModalOpen, setIsDeleteMemberModalOpen] = useState(false);
 	const [isEditMemberModalOpen, setIsEditMemberModalOpen] = useState(false);
-	console.log(member);
 
 	return (
 		<Card className="bg-primary/15 ring-primary/15 transition-shadow hover:shadow-md">

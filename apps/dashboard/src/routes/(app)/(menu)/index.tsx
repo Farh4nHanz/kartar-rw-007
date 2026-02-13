@@ -137,7 +137,7 @@ function RouteComponent() {
 			<StatisticCardGrid>
 				{stats.map((stat) => (
 					<StatisticCard
-						key={stat.value}
+						key={`${stat.value}-${Math.random()}`}
 						title={stat.label}
 						metric={stat.value || 0}
 						icon={stat.icon}

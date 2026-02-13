@@ -1,4 +1,5 @@
-import { supabase, type Tables } from "@workspace/supabase";
+import type { Tables } from "@workspace/supabase";
+import { supabase } from "@/lib/supabase";
 import type { SuccessResponseWithData } from "@/types/api";
 
 export type Program = Omit<

@@ -1,4 +1,5 @@
-import { supabase, type Tables } from "@workspace/supabase";
+import type { Tables } from "@workspace/supabase";
+import { supabase } from "@/lib/supabase";
 import { ApiError } from "@/shared/lib/api-error";
 import type { SuccessResponseWithData } from "@/shared/types/api";
 

@@ -1,5 +1,5 @@
 import type { Tables } from "@workspace/supabase/database.types";
-import { supabase } from "@workspace/supabase/supabase";
+import { supabase } from "@/lib/supabase";
 import { getPublicImageUrl } from "@/lib/utils/get-public-image-url";
 import type { SuccessResponseWithData } from "@/types/api";
 

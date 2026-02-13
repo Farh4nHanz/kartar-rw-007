@@ -1,5 +1,5 @@
 import type { Tables } from "@workspace/supabase/database.types";
-import { supabase } from "@workspace/supabase/supabase";
+import { supabase } from "@/lib/supabase";
 import { ApiError } from "@/shared/lib/api-error";
 import type {
 	Meta,
@@ -84,20 +84,16 @@ export async function getAllPositions(
 export async function addNewPosition(
 	payload: PositionPayload,
 ): Promise<SuccessResponse> {
-	const { data: existingData } = await supabase
-		.from("positions")
-		.select("sort_order")
-		.eq("sort_order", payload.sort_order)
-		.is("is_active", true);
-
-	if (existingData?.length)
-		throw new ApiError(
-			"Tingkat jabatan sudah dimiliki oleh jabatan lain dan tidak boleh sama.",
-		);
-
 	const { error } = await supabase.from("positions").insert(payload);
 
-	if (error) throw new ApiError(error.message, error.code);
+	if (error) {
+		if (error.code === "23505") {
+			throw new ApiError(
+				"Tingkat jabatan sudah dimiliki oleh jabatan lain dan tidak boleh sama.",
+			);
+		}
+		throw new ApiError(error.message, error.code);
+	}
 
 	return {
 		success: true,
@@ -109,23 +105,19 @@ export async function updatePositionById(
 	id: string,
 	payload: PositionPayload,
 ): Promise<SuccessResponse> {
-	const { data: existingData } = await supabase
-		.from("positions")
-		.select("sort_order")
-		.eq("sort_order", payload.sort_order)
-		.eq("is_active", true);
-
-	if (existingData)
-		throw new ApiError(
-			"Tingkat jabatan sudah dimiliki oleh jabatan lain dan tidak boleh sama.",
-		);
-
 	const { error } = await supabase
 		.from("positions")
 		.update(payload)
 		.eq("id", id);
 
-	if (error) throw new ApiError(error.message, error.code);
+	if (error) {
+		if (error.code === "23505") {
+			throw new ApiError(
+				"Tingkat jabatan sudah dimiliki oleh jabatan lain dan tidak boleh sama.",
+			);
+		}
+		throw new ApiError(error.message, error.code);
+	}
 
 	return {
 		success: true,

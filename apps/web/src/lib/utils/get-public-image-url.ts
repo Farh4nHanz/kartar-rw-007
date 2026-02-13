@@ -1,4 +1,4 @@
-import { supabase } from "@workspace/supabase/supabase";
+import { supabase } from "@/lib/supabase";
 
 export function getPublicImageUrl(bucket: string, path?: string | null) {
 	if (!path) return null;

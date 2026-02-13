@@ -1,4 +1,5 @@
-import { supabase, type Tables } from "@workspace/supabase";
+import type { Tables } from "@workspace/supabase";
+import { supabase } from "@/lib/supabase";
 import { ApiError } from "@/shared/lib/api-error";
 import type {
 	Meta,
@@ -88,7 +89,20 @@ export async function addNewPeriod(
 ): Promise<SuccessResponse> {
 	const { error } = await supabase.from("periods").insert(payload);
 
-	if (error) throw new ApiError(error.message, error.code);
+	if (error) {
+		if (error.code === "23505") {
+			if (error.message.includes("unique_active_period")) {
+				throw new ApiError("Hanya boleh ada satu periode aktif.");
+			}
+			if (error.message.includes("unique_period_year_range")) {
+				throw new ApiError(
+					"Periode dengan tahun awal dan akhir yang sama sudah ada.",
+				);
+			}
+		}
+
+		throw new ApiError(error.message, error.code);
+	}
 
 	return {
 		success: true,
@@ -102,7 +116,20 @@ export async function updatePeriodById(
 ): Promise<SuccessResponse> {
 	const { error } = await supabase.from("periods").update(payload).eq("id", id);
 
-	if (error) throw new ApiError(error.message, error.code);
+	if (error) {
+		if (error.code === "23505") {
+			if (error.message.includes("unique_active_period")) {
+				throw new ApiError("Hanya boleh ada satu periode aktif.");
+			}
+			if (error.message.includes("unique_period_year_range")) {
+				throw new ApiError(
+					"Periode dengan tahun awal dan akhir yang sama sudah ada.",
+				);
+			}
+		}
+
+		throw new ApiError(error.message, error.code);
+	}
 
 	return {
 		success: true,

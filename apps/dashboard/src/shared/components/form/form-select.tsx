@@ -32,6 +32,7 @@ export function FormSelect({
 	return (
 		<FormBase label={label} description={description}>
 			<Select
+				name={field.name}
 				value={stringify(field.state.value)}
 				onValueChange={(v) => field.handleChange(parse(v))}
 			>

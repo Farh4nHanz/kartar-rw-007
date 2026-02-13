@@ -1,4 +1,4 @@
-import { supabase } from "@workspace/supabase/supabase";
+import { supabase } from "@/lib/supabase";
 import { ApiError } from "@/shared/lib/api-error";
 
 type LoginPayload = {

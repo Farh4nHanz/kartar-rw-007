@@ -60,7 +60,6 @@ export const AddGalleryForm = memo(
 							dismissible: true,
 							closeButton: true,
 						});
-						console.log(payload);
 
 						form.reset();
 
