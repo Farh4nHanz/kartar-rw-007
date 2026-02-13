@@ -7,6 +7,6 @@ export const env = createEnv({
 		VITE_SUPABASE_URL: z.url(),
 		VITE_SUPABASE_PUBLISHABLE_KEY: z.string(),
 	},
-	runtimeEnv: import.meta.env,
+	runtimeEnv: process.env,
 	emptyStringAsUndefined: true,
 });
