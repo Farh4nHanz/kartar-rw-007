@@ -43,7 +43,7 @@ function RouteComponent() {
 						Struktur Organisasi
 					</h1>
 					<p className="text-gray-600 text-lg">
-						Kepengurusan Karang Taruna RW 007 Periode {getCurrentPeriod}
+						Kepengurusan Karang Taruna RW 07 Periode {getCurrentPeriod}
 					</p>
 				</div>
 

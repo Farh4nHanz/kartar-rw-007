@@ -33,6 +33,7 @@ export async function getAllNews(): Promise<SuccessResponseWithData<News[]>> {
 				)
 			`,
 		)
+		.eq("is_published", true)
 		.order("created_at", { ascending: true });
 
 	if (error) throw new Error("Gagal mengambil data berita.");
@@ -78,6 +79,7 @@ export async function getLatestNews(): Promise<
 				)
 			`,
 		)
+		.eq("is_published", true)
 		.limit(3);
 
 	if (error) throw new Error("Gagal mengambil data berita.");

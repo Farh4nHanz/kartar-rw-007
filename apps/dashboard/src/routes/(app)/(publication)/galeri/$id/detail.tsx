@@ -97,7 +97,7 @@ function RouteComponent() {
 					</div>
 					<div>
 						<h5>Jumlah Foto</h5>
-						<h3>{gallery?.data.images.length} foto</h3>
+						<h3>{gallery?.data.images.length} Foto</h3>
 					</div>
 				</CardContent>
 			</Card>

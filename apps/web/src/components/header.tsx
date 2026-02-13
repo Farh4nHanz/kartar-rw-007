@@ -44,13 +44,13 @@ export default function Header() {
 				</Link>
 
 				{/* Desktop Navigation */}
-				<nav className="hidden basis-8/12 flex-wrap items-end justify-end gap-3 lg:flex">
+				<nav className="hidden basis-7/12 flex-wrap items-end justify-end gap-3 lg:flex">
 					{links.map((item) => (
 						<Link
 							key={item.label}
 							to={item.to}
 							className={cn(
-								"rounded-md px-3 py-2 font-medium text-sm transition-colors duration-200",
+								"shrink-0 rounded-md px-3 py-2 font-medium text-sm transition-colors duration-200",
 								matchRoute({ to: item.to, fuzzy: true })
 									? "bg-blue-900 text-white"
 									: "text-gray-700 hover:bg-blue-50 hover:text-blue-900",

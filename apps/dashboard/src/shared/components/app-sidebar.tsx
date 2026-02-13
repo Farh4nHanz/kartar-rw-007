@@ -25,9 +25,16 @@ export function AppSidebar() {
 function Header() {
 	return (
 		<SidebarHeader className="group-data-[collapsible=icon]:hidden">
-			<h1 className="text-center font-bold font-heading text-primary text-xl">
-				Karang Taruna RW 07
-			</h1>
+			<div className="flex items-center justify-center gap-2">
+				<img
+					className="size-8 rounded-full object-cover object-center italic"
+					src="/android-chrome-512x512.png"
+					alt="Logo Karang Taruna"
+				/>
+				<h1 className="text-start font-bold font-heading text-base text-primary">
+					Karang Taruna RW 07
+				</h1>
+			</div>
 			<SidebarSeparator />
 		</SidebarHeader>
 	);

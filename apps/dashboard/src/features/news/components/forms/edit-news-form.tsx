@@ -55,10 +55,10 @@ export const EditNewsForm = memo(
 			defaultValues: {
 				title: selectedData?.title,
 				slug: selectedData?.slug,
-				category_id: selectedData?.category.id,
+				category_id: String(selectedData?.category.id),
 				content: selectedData?.content,
 				excerpt: selectedData?.excerpt,
-				is_published: selectedData?.is_published,
+				is_published: String(selectedData?.is_published) as unknown as boolean,
 				published_at: selectedData?.published_at,
 				thumbnail: undefined,
 			} satisfies EditNewsFormValue as EditNewsFormValue,
@@ -150,7 +150,7 @@ export const EditNewsForm = memo(
 								{/* News category */}
 								<form.AppField name="category_id">
 									{(field) => (
-										<field.Select label="Kategori" placeholder="Kategori">
+										<field.Select label="Kategori" placeholder="Pilih kategori">
 											<SelectGroup>
 												{categories?.map((category) => (
 													<SelectItem

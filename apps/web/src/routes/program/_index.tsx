@@ -44,22 +44,24 @@ function RouteComponent() {
 				</div>
 
 				{/* Filter */}
-				<div className="mb-8 flex flex-wrap justify-center gap-3">
-					{categories.map((category) => (
-						<Button
-							key={category}
-							className={cn(
-								"rounded-full px-5 py-2 font-[550] text-sm capitalize transition-all duration-300 hover:cursor-pointer",
-								filter === category.toLowerCase()
-									? "scale-105 bg-blue-900 text-white shadow-md hover:bg-blue-800"
-									: "border border-gray-200 bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-900",
-							)}
-							onClick={() => setFilter(category.toLowerCase())}
-						>
-							{category}
-						</Button>
-					))}
-				</div>
+				{programs?.data.length ? (
+					<div className="mb-8 flex flex-wrap justify-center gap-3">
+						{categories.map((category) => (
+							<Button
+								key={category}
+								className={cn(
+									"rounded-full px-5 py-2 font-[550] text-sm capitalize transition-all duration-300 hover:cursor-pointer",
+									filter === category.toLowerCase()
+										? "scale-105 bg-blue-900 text-white shadow-md hover:bg-blue-800"
+										: "border border-gray-200 bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-900",
+								)}
+								onClick={() => setFilter(category.toLowerCase())}
+							>
+								{category}
+							</Button>
+						))}
+					</div>
+				) : null}
 
 				{/* Programs Grid */}
 				<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
