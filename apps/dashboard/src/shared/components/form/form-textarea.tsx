@@ -19,7 +19,7 @@ export function FormTextarea({
 				value={field.state.value}
 				onChange={(e) => field.handleChange(e.target.value)}
 				onBlur={field.handleBlur}
-				className="min-h-24"
+				className="min-h-24 first-letter:capitalize"
 				aria-invalid={isInvalid}
 			/>
 		</FormBase>

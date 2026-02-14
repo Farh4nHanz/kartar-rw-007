@@ -23,6 +23,7 @@ export function FormInput({
 				onBlur={field.handleBlur}
 				aria-invalid={isInvalid}
 				autoComplete="off"
+				className="capitalize"
 			/>
 		</FormBase>
 	);
