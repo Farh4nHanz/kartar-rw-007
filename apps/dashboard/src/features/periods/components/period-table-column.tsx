@@ -16,6 +16,9 @@ export const columns = [
 	columnHelper.accessor("name", {
 		id: "period_name",
 		header: "Periode",
+		cell: ({ getValue }) => (
+			<span className="first-letter:capitalize">{getValue()}</span>
+		),
 		enableHiding: false,
 	}),
 	columnHelper.accessor("start_year", {

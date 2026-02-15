@@ -1,10 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import {
-	createFileRoute,
-	Link,
-	useNavigate,
-	useParams,
-} from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { NotFound } from "@workspace/ui/components/404";
 import { Badge } from "@workspace/ui/components/badge";
 import { Button } from "@workspace/ui/components/button";
 import {
@@ -34,16 +30,14 @@ export const Route = createFileRoute(
 	"/(app)/(publication)/berita/$slug/detail",
 )({
 	component: RouteComponent,
+	loader: ({ context: { queryClient }, params: { slug } }) =>
+		queryClient.ensureQueryData(getNewsDetailBySlugQueryOptions(slug)),
 });
 
 function RouteComponent() {
-	const { slug } = useParams({
-		from: "/(app)/(publication)/berita/$slug/detail",
-	});
+	const { slug } = Route.useParams();
 
-	const navigate = useNavigate({
-		from: "/berita/$slug/detail",
-	});
+	const navigate = Route.useNavigate();
 
 	const { data: news, isLoading } = useQuery(
 		getNewsDetailBySlugQueryOptions(slug),
@@ -82,6 +76,10 @@ function RouteComponent() {
 		return <NewsDetailSkeleton />;
 	}
 
+	if (!news?.data) {
+		return <NotFound />;
+	}
+
 	return (
 		<div className="h-full min-h-dvh w-full space-y-8 overflow-x-auto px-4 pt-20 pb-6">
 			<div className="flex items-center gap-4 max-md:flex-col">
@@ -106,12 +104,12 @@ function RouteComponent() {
 						>
 							{getStatus().status}
 						</Badge>
-						<Badge className="bg-gray-200 text-[calc(var(--text-xs)-1px)] text-gray-800 dark:bg-gray-500 dark:text-gray-50">
+						<Badge className="bg-gray-200 text-[calc(var(--text-xs)-1px)] text-gray-800 capitalize dark:bg-gray-500 dark:text-gray-50">
 							{news?.data.category.name}
 						</Badge>
 					</div>
 
-					<h1 className="font-bold text-2xl">{news?.data.title}</h1>
+					<h1 className="font-bold text-2xl capitalize">{news?.data.title}</h1>
 
 					<div className="flex items-center gap-6 [&_span]:text-muted-foreground [&_span]:text-xs">
 						<div className="flex items-center justify-center gap-2">
@@ -150,7 +148,7 @@ function RouteComponent() {
 						<CardTitle className="font-semibold">Konten</CardTitle>
 					</CardHeader>
 					<CardContent className="flex gap-10">
-						{news?.data.content}
+						<p className="first-letter:capitalize">{news?.data.content}</p>
 					</CardContent>
 				</Card>
 
@@ -165,7 +163,7 @@ function RouteComponent() {
 						</hgroup>
 						<hgroup>
 							<h5>Kategori</h5>
-							<h3>{news?.data.category.name}</h3>
+							<h3 className="capitalize">{news?.data.category.name}</h3>
 						</hgroup>
 						<hgroup>
 							<h5>Status</h5>

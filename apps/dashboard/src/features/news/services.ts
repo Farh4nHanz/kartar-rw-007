@@ -149,7 +149,12 @@ export async function getNewsDetailBySlug(
 		.eq("slug", slug)
 		.single();
 
-	if (error) throw new ApiError(error.message, error.code);
+	if (error) {
+		if (error.code === "PGRST116")
+			throw new ApiError("Data tidak ditemukan.", error.code);
+
+		throw new ApiError(error.message, error.code);
+	}
 
 	const thumbnailUrl = newsData?.image_path
 		? getPublicImageUrl(BUCKET_NAME, newsData.image_path)
@@ -196,55 +201,6 @@ export async function addNewNews(
 	return {
 		success: true,
 		message: "Berita baru berhasil ditambahkan.",
-	};
-}
-
-export async function updateNewsById(
-	id: string,
-	payload: EditNewsPayload,
-): Promise<SuccessResponse> {
-	const { data: existing, error: fetchError } = await supabase
-		.from("news")
-		.select("image_path")
-		.eq("id", id)
-		.single();
-
-	if (fetchError) throw new ApiError(fetchError.message, fetchError.code);
-
-	let newThumbnailPath: string | null = existing.image_path;
-
-	if (payload.thumbnail) {
-		newThumbnailPath = generateFilePath(payload.thumbnail);
-
-		const { error: uploadError } = await supabase.storage
-			.from(BUCKET_NAME)
-			.upload(newThumbnailPath, payload.thumbnail);
-
-		if (uploadError) throw new ApiError(uploadError.message, uploadError.name);
-
-		if (existing.image_path) {
-			const { error: deleteError } = await supabase.storage
-				.from(BUCKET_NAME)
-				.remove([existing.image_path]);
-
-			if (deleteError)
-				throw new ApiError(deleteError.message, deleteError.name);
-		}
-	}
-
-	const { error: updateError } = await supabase
-		.from("news")
-		.update({
-			...payload,
-			image_path: newThumbnailPath,
-		})
-		.eq("id", id);
-
-	if (updateError) throw new ApiError(updateError.message, updateError.code);
-
-	return {
-		success: true,
-		message: "Berita berhasil diperbarui.",
 	};
 }
 
@@ -318,16 +274,19 @@ export async function updateNewsBySlug(
 
 export async function updateNewsStatusById(
 	id: string,
-	isPublished: boolean,
+	payload: Pick<EditNewsPayload, "is_published" | "published_at">,
 ): Promise<SuccessResponse> {
 	const { error } = await supabase
 		.from("news")
-		.update({ is_published: isPublished })
+		.update({
+			is_published: payload.is_published,
+			published_at: payload.published_at,
+		})
 		.eq("id", id);
 
 	if (error) throw new ApiError(error.message, error.code);
 
-	const message = isPublished
+	const message = payload.is_published
 		? "Berita berhasil dipublish."
 		: "Berita disimpan ke dalam draft.";
 

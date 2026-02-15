@@ -119,8 +119,7 @@ export const FormMultipleFileUpload = memo(
 											<Button
 												type="button"
 												size="icon"
-												variant="destructive"
-												className="absolute top-2 right-2 opacity-0 transition-opacity duration-300 hover:cursor-pointer group-hover:opacity-100"
+												className="absolute top-2 right-2 bg-destructive text-destructive-foreground hover:cursor-pointer hover:bg-destructive/90 dark:text-foreground"
 												onClick={() => removeFile(index)}
 											>
 												<Trash2 size={16} />

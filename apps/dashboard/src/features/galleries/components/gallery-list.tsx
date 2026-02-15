@@ -153,15 +153,17 @@ export function GalleryList() {
 				</GalleryGrid>
 			)}
 
-			<DataTablePagination
-				currentPage={pagination.pageIndex + 1}
-				totalPages={galleries?.meta.totalPages || 1}
-				onPageChange={(page) =>
-					navigate({
-						search: (prev) => ({ ...prev, page }),
-					})
-				}
-			/>
+			{galleries?.data.length ? (
+				<DataTablePagination
+					currentPage={pagination.pageIndex + 1}
+					totalPages={galleries?.meta.totalPages || 1}
+					onPageChange={(page) =>
+						navigate({
+							search: (prev) => ({ ...prev, page }),
+						})
+					}
+				/>
+			) : null}
 		</>
 	);
 }

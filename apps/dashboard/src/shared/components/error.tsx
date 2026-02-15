@@ -28,15 +28,15 @@ export function RouteError({ error, reset }: ErrorComponentProps) {
 			: "Terjadi kesalahan saat memuat data.";
 
 	return (
-		<main className="grid h-full min-h-dvh place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+		<main className="grid h-full min-h-dvh place-items-center bg-background px-6 py-24 sm:py-32 lg:px-8">
 			<div className="flex flex-col items-center justify-center text-center">
 				<p className="font-semibold text-base text-red-700">Error</p>
 
-				<h1 className="mt-4 text-balance font-semibold text-3xl text-gray-900 tracking-tight sm:text-5xl">
+				<h1 className="mt-4 text-balance font-semibold text-3xl text-foreground tracking-tight sm:text-5xl">
 					Gagal Memuat Data
 				</h1>
 
-				<p className="mt-6 max-w-md text-pretty font-medium text-gray-500 text-sm sm:text-base/8">
+				<p className="mt-6 max-w-md text-pretty font-medium text-muted-foreground text-sm sm:text-base/8">
 					{errorMessage}
 				</p>
 

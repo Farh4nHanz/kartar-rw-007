@@ -35,11 +35,15 @@ export function updateNewsBySlugMutationOptions(
 
 export function updateNewsStatusByIdMutationOptions(
 	id: string,
-	options?: MutationOptions<SuccessResponse, ErrorResponse, boolean>,
+	options?: MutationOptions<
+		SuccessResponse,
+		ErrorResponse,
+		Pick<EditNewsPayload, "is_published" | "published_at">
+	>,
 ) {
 	return mutationOptions({
 		mutationKey: NEWS_MUTATION_KEYS.updateById(id),
-		mutationFn: (isPublished) => updateNewsStatusById(id, isPublished),
+		mutationFn: (payload) => updateNewsStatusById(id, payload),
 		...options,
 	});
 }

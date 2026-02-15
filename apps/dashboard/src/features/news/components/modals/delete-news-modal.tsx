@@ -91,6 +91,10 @@ export const DeleteNewsModal = memo(
 
 export const DeleteNewsModalOnDetail = memo(
 	({ selectedData, isModalOpen, setIsModalOpen }: ModalProps<News>) => {
+		const search = useSearch({
+			from: "/(app)/(publication)/berita/$slug/detail",
+		});
+
 		const navigate = useNavigate({
 			from: "/berita/$slug/detail",
 		});
@@ -108,10 +112,12 @@ export const DeleteNewsModalOnDetail = memo(
 					});
 
 					setIsModalOpen(false);
-					navigate({ to: "/berita" });
+
 					context.client.invalidateQueries({
-						queryKey: getAllNewsQueryOptions().queryKey,
+						queryKey: getAllNewsQueryOptions(search).queryKey,
 					});
+
+					navigate({ to: "/berita" });
 				},
 				onError: (err) => {
 					toast.error(err.message, {

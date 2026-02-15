@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@workspace/ui/components/button";
 import { ArrowLeft } from "lucide-react";
@@ -14,10 +13,6 @@ export const Route = createFileRoute("/(app)/(publication)/berita/new")({
 });
 
 function RouteComponent() {
-	const { data: categories } = useQuery(
-		getAllCategoriesQueryOptions({ type: "berita" }),
-	);
-
 	return (
 		<div className="h-full min-h-dvh w-full space-y-8 overflow-x-auto px-4 pt-20 pb-6">
 			<div className="flex flex-nowrap items-center gap-4">
@@ -40,7 +35,7 @@ function RouteComponent() {
 				</hgroup>
 			</div>
 
-			<AddNewsForm categories={categories?.data || []} />
+			<AddNewsForm />
 		</div>
 	);
 }

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { NewsTable } from "@/features/news/components/news-table";
+import { getAllNewsQueryOptions } from "@/features/news/hooks/query-options";
 import type { GetAllNewsParams } from "@/features/news/services";
 
 export const Route = createFileRoute("/(app)/(publication)/berita/_index")({
@@ -10,6 +11,8 @@ export const Route = createFileRoute("/(app)/(publication)/berita/_index")({
 		status: search.status || undefined,
 		title: search.title || undefined,
 	}),
+	loader: ({ context: { queryClient } }) =>
+		queryClient.ensureQueryData(getAllNewsQueryOptions()),
 	component: RouteComponent,
 });
 

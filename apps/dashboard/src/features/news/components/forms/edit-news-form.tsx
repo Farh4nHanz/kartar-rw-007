@@ -1,5 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
-import { useNavigate, useSearch } from "@tanstack/react-router";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
+import { NotFound } from "@workspace/ui/components/404";
 import { Button } from "@workspace/ui/components/button";
 import { Card, CardContent } from "@workspace/ui/components/card";
 import {
@@ -13,7 +14,7 @@ import { ArrowRightToLine, Save } from "lucide-react";
 import { memo } from "react";
 import slugify from "slugify";
 import { toast } from "sonner";
-import type { Category } from "@/features/categories/services";
+import { getAllCategoriesQueryOptions } from "@/features/categories/hooks/query-options";
 import { updateNewsBySlugMutationOptions } from "@/features/news/hooks/mutation-options";
 import {
 	getAllNewsQueryOptions,
@@ -23,240 +24,242 @@ import {
 	type EditNewsFormValue,
 	editNewsSchema,
 } from "@/features/news/schemas";
-import type { News } from "@/features/news/services";
 import { useAppForm } from "@/shared/components/form/hooks";
 
-export const EditNewsForm = memo(
-	({
-		isLoading,
-		selectedData,
-		categories,
-	}: {
-		isLoading: boolean;
-		selectedData: News;
-		categories: Category[];
-	}) => {
-		const navigate = useNavigate({
-			from: "/berita/$slug/edit",
-		});
+export const EditNewsForm = memo(() => {
+	const { slug } = useParams({
+		from: "/(app)/(publication)/berita/$slug/edit",
+	});
 
-		const search = useSearch({
-			from: "/(app)/(publication)/berita/$slug/edit",
-		});
+	const navigate = useNavigate({
+		from: "/berita/$slug/edit",
+	});
 
-		const statuses = [true, false] as const;
+	const search = useSearch({
+		from: "/(app)/(publication)/berita/$slug/edit",
+	});
 
-		const { mutateAsync } = useMutation(
-			updateNewsBySlugMutationOptions(selectedData?.slug),
-		);
+	const { data: news, isLoading: isNewsFetchLoading } = useQuery(
+		getNewsDetailBySlugQueryOptions(slug),
+	);
 
-		const form = useAppForm({
-			formId: "edit-news-form",
-			defaultValues: {
-				title: selectedData?.title,
-				slug: selectedData?.slug,
-				category_id: String(selectedData?.category.id),
-				content: selectedData?.content,
-				excerpt: selectedData?.excerpt,
-				is_published: String(selectedData?.is_published) as unknown as boolean,
-				published_at: selectedData?.published_at,
-				thumbnail: undefined,
-			} satisfies EditNewsFormValue as EditNewsFormValue,
-			validators: {
-				onSubmit: editNewsSchema,
-			},
-			onSubmit: async ({ value }) => {
-				const slug = slugify(value.title, {
-					lower: true,
-					trim: true,
-					strict: true,
-				});
+	const { data: categories, isLoading: isCategoriesFetchLoading } = useQuery(
+		getAllCategoriesQueryOptions({ type: "berita" }),
+	);
 
-				const excerpt = value.content.trim().substring(0, 150);
+	const statuses = [true, false] as const;
 
-				const publishedAt = value.is_published
-					? new Date().toISOString()
-					: null;
+	const { mutateAsync } = useMutation(updateNewsBySlugMutationOptions(slug));
 
-				await mutateAsync(
-					{
-						...value,
-						slug: `${slug}-${crypto.randomUUID()}`,
-						excerpt,
-						published_at: publishedAt,
+	const form = useAppForm({
+		formId: "edit-news-form",
+		defaultValues: {
+			title: news?.data.title ?? "",
+			slug: news?.data.slug ?? "",
+			category_id: news?.data.category.id ?? "",
+			content: news?.data.content ?? "",
+			excerpt: news?.data.excerpt ?? "",
+			is_published: news?.data.is_published as boolean,
+			published_at: news?.data.published_at ?? "",
+			thumbnail: undefined,
+		} satisfies EditNewsFormValue as EditNewsFormValue,
+		validators: {
+			onSubmit: editNewsSchema,
+		},
+		onSubmit: async ({ value }) => {
+			const slug = slugify(value.title, {
+				lower: true,
+				trim: true,
+				strict: true,
+			});
+
+			const excerpt = value.content.trim().substring(0, 150);
+
+			const publishedAt = value.is_published ? new Date().toISOString() : null;
+
+			await mutateAsync(
+				{
+					...value,
+					title: value.title.toLowerCase(),
+					slug: `${slug}-${Date.now()}`,
+					excerpt,
+					published_at: publishedAt,
+				},
+				{
+					onSuccess: (res, _variables, _onMutateResult, context) => {
+						toast.success(res.message, {
+							duration: 5000,
+							dismissible: true,
+							closeButton: true,
+						});
+
+						form.reset();
+
+						context.client.invalidateQueries({
+							queryKey: getNewsDetailBySlugQueryOptions(news?.data.id as string)
+								.queryKey,
+						});
+
+						context.client.invalidateQueries({
+							queryKey: getAllNewsQueryOptions(search).queryKey,
+						});
+
+						navigate({ to: "/berita", replace: true });
 					},
-					{
-						onSuccess: (res, _variables, _onMutateResult, context) => {
-							toast.success(res.message, {
-								duration: 5000,
-								dismissible: true,
-								closeButton: true,
-							});
-
-							form.reset();
-
-							context.client.invalidateQueries({
-								queryKey: getNewsDetailBySlugQueryOptions(selectedData?.id)
-									.queryKey,
-							});
-
-							context.client.invalidateQueries({
-								queryKey: getAllNewsQueryOptions(search).queryKey,
-							});
-
-							navigate({ to: "/berita", replace: true });
-						},
-						onError: (res) => {
-							toast.error(res.message, {
-								duration: 5000,
-								dismissible: true,
-								closeButton: true,
-							});
-						},
+					onError: (res) => {
+						toast.error(res.message, {
+							duration: 5000,
+							dismissible: true,
+							closeButton: true,
+						});
 					},
-				);
-			},
-		});
+				},
+			);
+		},
+	});
 
-		if (isLoading) {
-			return <ComponentLoader />;
-		}
+	if (isCategoriesFetchLoading || isNewsFetchLoading) {
+		return <ComponentLoader />;
+	}
 
-		return (
-			<form
-				className="grid w-full gap-5 [&_input,textarea]:text-sm"
-				onSubmit={(e) => {
-					e.preventDefault();
-					form.handleSubmit();
-				}}
-			>
-				<Card>
-					<CardContent>
-						<FieldSet>
-							<FieldLegend>Informasi Dasar</FieldLegend>
+	if (!news?.data) {
+		return <NotFound />;
+	}
 
-							{/* Input */}
-							<FieldGroup className="mt-3 gap-5">
-								{/* News name */}
-								<form.AppField name="title">
-									{(field) => (
-										<field.Input
-											label="Judul"
-											placeholder="Contoh: Kegiatan Bersih-Bersih Lingkungan"
-										/>
-									)}
-								</form.AppField>
+	return (
+		<form
+			className="grid w-full gap-5 [&_input,textarea]:text-sm"
+			onSubmit={(e) => {
+				e.preventDefault();
+				form.handleSubmit();
+			}}
+		>
+			<Card>
+				<CardContent>
+					<FieldSet>
+						<FieldLegend>Informasi Dasar</FieldLegend>
 
-								{/* News category */}
-								<form.AppField name="category_id">
-									{(field) => (
-										<field.Select label="Kategori" placeholder="Pilih kategori">
-											<SelectGroup>
-												{categories?.map((category) => (
-													<SelectItem
-														key={category.id}
-														value={category.id}
-														className="capitalize"
-													>
-														{category.name}
-													</SelectItem>
-												))}
-											</SelectGroup>
-										</field.Select>
-									)}
-								</form.AppField>
-
-								{/* News status */}
-								<form.AppField name="is_published">
-									{(field) => (
-										<field.Select
-											label="Status"
-											placeholder="Status"
-											stringifyValue={(v) => String(v)}
-											parseValue={(s) => s === "true"}
-										>
-											<SelectGroup>
-												{statuses.map((status) => (
-													<SelectItem
-														key={String(status)}
-														value={String(status)}
-														className="capitalize"
-													>
-														{status ? "Publish" : "Draft"}
-													</SelectItem>
-												))}
-											</SelectGroup>
-										</field.Select>
-									)}
-								</form.AppField>
-
-								{/* News thumbnail */}
-								<form.AppField name="thumbnail">
-									{(field) => (
-										<field.FileInput label="Thumbnail" accept="image/*" />
-									)}
-								</form.AppField>
-							</FieldGroup>
-						</FieldSet>
-					</CardContent>
-				</Card>
-
-				<Card>
-					<CardContent>
-						<FieldSet>
-							<FieldLegend>Konten Berita</FieldLegend>
-
-							<form.AppField name="content">
+						{/* Input */}
+						<FieldGroup className="mt-3 gap-5">
+							{/* News name */}
+							<form.AppField name="title">
 								{(field) => (
-									<field.Textarea
-										label=""
-										placeholder="Tulis konten berita di sini..."
+									<field.Input
+										label="Judul"
+										placeholder="Contoh: Kegiatan Bersih-Bersih Lingkungan"
 									/>
 								)}
 							</form.AppField>
-						</FieldSet>
-					</CardContent>
-				</Card>
 
-				{/* Submit and cancel buttons */}
-				<form.Subscribe
-					selector={(state) => [
-						state.canSubmit,
-						state.isSubmitting,
-						state.values,
-					]}
-					children={([canSubmit, isSubmitting, values]) => (
-						<div className="flex items-start justify-end gap-2">
-							<Button
-								type="button"
-								variant="destructive"
-								onClick={() => navigate({ to: "/berita", replace: true })}
-							>
-								Batal
-							</Button>
-							{(values as EditNewsFormValue).is_published ? (
-								<Button
-									type="submit"
-									disabled={Boolean(!canSubmit) || Boolean(isSubmitting)}
-									className="bg-green-500 text-primary-foreground hover:bg-green-600 disabled:bg-green/50"
-								>
-									{isSubmitting ? <ComponentLoader /> : "Publish"}
-									<ArrowRightToLine />
-								</Button>
-							) : (
-								<Button
-									type="submit"
-									disabled={Boolean(!canSubmit) || Boolean(isSubmitting)}
-									className="bg-amber-500 text-primary-foreground hover:bg-amber-600 dark:bg-amber-300 dark:hover:bg-amber-400"
-								>
-									<Save />
-									{isSubmitting ? <ComponentLoader /> : "Simpan sebagai Draft"}
-								</Button>
+							{/* News category */}
+							<form.AppField name="category_id">
+								{(field) => (
+									<field.Select label="Kategori" placeholder="Pilih kategori">
+										<SelectGroup>
+											{categories?.data.map((category) => (
+												<SelectItem
+													key={category.id}
+													value={category.id}
+													className="capitalize"
+												>
+													{category.name}
+												</SelectItem>
+											))}
+										</SelectGroup>
+									</field.Select>
+								)}
+							</form.AppField>
+
+							{/* News status */}
+							<form.AppField name="is_published">
+								{(field) => (
+									<field.Select
+										label="Status"
+										placeholder="Status"
+										stringifyValue={(v) => String(v)}
+										parseValue={(s) => s === "true"}
+									>
+										<SelectGroup>
+											{statuses.map((status) => (
+												<SelectItem
+													key={String(status)}
+													value={String(status)}
+													className="capitalize"
+												>
+													{status ? "Publish" : "Draft"}
+												</SelectItem>
+											))}
+										</SelectGroup>
+									</field.Select>
+								)}
+							</form.AppField>
+
+							{/* News thumbnail */}
+							<form.AppField name="thumbnail">
+								{(field) => (
+									<field.FileInput label="Thumbnail" accept="image/*" />
+								)}
+							</form.AppField>
+						</FieldGroup>
+					</FieldSet>
+				</CardContent>
+			</Card>
+
+			<Card>
+				<CardContent>
+					<FieldSet>
+						<FieldLegend>Konten Berita</FieldLegend>
+
+						<form.AppField name="content">
+							{(field) => (
+								<field.Textarea
+									label=""
+									placeholder="Tulis konten berita di sini..."
+								/>
 							)}
-						</div>
-					)}
-				/>
-			</form>
-		);
-	},
-);
+						</form.AppField>
+					</FieldSet>
+				</CardContent>
+			</Card>
+
+			{/* Submit and cancel buttons */}
+			<form.Subscribe
+				selector={(state) => [
+					state.canSubmit,
+					state.isSubmitting,
+					state.values,
+				]}
+				children={([canSubmit, isSubmitting, values]) => (
+					<div className="flex items-start justify-end gap-2">
+						<Button
+							type="button"
+							variant="destructive"
+							onClick={() => navigate({ to: "/berita", replace: true })}
+						>
+							Batal
+						</Button>
+						{(values as EditNewsFormValue).is_published ? (
+							<Button
+								type="submit"
+								disabled={Boolean(!canSubmit) || Boolean(isSubmitting)}
+								className="bg-green-500 text-primary-foreground hover:bg-green-600 disabled:bg-green/50"
+							>
+								{isSubmitting ? <ComponentLoader /> : "Publish"}
+								<ArrowRightToLine />
+							</Button>
+						) : (
+							<Button
+								type="submit"
+								disabled={Boolean(!canSubmit) || Boolean(isSubmitting)}
+								className="bg-amber-500 text-primary-foreground hover:bg-amber-600 dark:bg-amber-300 dark:hover:bg-amber-400"
+							>
+								<Save />
+								{isSubmitting ? <ComponentLoader /> : "Simpan sebagai Draft"}
+							</Button>
+						)}
+					</div>
+				)}
+			/>
+		</form>
+	);
+});

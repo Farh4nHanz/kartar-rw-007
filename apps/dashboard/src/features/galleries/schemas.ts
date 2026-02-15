@@ -1,7 +1,15 @@
+import slugify from "slugify";
 import { z } from "zod";
 
 export const addGallerySchema = z.object({
 	title: z.string().min(1, "Mohon isi nama galeri."),
+	slug: z.string().transform((val) =>
+		slugify(val, {
+			lower: true,
+			strict: true,
+			trim: true,
+		}),
+	),
 	description: z.string().min(1, "Mohon isi deskripsi tentang galeri ini."),
 	category_id: z.string().min(1, "Pilih kategori terlebih dahulu."),
 	activity_date: z.string().min(1, "Mohon isi tanggal kegiatan."),
@@ -30,6 +38,13 @@ export type AddGalleryFormValues = z.infer<typeof addGallerySchema>;
 
 export const editGallerySchema = z.object({
 	title: z.string().min(1, "Mohon isi nama galeri."),
+	slug: z.string().transform((val) =>
+		slugify(val, {
+			lower: true,
+			strict: true,
+			trim: true,
+		}),
+	),
 	description: z.string().min(1, "Mohon isi deskripsi tentang galeri ini."),
 	category_id: z.string().min(1, "Pilih kategori terlebih dahulu."),
 	activity_date: z.string().min(1, "Mohon isi tanggal kegiatan."),

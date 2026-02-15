@@ -53,6 +53,7 @@ export async function getAllGalleries(
 		`
 		id,
 		title,
+		slug,
 		description,
 		activity_date,
 		category:categories(id, name, type),
@@ -109,8 +110,8 @@ export async function getAllGalleries(
 	};
 }
 
-export const getGalleryDetailById = async (
-	id: string,
+export const getGalleryDetailBySlug = async (
+	slug: string,
 ): Promise<SuccessResponseWithData<Gallery>> => {
 	const { data, error } = await supabase
 		.from("galleries")
@@ -118,16 +119,20 @@ export const getGalleryDetailById = async (
 			`
 			id,
 			title,
+			slug,
 			description,
 			activity_date,
 			category:categories(id, name, type),
 			images:gallery_images(id, image_path)
 			`,
 		)
-		.eq("id", id)
+		.eq("slug", slug)
 		.single();
 
 	if (error) {
+		if (error.code === "PGRST116")
+			throw new ApiError("Data tidak ditemukan.", error.code);
+
 		throw new ApiError(error.message, error.code);
 	}
 
@@ -142,6 +147,7 @@ export const getGalleryDetailById = async (
 		data: {
 			id: data.id,
 			title: data.title,
+			slug: data.slug,
 			description: data.description,
 			activity_date: data.activity_date,
 			category: data.category,
@@ -153,12 +159,14 @@ export const getGalleryDetailById = async (
 export async function addNewGallery(
 	payload: AddGalleryPayload,
 ): Promise<SuccessResponse> {
-	const { title, description, category_id, activity_date, images } = payload;
+	const { title, slug, description, category_id, activity_date, images } =
+		payload;
 
 	const { data: gallery, error: galleryError } = await supabase
 		.from("galleries")
 		.insert({
 			title,
+			slug,
 			description,
 			category_id,
 			activity_date,
@@ -228,8 +236,8 @@ export async function addNewGallery(
 	};
 }
 
-export async function updateGalleryById(
-	id: string,
+export async function updateGalleryBySlug(
+	slug: string,
 	payload: EditGalleryPayload,
 ): Promise<SuccessResponse> {
 	const {
@@ -242,15 +250,18 @@ export async function updateGalleryById(
 	} = payload;
 
 	// Update gallery metadata
-	const { error: updateError } = await supabase
+	const { data: gallery, error: updateError } = await supabase
 		.from("galleries")
 		.update({
 			title,
+			slug: payload.slug,
 			description,
 			category_id,
 			activity_date,
 		})
-		.eq("id", id);
+		.eq("slug", slug)
+		.select("id")
+		.single();
 
 	if (updateError) {
 		throw new ApiError(updateError.message, updateError.code);
@@ -262,7 +273,7 @@ export async function updateGalleryById(
 		const { data: imagesToDelete, error: fetchError } = await supabase
 			.from("gallery_images")
 			.select("id, image_path")
-			.eq("gallery_id", id)
+			.eq("gallery_id", gallery.id)
 			.in("id", deleted_image_ids);
 
 		if (fetchError) {
@@ -311,7 +322,7 @@ export async function updateGalleryById(
 				.from("gallery_images")
 				.insert(
 					uploadResults.map((path) => ({
-						gallery_id: id,
+						gallery_id: gallery.id,
 						image_path: path,
 					})),
 				);
@@ -340,35 +351,47 @@ export async function updateGalleryById(
 	};
 }
 
-export async function deleteGalleryById(id: string): Promise<SuccessResponse> {
+export async function deleteGalleryBySlug(
+	slug: string,
+): Promise<SuccessResponse> {
+	const { data: gallery, error: galleryFetchError } = await supabase
+		.from("galleries")
+		.select("id")
+		.eq("slug", slug)
+		.single();
+
+	if (galleryFetchError) {
+		throw new ApiError(galleryFetchError.message, galleryFetchError.code);
+	}
+
 	const { data: images, error: imageError } = await supabase
 		.from("gallery_images")
 		.select("image_path")
-		.eq("gallery_id", id);
+		.eq("gallery_id", gallery.id);
 
 	if (imageError) {
 		throw new ApiError(imageError.message, imageError.code);
 	}
 
 	if (images && images.length > 0) {
-		const paths = images.map((img) => img.image_path);
+		const paths = images.map((img) => img.image_path) as string[];
 
 		const { error: storageError } = await supabase.storage
 			.from(BUCKET_NAME)
-			.remove(paths as string[]);
+			.remove(paths);
 
 		if (storageError) {
 			throw new ApiError(storageError.message, storageError.name);
 		}
 	}
 
-	const { error: galleryError } = await supabase
+	const { error: deleteError } = await supabase
 		.from("galleries")
 		.delete()
-		.eq("id", id);
+		.eq("id", gallery.id);
 
-	if (galleryError) {
-		throw new ApiError(galleryError.message, galleryError.code);
+	if (deleteError) {
+		throw new ApiError(deleteError.message, deleteError.code);
 	}
 
 	return {

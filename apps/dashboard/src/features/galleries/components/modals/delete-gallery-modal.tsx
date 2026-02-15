@@ -15,7 +15,7 @@ import { ComponentLoader } from "@workspace/ui/components/loader";
 import { BadgeQuestionMark } from "lucide-react";
 import { memo } from "react";
 import { toast } from "sonner";
-import { deleteGalleryByIdMutationOptions } from "@/features/galleries/hooks/mutation-options";
+import { deleteGalleryBySlugMutationOptions } from "@/features/galleries/hooks/mutation-options";
 import { getAllGalleriesQueryOptions } from "@/features/galleries/hooks/query-options";
 import type { Gallery } from "@/features/galleries/services";
 import type { ModalProps } from "@/shared/types/props";
@@ -29,7 +29,7 @@ export const DeleteGalleryModal = memo(
 		 * Delete gallery mutation
 		 * =================== */
 		const { mutate, isPending: isDeleteGalleryPending } = useMutation(
-			deleteGalleryByIdMutationOptions(selectedData?.id as string, {
+			deleteGalleryBySlugMutationOptions(selectedData?.slug as string, {
 				onSuccess: (res, _variables, _onMutateResult, context) => {
 					toast.success(res.message ?? "Galeri berhasil dihapus.", {
 						dismissible: true,

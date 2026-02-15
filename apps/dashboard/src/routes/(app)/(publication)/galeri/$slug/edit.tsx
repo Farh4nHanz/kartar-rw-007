@@ -2,14 +2,17 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@workspace/ui/components/button";
 import { ArrowLeft } from "lucide-react";
 import { getAllCategoriesQueryOptions } from "@/features/categories/hooks/query-options";
-import { AddGalleryForm } from "@/features/galleries/components/forms/add-gallery-form";
+import { EditGalleryForm } from "@/features/galleries/components/forms/edit-gallery-form";
+import { getGalleryDetailBySlugQueryOptions } from "@/features/galleries/hooks/query-options";
 
-export const Route = createFileRoute("/(app)/(publication)/galeri/new")({
+export const Route = createFileRoute("/(app)/(publication)/galeri/$slug/edit")({
 	component: RouteComponent,
-	loader: ({ context: { queryClient } }) =>
+	loader: ({ context: { queryClient }, params: { slug } }) => {
 		queryClient.ensureQueryData(
 			getAllCategoriesQueryOptions({ type: "galeri" }),
-		),
+		);
+		queryClient.ensureQueryData(getGalleryDetailBySlugQueryOptions(slug));
+	},
 });
 
 function RouteComponent() {
@@ -28,15 +31,14 @@ function RouteComponent() {
 				</Button>
 
 				<hgroup className="space-y-1">
-					<h1 className="font-bold text-2xl">Tambah Galeri</h1>
+					<h1 className="font-bold text-2xl">Edit Galeri</h1>
 					<h3 className="text-muted-foreground text-sm">
-						Tambahkan koleksi foto dokumentasi kegiatan organisasi ke dalam
-						galeri.
+						Ubah koleksi foto dokumentasi kegiatan organisasi.
 					</h3>
 				</hgroup>
 			</div>
 
-			<AddGalleryForm />
+			<EditGalleryForm />
 		</div>
 	);
 }

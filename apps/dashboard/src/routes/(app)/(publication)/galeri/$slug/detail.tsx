@@ -1,10 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import {
-	createFileRoute,
-	Link,
-	useNavigate,
-	useParams,
-} from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { NotFound } from "@workspace/ui/components/404";
 import { Badge } from "@workspace/ui/components/badge";
 import { Button } from "@workspace/ui/components/button";
 import {
@@ -16,24 +12,26 @@ import {
 import { Skeleton } from "@workspace/ui/components/skeleton";
 import { ArrowLeft, Pencil } from "lucide-react";
 import { useMemo } from "react";
-import { getGalleryDetailByIdQueryOptions } from "@/features/galleries/hooks/query-options";
+import { getGalleryDetailBySlugQueryOptions } from "@/features/galleries/hooks/query-options";
 
-export const Route = createFileRoute("/(app)/(publication)/galeri/$id/detail")({
+export const Route = createFileRoute(
+	"/(app)/(publication)/galeri/$slug/detail",
+)({
 	component: RouteComponent,
+	loader: ({ context: { queryClient }, params: { slug } }) =>
+		queryClient.ensureQueryData(getGalleryDetailBySlugQueryOptions(slug)),
 });
 
 function RouteComponent() {
-	const { id } = useParams({
-		from: "/(app)/(publication)/galeri/$id/detail",
-	});
+	const { slug } = Route.useParams();
 
-	const navigate = useNavigate({
-		from: "/galeri/$id/detail",
-	});
+	const navigate = Route.useNavigate();
 
-	const { data: gallery, isLoading } = useQuery(
-		getGalleryDetailByIdQueryOptions(id),
-	);
+	const {
+		data: gallery,
+		isLoading,
+		error,
+	} = useQuery(getGalleryDetailBySlugQueryOptions(slug));
 
 	const getActivityDate = useMemo(
 		() =>
@@ -50,9 +48,13 @@ function RouteComponent() {
 		return <GalleryDetailSkeleton />;
 	}
 
+	if (!gallery?.data) {
+		return <NotFound />;
+	}
+
 	return (
 		<div className="h-full min-h-dvh w-full space-y-8 overflow-x-auto px-4 pt-20 pb-6">
-			<div className="flex flex-nowrap items-center gap-4">
+			<div className="flex items-center gap-4 max-md:flex-col">
 				<Button
 					variant="ghost"
 					size="icon"
@@ -74,8 +76,10 @@ function RouteComponent() {
 				</div>
 
 				<Button
-					className="gap-2 justify-self-end bg-yellow-400 hover:bg-yellow-500"
-					onClick={() => navigate({ to: "/galeri/$id/edit", params: { id } })}
+					className="gap-2 bg-yellow-400 hover:bg-yellow-500 max-md:self-end"
+					onClick={() =>
+						navigate({ to: "/galeri/$slug/edit", params: { slug } })
+					}
 				>
 					<Pencil />
 					Edit Galeri

@@ -93,6 +93,7 @@ export type Database = {
 					created_at: string;
 					description: string;
 					id: string;
+					slug: string;
 					title: string;
 					updated_at: string;
 				};
@@ -102,6 +103,7 @@ export type Database = {
 					created_at?: string;
 					description: string;
 					id?: string;
+					slug: string;
 					title: string;
 					updated_at?: string;
 				};
@@ -111,6 +113,7 @@ export type Database = {
 					created_at?: string;
 					description?: string;
 					id?: string;
+					slug?: string;
 					title?: string;
 					updated_at?: string;
 				};

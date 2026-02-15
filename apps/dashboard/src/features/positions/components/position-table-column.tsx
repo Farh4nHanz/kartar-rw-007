@@ -16,8 +16,8 @@ export const columns = [
 	columnHelper.accessor("name", {
 		id: "position_name",
 		header: "Jabatan",
-		cell: ({ renderValue }) => (
-			<span className="font-semibold">{renderValue()}</span>
+		cell: ({ getValue }) => (
+			<span className="font-semibold capitalize">{getValue()}</span>
 		),
 		enableHiding: false,
 	}),
@@ -25,6 +25,9 @@ export const columns = [
 		id: "description",
 		enableHiding: false,
 		header: "Deskripsi",
+		cell: ({ getValue }) => (
+			<span className="first-letter:capitalize">{getValue()}</span>
+		),
 	}),
 	columnHelper.accessor("sort_order", {
 		id: "sort_order",

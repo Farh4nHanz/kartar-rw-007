@@ -1,10 +1,10 @@
 export const GALLERIES_QUERY_KEYS = {
 	all: ["galleries"],
-	byId: (id: string) => [...GALLERIES_QUERY_KEYS.all, id],
+	bySlug: (slug: string) => [...GALLERIES_QUERY_KEYS.all, slug],
 } as const;
 
 export const GALLERIES_MUTATION_KEYS = {
 	add: [...GALLERIES_QUERY_KEYS.all, "add"],
-	updateById: (id: string) => [...GALLERIES_QUERY_KEYS.all, "update", id],
-	deleteById: (id: string) => [...GALLERIES_QUERY_KEYS.all, "delete", id],
+	updateBySlug: (slug: string) => [...GALLERIES_QUERY_KEYS.all, "update", slug],
+	deleteBySlug: (slug: string) => [...GALLERIES_QUERY_KEYS.all, "delete", slug],
 } as const;

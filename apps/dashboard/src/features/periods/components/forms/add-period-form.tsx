@@ -32,28 +32,31 @@ export const AddPeriodForm = memo(
 				onSubmit: periodSchema,
 			},
 			onSubmit: async ({ value }) => {
-				await mutateAsync(value, {
-					onSuccess: (res, _variables, _onMutateResult, context) => {
-						toast.success(res.message, {
-							duration: 5000,
-							dismissible: true,
-							closeButton: true,
-						});
+				await mutateAsync(
+					{ ...value, name: value.name.toLowerCase() },
+					{
+						onSuccess: (res, _variables, _onMutateResult, context) => {
+							toast.success(res.message, {
+								duration: 5000,
+								dismissible: true,
+								closeButton: true,
+							});
 
-						form.reset();
-						onSuccess?.();
-						context.client.invalidateQueries({
-							queryKey: getAllPeriodsQueryOptions(search).queryKey,
-						});
+							form.reset();
+							onSuccess?.();
+							context.client.invalidateQueries({
+								queryKey: getAllPeriodsQueryOptions(search).queryKey,
+							});
+						},
+						onError: (res) => {
+							toast.error(res.message, {
+								duration: 5000,
+								dismissible: true,
+								closeButton: true,
+							});
+						},
 					},
-					onError: (res) => {
-						toast.error(res.message, {
-							duration: 5000,
-							dismissible: true,
-							closeButton: true,
-						});
-					},
-				});
+				);
 			},
 		});
 
