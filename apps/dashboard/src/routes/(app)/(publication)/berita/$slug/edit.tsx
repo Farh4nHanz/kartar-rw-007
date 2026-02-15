@@ -1,32 +1,21 @@
-import { useQuery } from "@tanstack/react-query";
-import { createFileRoute, Link, useParams } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@workspace/ui/components/button";
 import { ArrowLeft } from "lucide-react";
 import { getAllCategoriesQueryOptions } from "@/features/categories/hooks/query-options";
 import { EditNewsForm } from "@/features/news/components/forms/edit-news-form";
 import { getNewsDetailBySlugQueryOptions } from "@/features/news/hooks/query-options";
-import type { News } from "@/features/news/services";
 
 export const Route = createFileRoute("/(app)/(publication)/berita/$slug/edit")({
 	component: RouteComponent,
-	loader: ({ context: { queryClient } }) =>
+	loader: ({ context: { queryClient }, params: { slug } }) => {
 		queryClient.ensureQueryData(
 			getAllCategoriesQueryOptions({ type: "berita" }),
-		),
+		);
+		queryClient.ensureQueryData(getNewsDetailBySlugQueryOptions(slug));
+	},
 });
 
 function RouteComponent() {
-	const { slug } = useParams({
-		from: "/(app)/(publication)/berita/$slug/edit",
-	});
-
-	const { data: categories, isLoading: isCategoriesDataFetchLoading } =
-		useQuery(getAllCategoriesQueryOptions({ type: "berita" }));
-
-	const { data: news, isLoading: isNewsDataFetchLoading } = useQuery(
-		getNewsDetailBySlugQueryOptions(slug),
-	);
-
 	return (
 		<div className="h-full min-h-dvh w-full space-y-8 overflow-x-auto px-4 pt-20 pb-6">
 			<div className="flex flex-nowrap items-center gap-4">
@@ -49,11 +38,7 @@ function RouteComponent() {
 				</hgroup>
 			</div>
 
-			<EditNewsForm
-				isLoading={isCategoriesDataFetchLoading || isNewsDataFetchLoading}
-				selectedData={news?.data as News}
-				categories={categories?.data || []}
-			/>
+			<EditNewsForm />
 		</div>
 	);
 }

@@ -76,7 +76,14 @@ export async function addNewCategory(
 ): Promise<SuccessResponse> {
 	const { error } = await supabase.from("categories").insert(payload);
 
-	if (error) throw new ApiError(error.message, error.code);
+	if (error) {
+		if (error.code === "23505") {
+			throw new ApiError(
+				"Kategori tersebut sudah dimiliki oleh tipe yang dipilih.",
+			);
+		}
+		throw new ApiError(error.message, error.code);
+	}
 
 	return {
 		success: true,
@@ -93,7 +100,14 @@ export async function updateCategoryById(
 		.update(payload)
 		.eq("id", id);
 
-	if (error) throw new ApiError(error.message, error.code);
+	if (error) {
+		if (error.code === "23505") {
+			throw new ApiError(
+				"Kategori tersebut sudah dimiliki oleh tipe yang dipilih.",
+			);
+		}
+		throw new ApiError(error.message, error.code);
+	}
 
 	return {
 		success: true,

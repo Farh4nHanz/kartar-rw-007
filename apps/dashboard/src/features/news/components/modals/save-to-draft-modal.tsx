@@ -84,7 +84,7 @@ export const SaveToDraftModal = memo(
 							className="bg-green-500 text-primary-foreground hover:bg-green-600"
 							onClick={(e) => {
 								e.preventDefault();
-								mutate(false);
+								mutate({ is_published: false, published_at: null });
 							}}
 							disabled={isSaveToDraftNewsPending}
 						>

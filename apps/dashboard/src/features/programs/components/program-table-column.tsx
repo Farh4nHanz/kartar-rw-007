@@ -21,11 +21,17 @@ export function getProgramTableColumns(categories: Category[]) {
 				header: ({ column }) => (
 					<DataTableSortableHeader label="Nama Program" column={column} />
 				),
+				cell: ({ getValue }) => (
+					<span className="capitalize">{getValue()}</span>
+				),
 				enableHiding: false,
 			}),
 			columnHelper.accessor("description", {
 				id: "deskripsi",
 				header: "Deskripsi",
+				cell: ({ getValue }) => (
+					<span className="first-letter:capitalize">{getValue()}</span>
+				),
 			}),
 			columnHelper.accessor("category.name", {
 				id: "kategori",

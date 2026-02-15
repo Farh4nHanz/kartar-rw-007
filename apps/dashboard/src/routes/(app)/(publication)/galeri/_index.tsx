@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { GalleryList } from "@/features/galleries/components/gallery-list";
+import { getAllGalleriesQueryOptions } from "@/features/galleries/hooks/query-options";
 import type { GetAllGalleriesParams } from "@/features/galleries/services";
 
 export const Route = createFileRoute("/(app)/(publication)/galeri/_index")({
@@ -8,6 +9,8 @@ export const Route = createFileRoute("/(app)/(publication)/galeri/_index")({
 		limit: search.limit || 10,
 		name: search.name || undefined,
 	}),
+	loader: ({ context: { queryClient } }) =>
+		queryClient.ensureQueryData(getAllGalleriesQueryOptions()),
 	component: RouteComponent,
 });
 

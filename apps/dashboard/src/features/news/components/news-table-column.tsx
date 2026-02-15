@@ -13,6 +13,7 @@ export const columns = [
 	columnHelper.accessor("title", {
 		id: "nama",
 		header: "Judul",
+		cell: ({ getValue }) => <span className="capitalize">{getValue()}</span>,
 		enableHiding: false,
 	}),
 	columnHelper.accessor("category.name", {
@@ -20,7 +21,7 @@ export const columns = [
 		header: "Kategori",
 		cell: ({ renderValue }) => {
 			return (
-				<Badge className="bg-gray-200 text-[calc(var(--text-xs)-1px)] text-gray-800 dark:bg-gray-500 dark:text-gray-50">
+				<Badge className="bg-gray-200 text-[calc(var(--text-xs)-1px)] text-gray-800 capitalize dark:bg-gray-500 dark:text-gray-50">
 					{renderValue()}
 				</Badge>
 			);

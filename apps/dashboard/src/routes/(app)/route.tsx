@@ -12,10 +12,17 @@ export const Route = createFileRoute("/(app)")({
 
 function RouteComponent() {
 	const isMobile = useIsMobile();
-	const { loading, isLoggedIn } = useAuth();
+	const { loading, isLoggedIn, isAdmin } = useAuth();
 
 	if (loading) return <RouteComponentLoader />;
-	if (!isLoggedIn) return <Navigate to="/login" replace />;
+
+	if (!isLoggedIn) {
+		return <Navigate to="/login" replace />;
+	}
+
+	if (!isAdmin) {
+		return <Navigate to="." href="https://kartar-rw07.netlify.app" replace />;
+	}
 
 	return (
 		<SidebarProvider

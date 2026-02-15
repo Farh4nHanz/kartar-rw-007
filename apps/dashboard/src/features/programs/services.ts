@@ -90,7 +90,12 @@ export async function addNewProgram(
 ): Promise<SuccessResponse> {
 	const { error } = await supabase.from("programs").insert(payload);
 
-	if (error) throw new ApiError(error.message, error.code);
+	if (error) {
+		if (error.code === "23505") {
+			throw new ApiError("Program tersebut sudah ada.");
+		}
+		throw new ApiError(error.message, error.code);
+	}
 
 	return {
 		success: true,

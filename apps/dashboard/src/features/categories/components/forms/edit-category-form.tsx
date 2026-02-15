@@ -44,28 +44,31 @@ export const EditCategoryForm = memo(
 				onSubmit: categorySchema,
 			},
 			onSubmit: async ({ value }) => {
-				await mutateAsync(value, {
-					onSuccess: (res, _variables, _onMutateResult, context) => {
-						toast.success(res.message, {
-							duration: 5000,
-							dismissible: true,
-							closeButton: true,
-						});
+				await mutateAsync(
+					{ name: value.name.toLowerCase(), type: value.type.toLowerCase() },
+					{
+						onSuccess: (res, _variables, _onMutateResult, context) => {
+							toast.success(res.message, {
+								duration: 5000,
+								dismissible: true,
+								closeButton: true,
+							});
 
-						form.reset();
-						onSuccess?.();
-						context.client.invalidateQueries({
-							queryKey: getAllCategoriesQueryOptions(search).queryKey,
-						});
+							form.reset();
+							onSuccess?.();
+							context.client.invalidateQueries({
+								queryKey: getAllCategoriesQueryOptions(search).queryKey,
+							});
+						},
+						onError: (res) => {
+							toast.error(res.message, {
+								duration: 5000,
+								dismissible: true,
+								closeButton: true,
+							});
+						},
 					},
-					onError: (res) => {
-						toast.error(res.message, {
-							duration: 5000,
-							dismissible: true,
-							closeButton: true,
-						});
-					},
-				});
+				);
 			},
 		});
 

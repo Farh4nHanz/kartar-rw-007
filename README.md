@@ -275,6 +275,7 @@ create table public.news (
 create table public.galleries (
   id uuid not null default gen_random_uuid (),
   title character varying not null,
+  slug text not null,
   description text not null,
   category_id uuid not null,
   activity_date timestamp without time zone not null,
@@ -415,6 +416,11 @@ $$;
 
 ```sql
 -- ============================================
+-- Index untuk tabel categories
+-- ============================================
+CREATE UNIQUE INDEX unique_category ON public.categories USING btree (name, type);
+
+-- ============================================
 -- Index untuk tabel periods
 -- ============================================
 CREATE UNIQUE INDEX unique_active_period ON public.periods USING btree (is_active) WHERE (is_active = true);
@@ -425,6 +431,26 @@ CREATE UNIQUE INDEX unique_period_year_range ON public.periods USING btree (star
 -- Index untuk tabel positions
 -- ============================================
 CREATE UNIQUE INDEX unique_active_sort_order ON public.positions USING btree (sort_order) WHERE (is_active = true);
+
+-- ============================================
+-- Index untuk tabel programs
+-- ============================================
+CREATE UNIQUE INDEX unique_active_program ON public.programs USING btree (title, category_id, schedule_type, status) WHERE (is_active = true);
+
+-- ============================================
+-- Index untuk tabel news
+-- ============================================
+CREATE UNIQUE INDEX news_slug_unique ON public.news USING btree (slug)
+
+-- ============================================
+-- Index untuk tabel galleries
+-- ============================================
+CREATE UNIQUE INDEX galleries_slug_unique ON public.galleries USING btree (slug)
+
+-- ============================================
+-- Index untuk tabel collaborations
+-- ============================================
+CREATE UNIQUE INDEX unique_partner_period ON public.collaborations USING btree (partner_name, period_id);
 
 ```
 

@@ -11,8 +11,7 @@ function RouteComponent() {
 	const { loading, isLoggedIn } = useAuth();
 
 	if (loading) return <RouteComponentLoader />;
-	if (isLoggedIn)
-		return <Navigate to={window.history.state?.from ?? "/"} replace />;
+	if (isLoggedIn) return <Navigate to="/" replace />;
 
 	return (
 		<div className="flex min-h-screen items-center justify-center bg-linear-to-br from-primary/5 via-background to-accent/5 p-4">

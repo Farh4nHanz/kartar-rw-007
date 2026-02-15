@@ -54,7 +54,7 @@ function GalleryCard({ gallery }: { gallery: Gallery }) {
 			<CardFooter className="gap-3">
 				{/* View button */}
 				<Button asChild className="flex-1" variant="outline">
-					<Link to="/galeri/$id/detail" params={{ id: gallery.id }}>
+					<Link to="/galeri/$slug/detail" params={{ slug: gallery.slug }}>
 						<Eye />
 						Lihat
 					</Link>
@@ -69,7 +69,7 @@ function GalleryCard({ gallery }: { gallery: Gallery }) {
 						size="icon"
 						asChild
 					>
-						<Link to="/galeri/$id/edit" params={{ id: gallery.id }}>
+						<Link to="/galeri/$slug/edit" params={{ slug: gallery.slug }}>
 							<Edit />
 						</Link>
 					</Button>

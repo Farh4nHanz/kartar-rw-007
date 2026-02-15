@@ -6,8 +6,8 @@ import type {
 } from "@/features/galleries/schemas";
 import {
 	addNewGallery,
-	deleteGalleryById,
-	updateGalleryById,
+	deleteGalleryBySlug,
+	updateGalleryBySlug,
 } from "@/features/galleries/services";
 import type { ErrorResponse, SuccessResponse } from "@/shared/types/api";
 
@@ -21,24 +21,24 @@ export function addGalleryMutationOptions(
 	});
 }
 
-export function updateGalleryByIdMutationOptions(
-	id: string,
+export function updateGalleryBySlugMutationOptions(
+	slug: string,
 	options?: MutationOptions<SuccessResponse, ErrorResponse, EditGalleryPayload>,
 ) {
 	return mutationOptions({
-		mutationKey: GALLERIES_MUTATION_KEYS.updateById(id),
-		mutationFn: (payload) => updateGalleryById(id, payload),
+		mutationKey: GALLERIES_MUTATION_KEYS.updateBySlug(slug),
+		mutationFn: (payload) => updateGalleryBySlug(slug, payload),
 		...options,
 	});
 }
 
-export function deleteGalleryByIdMutationOptions(
-	id: string,
+export function deleteGalleryBySlugMutationOptions(
+	slug: string,
 	options?: MutationOptions<SuccessResponse, ErrorResponse>,
 ) {
 	return mutationOptions({
-		mutationKey: GALLERIES_MUTATION_KEYS.deleteById(id),
-		mutationFn: () => deleteGalleryById(id),
+		mutationKey: GALLERIES_MUTATION_KEYS.deleteBySlug(slug),
+		mutationFn: () => deleteGalleryBySlug(slug),
 		...options,
 	});
 }

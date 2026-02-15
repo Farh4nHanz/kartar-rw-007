@@ -3,7 +3,7 @@ import { GALLERIES_QUERY_KEYS } from "@/features/galleries/constants";
 import {
 	type GetAllGalleriesParams,
 	getAllGalleries,
-	getGalleryDetailById,
+	getGalleryDetailBySlug,
 } from "@/features/galleries/services";
 
 export function getAllGalleriesQueryOptions(params?: GetAllGalleriesParams) {
@@ -13,9 +13,9 @@ export function getAllGalleriesQueryOptions(params?: GetAllGalleriesParams) {
 	});
 }
 
-export function getGalleryDetailByIdQueryOptions(id: string) {
+export function getGalleryDetailBySlugQueryOptions(slug: string) {
 	return queryOptions({
-		queryKey: GALLERIES_QUERY_KEYS.byId(id),
-		queryFn: () => getGalleryDetailById(id),
+		queryKey: GALLERIES_QUERY_KEYS.bySlug(slug),
+		queryFn: () => getGalleryDetailBySlug(slug),
 	});
 }
