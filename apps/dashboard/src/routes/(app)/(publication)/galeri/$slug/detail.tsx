@@ -27,11 +27,9 @@ function RouteComponent() {
 
 	const navigate = Route.useNavigate();
 
-	const {
-		data: gallery,
-		isLoading,
-		error,
-	} = useQuery(getGalleryDetailBySlugQueryOptions(slug));
+	const { data: gallery, isLoading } = useQuery(
+		getGalleryDetailBySlugQueryOptions(slug),
+	);
 
 	const getActivityDate = useMemo(
 		() =>
