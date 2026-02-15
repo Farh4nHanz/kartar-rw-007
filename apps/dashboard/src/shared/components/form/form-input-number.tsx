@@ -7,7 +7,8 @@ export function FormInputNumber({
 	label,
 	description,
 	placeholder = "Enter value",
-}: FormControlProps) {
+	...props
+}: FormControlProps & React.ComponentProps<typeof Input>) {
 	const field = useFieldContext<number>();
 	const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
@@ -33,6 +34,7 @@ export function FormInputNumber({
 				}}
 				onBlur={field.handleBlur}
 				aria-invalid={isInvalid}
+				{...props}
 			/>
 		</FormBase>
 	);

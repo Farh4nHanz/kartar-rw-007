@@ -12,7 +12,11 @@ import type { FormControlProps } from "@/shared/types/form";
 import { FormBase } from "./form-base";
 import { useFieldContext } from "./hooks";
 
-export function FormDatePicker({ label, description }: FormControlProps) {
+export function FormDatePicker({
+	label,
+	description,
+	...props
+}: FormControlProps & React.ComponentProps<typeof Button>) {
 	const field = useFieldContext<string>();
 	const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
@@ -27,8 +31,9 @@ export function FormDatePicker({ label, description }: FormControlProps) {
 				<PopoverTrigger asChild>
 					<Button
 						variant="outline"
-						className="justify-start text-left font-normal"
+						className="justify-start text-left font-normal capitalize"
 						aria-invalid={isInvalid}
+						{...props}
 					>
 						<CalendarIcon className="mr-2 h-4 w-4" />
 						{date ? format(date, "PPPP", { locale: id }) : "Pilih tanggal"}

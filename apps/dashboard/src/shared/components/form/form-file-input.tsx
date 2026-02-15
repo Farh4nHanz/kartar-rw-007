@@ -29,7 +29,8 @@ export function FormFileInput({
 	label,
 	description,
 	accept = "image/*",
-}: FormFileInputProps) {
+	...props
+}: FormFileInputProps & React.ComponentProps<typeof InputGroupInput>) {
 	const field = useFieldContext<File | undefined>();
 	const [imageFile, setImageFile] = useState<File | null>(null);
 	const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -84,6 +85,7 @@ export function FormFileInput({
 					accept={accept}
 					onChange={handleFileChange}
 					aria-invalid={isInvalid}
+					{...props}
 				/>
 
 				{imageFile ? (

@@ -1,4 +1,5 @@
 import { Textarea } from "@workspace/ui/components/textarea";
+import type React from "react";
 import type { FormControlProps } from "@/shared/types/form";
 import { FormBase } from "./form-base";
 import { useFieldContext } from "./hooks";
@@ -7,7 +8,8 @@ export function FormTextarea({
 	label,
 	description,
 	placeholder,
-}: FormControlProps) {
+	...props
+}: FormControlProps & React.ComponentProps<typeof Textarea>) {
 	const field = useFieldContext<string>();
 	const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
@@ -21,6 +23,7 @@ export function FormTextarea({
 				onBlur={field.handleBlur}
 				className="min-h-24 first-letter:capitalize"
 				aria-invalid={isInvalid}
+				{...props}
 			/>
 		</FormBase>
 	);

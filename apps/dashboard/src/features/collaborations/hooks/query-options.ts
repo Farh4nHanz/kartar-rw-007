@@ -6,7 +6,7 @@ import {
 } from "@/features/collaborations/services";
 
 export function getAllCollaborationsQueryOptions(
-	params: GetAllCollaborationsParams,
+	params?: GetAllCollaborationsParams,
 ) {
 	return queryOptions({
 		queryKey: [...COLLABORATIONS_QUERY_KEYS.all, params],

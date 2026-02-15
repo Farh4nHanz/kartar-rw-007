@@ -99,7 +99,13 @@ export const EditProgramForm = memo(
 					<FieldGroup className="gap-5">
 						{/* Program name */}
 						<form.AppField name="title">
-							{(field) => <field.Input label="Nama" placeholder="Keja Bakti" />}
+							{(field) => (
+								<field.Input
+									label="Nama"
+									placeholder="Contoh: Keja Bakti"
+									data-required
+								/>
+							)}
 						</form.AppField>
 
 						{/* Program description */}
@@ -108,6 +114,7 @@ export const EditProgramForm = memo(
 								<field.Textarea
 									label="Deskripsi"
 									placeholder="Berikan deskripsi singkat mengenai program atau kegiatan ini."
+									data-required
 								/>
 							)}
 						</form.AppField>
@@ -116,7 +123,11 @@ export const EditProgramForm = memo(
 							{/* Program category */}
 							<form.AppField name="category_id">
 								{(field) => (
-									<field.Select label="Kategori" placeholder="Kategori">
+									<field.Select
+										label="Kategori"
+										placeholder="Pilih kategori"
+										data-required
+									>
 										<SelectGroup>
 											{!categories?.length ? (
 												<SelectItem
@@ -146,7 +157,11 @@ export const EditProgramForm = memo(
 							{/* Program schedule */}
 							<form.AppField name="schedule_type">
 								{(field) => (
-									<field.Select label="Jadwal" placeholder="Jadwal">
+									<field.Select
+										label="Jadwal"
+										placeholder="Pilih jadwal"
+										data-required
+									>
 										<SelectGroup>
 											{schedule_types.map((schedule) => (
 												<SelectItem
@@ -168,8 +183,9 @@ export const EditProgramForm = memo(
 							{(field) => (
 								<field.Select
 									label="Status Pelaksanaan"
-									placeholder="Status"
+									placeholder="Pilih status"
 									description="Tentukan seberapa sering program atau kegiatan ini dilaksanakan."
+									data-required
 								>
 									<SelectGroup>
 										{statuses.map((status) => (

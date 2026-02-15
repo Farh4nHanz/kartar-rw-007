@@ -86,7 +86,11 @@ export const EditPositionForm = memo(
 						{/* Position name */}
 						<form.AppField name="name">
 							{(field) => (
-								<field.Input label="Nama Jabatan" placeholder="Ketua" />
+								<field.Input
+									label="Nama Jabatan"
+									placeholder="Contoh: Ketua"
+									data-required
+								/>
 							)}
 						</form.AppField>
 
@@ -95,7 +99,8 @@ export const EditPositionForm = memo(
 							{(field) => (
 								<field.Textarea
 									label="Deskripsi Jabatan"
-									placeholder="Ketua organisasi"
+									placeholder="Contoh: Ketua organisasi"
+									data-required
 								/>
 							)}
 						</form.AppField>
@@ -108,6 +113,7 @@ export const EditPositionForm = memo(
 										label="Tingkat Jabatan"
 										placeholder="1"
 										description="Menentukan tingkatan jabatan menurut hierarki organisasi. Misalnya, Ketua = 1, Wakil Ketua = 2."
+										data-required
 									/>
 								)}
 							</form.AppField>
@@ -120,6 +126,7 @@ export const EditPositionForm = memo(
 										placeholder="Pilih status jabatan"
 										stringifyValue={(v) => String(v)}
 										parseValue={(s) => s === "true"}
+										data-required
 									>
 										<SelectGroup>
 											{[

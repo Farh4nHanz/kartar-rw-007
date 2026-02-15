@@ -147,6 +147,7 @@ export const EditNewsForm = memo(() => {
 									<field.Input
 										label="Judul"
 										placeholder="Contoh: Kegiatan Bersih-Bersih Lingkungan"
+										data-required
 									/>
 								)}
 							</form.AppField>
@@ -154,7 +155,11 @@ export const EditNewsForm = memo(() => {
 							{/* News category */}
 							<form.AppField name="category_id">
 								{(field) => (
-									<field.Select label="Kategori" placeholder="Pilih kategori">
+									<field.Select
+										label="Kategori"
+										placeholder="Pilih kategori"
+										data-required
+									>
 										<SelectGroup>
 											{categories?.data.map((category) => (
 												<SelectItem
@@ -175,9 +180,9 @@ export const EditNewsForm = memo(() => {
 								{(field) => (
 									<field.Select
 										label="Status"
-										placeholder="Status"
 										stringifyValue={(v) => String(v)}
 										parseValue={(s) => s === "true"}
+										data-required
 									>
 										<SelectGroup>
 											{statuses.map((status) => (
@@ -208,13 +213,14 @@ export const EditNewsForm = memo(() => {
 			<Card>
 				<CardContent>
 					<FieldSet>
-						<FieldLegend>Konten Berita</FieldLegend>
+						<FieldLegend className="mb-5">Isi Berita</FieldLegend>
 
 						<form.AppField name="content">
 							{(field) => (
 								<field.Textarea
-									label=""
+									label="Konten"
 									placeholder="Tulis konten berita di sini..."
+									data-required
 								/>
 							)}
 						</form.AppField>

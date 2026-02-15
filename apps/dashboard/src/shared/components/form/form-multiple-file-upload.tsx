@@ -12,7 +12,10 @@ export const FormMultipleFileUpload = memo(
 		label,
 		description,
 		maxSizeMB = 5,
-	}: FormControlProps & { maxSizeMB?: number }) => {
+		...props
+	}: FormControlProps & { maxSizeMB?: number } & React.ComponentProps<
+			typeof Input
+		>) => {
 		const field = useFieldContext<File[]>();
 		const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -69,6 +72,13 @@ export const FormMultipleFileUpload = memo(
 					<Card
 						className="cursor-pointer border-2 border-dashed p-6 text-center transition-colors hover:border-primary"
 						onClick={() => fileInputRef.current?.click()}
+						onKeyDown={(e) => {
+							if (e.key === "Enter" || e.key === " ") {
+								e.preventDefault();
+								fileInputRef.current?.click();
+							}
+						}}
+						tabIndex={0}
 						aria-invalid={isInvalid}
 					>
 						<div className="flex flex-col items-center gap-2">
@@ -89,6 +99,7 @@ export const FormMultipleFileUpload = memo(
 						accept="image/*"
 						className="hidden"
 						onChange={handleFilesChange}
+						{...props}
 					/>
 
 					{/* Preview list */}

@@ -76,7 +76,8 @@ export const AddPeriodForm = memo(
 							{(field) => (
 								<field.Input
 									label="Nama Periode"
-									placeholder="Periode 2020-2025"
+									placeholder="Contoh: Periode 2020-2025"
+									data-required
 								/>
 							)}
 						</form.AppField>
@@ -85,14 +86,14 @@ export const AddPeriodForm = memo(
 							{/* Period starts */}
 							<form.AppField name="start_year">
 								{(field) => (
-									<field.InputNumber label="Tahun Mulai" placeholder="2020" />
+									<field.InputNumber label="Tahun Mulai" data-required />
 								)}
 							</form.AppField>
 
 							{/* Period ends */}
 							<form.AppField name="end_year">
 								{(field) => (
-									<field.InputNumber label="Tahun Selesai" placeholder="2025" />
+									<field.InputNumber label="Tahun Selesai" data-required />
 								)}
 							</form.AppField>
 						</div>
@@ -105,6 +106,7 @@ export const AddPeriodForm = memo(
 									placeholder="Pilih status periode"
 									stringifyValue={(v) => String(v)}
 									parseValue={(s) => s === "true"}
+									data-required
 								>
 									<SelectGroup>
 										{[

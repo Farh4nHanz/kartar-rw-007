@@ -106,14 +106,17 @@ export const AddGalleryForm = memo(() => {
 								{(field) => (
 									<field.Input
 										label="Nama Galeri"
-										placeholder="Contoh: Kegiatan Bersih-Bersih Lingkungan"
+										placeholder="Contoh: Galeri Kegiatan Bersih-Bersih Lingkungan"
+										data-required
 									/>
 								)}
 							</form.AppField>
 
 							{/* Gallery Activity Date */}
 							<form.AppField name="activity_date">
-								{(field) => <field.DatePicker label="Tanggal Kegiatan" />}
+								{(field) => (
+									<field.DatePicker label="Tanggal Kegiatan" data-required />
+								)}
 							</form.AppField>
 
 							{/* Gallery descripiton */}
@@ -122,6 +125,7 @@ export const AddGalleryForm = memo(() => {
 									<field.Textarea
 										label="Deskripsi"
 										placeholder="Berikan deskripsi terkait galeri ini..."
+										data-required
 									/>
 								)}
 							</form.AppField>
@@ -129,7 +133,11 @@ export const AddGalleryForm = memo(() => {
 							{/* Gallery category */}
 							<form.AppField name="category_id">
 								{(field) => (
-									<field.Select label="Kategori" placeholder="Pilih kategori">
+									<field.Select
+										label="Kategori"
+										placeholder="Pilih kategori"
+										data-required
+									>
 										<SelectGroup>
 											{categories?.data.map((category) => (
 												<SelectItem
@@ -153,7 +161,9 @@ export const AddGalleryForm = memo(() => {
 			<Card>
 				<CardContent>
 					<form.AppField name="images">
-						{(field) => <field.MultipleFileUpload label="Upload Foto" />}
+						{(field) => (
+							<field.MultipleFileUpload label="Upload Foto" data-required />
+						)}
 					</form.AppField>
 				</CardContent>
 			</Card>

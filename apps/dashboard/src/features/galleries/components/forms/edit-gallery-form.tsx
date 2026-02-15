@@ -139,14 +139,17 @@ export const EditGalleryForm = memo(() => {
 								{(field) => (
 									<field.Input
 										label="Nama Galeri"
-										placeholder="Contoh: Kegiatan Bersih-Bersih Lingkungan"
+										placeholder="Contoh: Galeri Kegiatan Bersih-Bersih Lingkungan"
+										data-required
 									/>
 								)}
 							</form.AppField>
 
 							{/* Gallery Activity Date */}
 							<form.AppField name="activity_date">
-								{(field) => <field.DatePicker label="Tanggal Kegiatan" />}
+								{(field) => (
+									<field.DatePicker label="Tanggal Kegiatan" data-required />
+								)}
 							</form.AppField>
 
 							{/* Gallery descripiton */}
@@ -155,6 +158,7 @@ export const EditGalleryForm = memo(() => {
 									<field.Textarea
 										label="Deskripsi"
 										placeholder="Berikan deskripsi terkait galeri ini..."
+										data-required
 									/>
 								)}
 							</form.AppField>
@@ -164,7 +168,8 @@ export const EditGalleryForm = memo(() => {
 								{(field) => (
 									<field.Select
 										label="Kategori"
-										placeholder="Pilih kategori galeri"
+										placeholder="Pilih kategori"
+										data-required
 									>
 										<SelectGroup>
 											{categories?.data.map((category) => (

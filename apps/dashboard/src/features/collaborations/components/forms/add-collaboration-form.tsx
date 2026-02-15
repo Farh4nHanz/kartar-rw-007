@@ -87,7 +87,8 @@ export const AddCollaborationForm = memo(
 							{(field) => (
 								<field.Input
 									label="Nama Mitra"
-									placeholder="Contoh: PT. Mitra Indonesia"
+									placeholder="Contoh: PT. Mitra ABC"
+									data-required
 								/>
 							)}
 						</form.AppField>
@@ -98,6 +99,7 @@ export const AddCollaborationForm = memo(
 								<field.Textarea
 									label="Deskripsi"
 									placeholder="Berikan deskripsi terkait kolaborasi ini..."
+									data-required
 								/>
 							)}
 						</form.AppField>
@@ -108,7 +110,8 @@ export const AddCollaborationForm = memo(
 								{(field) => (
 									<field.Select
 										label="Kategori"
-										placeholder="Pilih kategori kemitraan"
+										placeholder="Pilih kategori"
+										data-required
 									>
 										<SelectGroup>
 											{categories.map((category) => (
@@ -131,6 +134,7 @@ export const AddCollaborationForm = memo(
 									<field.Select
 										label="Periode Kemitraan"
 										placeholder="Pilih periode"
+										data-required
 									>
 										<SelectGroup>
 											{periods.map((period) => (

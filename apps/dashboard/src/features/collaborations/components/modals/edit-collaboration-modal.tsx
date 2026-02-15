@@ -28,7 +28,7 @@ export const EditCollaborationModal = memo(
 				className="max-h-[calc(100vh-2rem)] max-w-sm gap-2 overflow-y-auto md:max-w-xl"
 			>
 				<DialogTitle className="text-base">Ubah Data Kemitraan</DialogTitle>
-				<DialogDescription>
+				<DialogDescription className="capitalize">
 					Mengubah data {selectedData?.partner_name}
 				</DialogDescription>
 
