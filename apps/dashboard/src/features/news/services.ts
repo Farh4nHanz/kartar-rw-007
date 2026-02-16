@@ -196,7 +196,12 @@ export async function addNewNews(
 
 	const { error: insertError } = await supabase.from("news").insert(body);
 
-	if (insertError) throw new ApiError(insertError.message, insertError.code);
+	if (insertError) {
+		if (insertError.code === "23505") {
+			throw new ApiError("Berita tersebut sudah ada.");
+		}
+		throw new ApiError(insertError.message, insertError.code);
+	}
 
 	return {
 		success: true,
@@ -263,6 +268,9 @@ export async function updateNewsBySlug(
 		.eq("slug", slug);
 
 	if (updateError) {
+		if (updateError.code === "23505") {
+			throw new ApiError("Berita tersebut sudah ada.");
+		}
 		throw new ApiError(updateError.message, updateError.code);
 	}
 

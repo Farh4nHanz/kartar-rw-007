@@ -98,7 +98,12 @@ export async function addNewCollaboration(
 		logo_path: logoPath,
 	});
 
-	if (error) throw new ApiError(error.message, error.code);
+	if (error) {
+		if (error.code === "23505") {
+			throw new ApiError("Mitra tersebut sudah ada.");
+		}
+		throw new ApiError(error.message, error.code);
+	}
 
 	return {
 		success: true,
@@ -149,7 +154,12 @@ export async function updateCollaborationById(
 		})
 		.eq("id", id);
 
-	if (updateError) throw new ApiError(updateError.message, updateError.code);
+	if (updateError) {
+		if (updateError.code === "23505") {
+			throw new ApiError("Mitra tersebut sudah ada.");
+		}
+		throw new ApiError(updateError.message, updateError.code);
+	}
 
 	return {
 		success: true,

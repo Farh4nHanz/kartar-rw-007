@@ -99,7 +99,7 @@ export async function addNewProgram(
 
 	return {
 		success: true,
-		message: "Kategori baru berhasil ditambahkan.",
+		message: "Program baru berhasil ditambahkan.",
 	};
 }
 
@@ -116,7 +116,7 @@ export async function updateProgramById(
 
 	return {
 		success: true,
-		message: "Data kategori berhasil diperbarui.",
+		message: "Program berhasil diperbarui.",
 	};
 }
 
@@ -127,6 +127,6 @@ export async function deleteProgramById(id: string): Promise<SuccessResponse> {
 
 	return {
 		success: true,
-		message: "Data kategori berhasil dihapus.",
+		message: "Program berhasil dihapus.",
 	};
 }
