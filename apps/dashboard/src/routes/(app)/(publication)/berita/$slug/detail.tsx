@@ -94,7 +94,7 @@ function RouteComponent() {
 					</Link>
 				</Button>
 
-				<div className="flex flex-1 flex-col gap-3">
+				<div className="flex flex-1 flex-col gap-3 max-md:self-start">
 					<div className="flex items-center justify-start gap-2">
 						<Badge
 							className={cn(

@@ -77,14 +77,22 @@ export const AddCategoryForm = memo(
 						{/* Category name */}
 						<form.AppField name="name">
 							{(field) => (
-								<field.Input label="Nama Kategori" placeholder="Sosial" />
+								<field.Input
+									label="Nama Kategori"
+									placeholder="Contoh: Sosial"
+									data-required
+								/>
 							)}
 						</form.AppField>
 
 						{/* Category type */}
 						<form.AppField name="type">
 							{(field) => (
-								<field.Select label="Tipe Kategori" placeholder="Pilih tipe">
+								<field.Select
+									label="Tipe Kategori"
+									placeholder="Pilih tipe"
+									data-required
+								>
 									<SelectGroup>
 										{types.map((type) => (
 											<SelectItem

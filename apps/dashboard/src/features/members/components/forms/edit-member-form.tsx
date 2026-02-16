@@ -93,8 +93,9 @@ export const EditMemberForm = memo(
 						<form.AppField name="name">
 							{(field) => (
 								<field.Input
-									label="Nama Anggota"
-									placeholder="Nama lengkap anggota"
+									label="Nama Lengkap Anggota"
+									placeholder="Contoh: Budi Santoso"
+									data-required
 								/>
 							)}
 						</form.AppField>
@@ -103,7 +104,11 @@ export const EditMemberForm = memo(
 							{/* Member position */}
 							<form.AppField name="position_id">
 								{(field) => (
-									<field.Select label="Jabatan" placeholder="Pilih jabatan">
+									<field.Select
+										label="Jabatan"
+										placeholder="Pilih jabatan"
+										data-required
+									>
 										<SelectGroup>
 											{positionsData.map((position) => (
 												<SelectItem
@@ -123,8 +128,9 @@ export const EditMemberForm = memo(
 							<form.AppField name="period_id">
 								{(field) => (
 									<field.Select
-										label="Periode Anggota"
+										label="Periode Keanggotaan"
 										placeholder="Pilih periode"
+										data-required
 									>
 										<SelectGroup>
 											{periodsData.map((period) => (

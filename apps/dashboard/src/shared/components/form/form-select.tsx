@@ -20,7 +20,10 @@ export function FormSelect({
 	children,
 	stringifyValue,
 	parseValue,
-}: FormControlProps & React.PropsWithChildren & TransformFns) {
+	...props
+}: FormControlProps &
+	TransformFns &
+	React.ComponentProps<typeof SelectTrigger>) {
 	const field = useFieldContext<unknown>();
 	const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
@@ -40,6 +43,7 @@ export function FormSelect({
 					id={field.name}
 					className="w-full capitalize"
 					aria-invalid={isInvalid}
+					{...props}
 				>
 					<SelectValue placeholder={placeholder} />
 				</SelectTrigger>

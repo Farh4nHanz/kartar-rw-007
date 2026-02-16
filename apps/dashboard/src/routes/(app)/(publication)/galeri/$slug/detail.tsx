@@ -64,7 +64,7 @@ function RouteComponent() {
 					</Link>
 				</Button>
 
-				<div className="flex-1">
+				<div className="flex-1 max-md:self-start">
 					<h1 className="font-bold text-2xl capitalize">
 						{gallery?.data.title}
 					</h1>

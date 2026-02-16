@@ -186,4 +186,12 @@
 	html {
 		@apply font-poppins;
 	}
+	div[data-slot="field-content"]:has(
+			input[data-required="true"],
+			textarea[data-required="true"],
+			button[data-required="true"]
+		)
+		> label {
+		@apply after:content-["*"] after:text-destructive;
+	}
 }

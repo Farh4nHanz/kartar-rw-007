@@ -7,7 +7,8 @@ export function FormInput({
 	label,
 	description,
 	placeholder = "Enter value",
-}: FormControlProps) {
+	...props
+}: FormControlProps & React.ComponentProps<typeof Input>) {
 	const field = useFieldContext<string>();
 	const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
@@ -23,6 +24,7 @@ export function FormInput({
 				onBlur={field.handleBlur}
 				aria-invalid={isInvalid}
 				autoComplete="off"
+				{...props}
 			/>
 		</FormBase>
 	);
