@@ -123,7 +123,7 @@ function HomeComponent() {
 					<div className="rounded-lg bg-blue-50 p-6 text-center transition-transform duration-300 hover:scale-105">
 						<Lightbulb className="mx-auto mb-3 size-12 text-blue-900" />
 						<div className="mb-1 font-bold text-3xl text-blue-900">8+</div>
-						<div className="text-gray-600">Kolaborasi</div>
+						<div className="text-gray-600">Mitra Kerja Sama</div>
 					</div>
 
 					<div className="rounded-lg bg-blue-50 p-6 text-center transition-transform duration-300 hover:scale-105">

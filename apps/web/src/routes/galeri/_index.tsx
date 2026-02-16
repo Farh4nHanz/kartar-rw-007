@@ -118,7 +118,7 @@ function RouteComponent() {
 												<h3 className="font-bold text-blue-900 text-lg capitalize">
 													{gallery.title}
 												</h3>
-												<p className="text-gray-600 text-sm first-letter:capitalize">
+												<p className="line-clamp-3 text-gray-600 text-sm first-letter:capitalize">
 													{gallery.description}
 												</p>
 												<p className="text-gray-500 text-xs">

@@ -135,7 +135,7 @@ function RouteComponent() {
 										</CardHeader>
 
 										<CardContent className="flex flex-col gap-3">
-											<p className="line-clamp-5 text-gray-700 text-smleading-relaxed first-letter:capitalize">
+											<p className="line-clamp-3 text-gray-700 text-smleading-relaxed first-letter:capitalize">
 												{program.description}
 											</p>
 										</CardContent>
