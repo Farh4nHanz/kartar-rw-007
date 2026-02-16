@@ -440,12 +440,12 @@ CREATE UNIQUE INDEX unique_active_program ON public.programs USING btree (title,
 -- ============================================
 -- Index untuk tabel news
 -- ============================================
-CREATE UNIQUE INDEX news_slug_unique ON public.news USING btree (slug)
+CREATE UNIQUE INDEX news_slug_unique ON public.news USING btree (slug);
 
 -- ============================================
 -- Index untuk tabel galleries
 -- ============================================
-CREATE UNIQUE INDEX galleries_slug_unique ON public.galleries USING btree (slug)
+CREATE UNIQUE INDEX galleries_slug_unique ON public.galleries USING btree (slug);
 
 -- ============================================
 -- Index untuk tabel collaborations
