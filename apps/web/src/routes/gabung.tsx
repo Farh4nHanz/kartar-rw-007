@@ -64,16 +64,16 @@ function RouteComponent() {
 						<CardContent className="grid grid-cols-1 gap-4 md:grid-cols-2">
 							{[
 								"Berusia 17 - 35 tahun",
-								"Berdomisili di lingkungan RW 007",
+								"Berdomisili di lingkungan RW 07",
 								"Memiliki KTP atau kartu identitas yang masih berlaku",
 								"Bersedia aktif mengikuti kegiatan organisasi",
 								"Memiliki komitmen untuk berkontribusi bagi masyarakat",
 							].map((requirement) => (
 								<div
 									key={requirement}
-									className="flex items-center gap-3 rounded-lg bg-blue-50 p-4"
+									className="flex items-start gap-3 rounded-lg bg-blue-50 p-4"
 								>
-									<CheckCircle className="size-5 text-blue-900" />
+									<CheckCircle className="size-5 shrink-0 text-blue-900" />
 									<span className="text-gray-700 text-sm">{requirement}</span>
 								</div>
 							))}
@@ -102,7 +102,7 @@ function RouteComponent() {
 							].map((benefit) => (
 								<div
 									key={benefit}
-									className="flex items-center gap-3 rounded-lg py-1 [&::before]:flex [&::before]:size-8 [&::before]:shrink-0 [&::before]:items-center [&::before]:justify-center [&::before]:rounded-full [&::before]:bg-blue-900 [&::before]:font-semibold [&::before]:text-white [&::before]:leading-none [&::before]:[content:counter(benefit)] [&::before]:[counter-increment:benefit]"
+									className="flex items-start gap-3 rounded-lg py-1 [&::before]:flex [&::before]:size-8 [&::before]:shrink-0 [&::before]:items-center [&::before]:justify-center [&::before]:rounded-full [&::before]:bg-blue-900 [&::before]:font-semibold [&::before]:text-white [&::before]:leading-none [&::before]:[content:counter(benefit)] [&::before]:[counter-increment:benefit]"
 								>
 									<p className="text-gray-700 text-sm">{benefit}</p>
 								</div>
@@ -129,7 +129,7 @@ function RouteComponent() {
 							].map((process) => (
 								<div
 									key={process}
-									className="flex items-center gap-3 rounded-lg py-1 [&::before]:flex [&::before]:size-10 [&::before]:shrink-0 [&::before]:items-center [&::before]:justify-center [&::before]:rounded-full [&::before]:bg-blue-900 [&::before]:font-semibold [&::before]:text-sm [&::before]:text-white [&::before]:leading-none [&::before]:[content:counter(process)] [&::before]:[counter-increment:process]"
+									className="flex items-start gap-3 rounded-lg py-1 [&::before]:flex [&::before]:size-8 [&::before]:shrink-0 [&::before]:items-center [&::before]:justify-center [&::before]:rounded-full [&::before]:bg-blue-900 [&::before]:font-semibold [&::before]:text-sm [&::before]:text-white [&::before]:leading-none [&::before]:[content:counter(process)] [&::before]:[counter-increment:process]"
 								>
 									<p className="text-gray-700 text-sm">{process}</p>
 								</div>

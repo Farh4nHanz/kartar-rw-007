@@ -76,13 +76,13 @@ function RouteComponent() {
 								{[
 									"Mengembangkan potensi dan kreativitas pemuda melalui berbagai program pemberdayaan",
 									"Menumbuhkan jiwa kepemimpinan dan kewirausahaan di kalangan generasi muda",
-									"Membangun solidaritas dan kerjasama antar pemuda dalam lingkungan RW 007",
+									"Membangun solidaritas dan kerjasama antar pemuda dalam lingkungan RW 07",
 									"Melaksanakan kegiatan sosial kemasyarakatan yang bermanfaat bagi lingkungan",
 									"Menjadi mitra strategis dalam pembangunan masyarakat yang lebih baik",
 								].map((mission) => (
 									<li
 										key={mission}
-										className="flex items-center text-gray-700 text-sm"
+										className="flex items-start text-gray-700 text-sm"
 									>
 										{mission}
 									</li>
@@ -111,7 +111,7 @@ function RouteComponent() {
 										key={goal}
 										className="rounded-lg bg-blue-50 p-4 *:[&::before]:mr-4 *:[&::before]:flex *:[&::before]:size-8 *:[&::before]:shrink-0 *:[&::before]:items-center *:[&::before]:justify-center *:[&::before]:rounded-sm *:[&::before]:bg-blue-900 *:[&::before]:font-semibold *:[&::before]:text-white *:[&::before]:[content:counter(goal)] *:[&::before]:[counter-increment:goal]"
 									>
-										<p className="flex items-center text-gray-700 text-sm">
+										<p className="flex items-start text-gray-700 text-sm">
 											{goal}
 										</p>
 									</div>

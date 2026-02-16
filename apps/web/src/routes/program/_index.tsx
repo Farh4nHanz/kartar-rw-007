@@ -147,15 +147,15 @@ function RouteComponent() {
 				{/* Info Section */}
 				<Card className="mt-12 rounded-lg px-2 py-5">
 					<CardHeader>
-						<CardTitle className="flex items-center gap-2 font-semibold text-blue-900 text-xl">
-							<Info className="size-6" />
+						<CardTitle className="flex items-center gap-3 font-semibold text-blue-900 text-xl">
+							<Info className="size-6 shrink-0" />
 							Tentang Program Kami
 						</CardTitle>
 					</CardHeader>
 
 					<CardContent className="space-y-4 text-gray-700">
 						<p className="text-sm leading-relaxed">
-							Program dan kegiatan Karang Taruna RW 007 dirancang berdasarkan
+							Program dan kegiatan Karang Taruna RW 07 dirancang berdasarkan
 							kebutuhan masyarakat dan potensi yang ada di lingkungan kami.
 							Setiap program memiliki tujuan yang jelas dalam pemberdayaan
 							masyarakat dan pengembangan pemuda.
