@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@workspace/ui/components/button";
-import { Card, CardContent } from "@workspace/ui/components/card";
+import { Card, CardContent, CardHeader } from "@workspace/ui/components/card";
 import { Skeleton } from "@workspace/ui/components/skeleton";
 import { cn } from "@workspace/ui/lib/utils";
 import { ImageIcon } from "lucide-react";
@@ -94,18 +94,20 @@ function RouteComponent() {
 									to="/galeri/$id/detail"
 									params={{ id: gallery.id }}
 								>
-									<Card className="overflow-hidden rounded-lg p-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-										{gallery.images.length ? (
-											<img
-												src={gallery.images.at(0)?.image_url || ""}
-												alt={gallery.title}
-												className="aspect-video h-full w-full rounded-lg object-cover object-center"
-											/>
-										) : (
-											<div className="flex aspect-video items-center justify-center bg-linear-to-br from-blue-100 to-gray-100">
-												<ImageIcon className="size-16 text-blue-600" />
-											</div>
-										)}
+									<Card className="gap-0 overflow-hidden rounded-lg p-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+										<CardHeader className="p-0">
+											{gallery.images.length ? (
+												<img
+													src={gallery.images.at(0)?.image_url || ""}
+													alt={gallery.title}
+													className="aspect-video h-full w-full rounded-t-lg object-cover object-center"
+												/>
+											) : (
+												<div className="flex aspect-video items-center justify-center bg-linear-to-br from-blue-100 to-gray-100">
+													<ImageIcon className="size-16 text-blue-600" />
+												</div>
+											)}
+										</CardHeader>
 
 										<CardContent className="flex flex-col gap-3 p-5">
 											<span className="w-fit rounded-full bg-blue-900 px-3 py-1 font-semibold text-white text-xs capitalize">
@@ -116,7 +118,7 @@ function RouteComponent() {
 												<h3 className="font-bold text-blue-900 text-lg capitalize">
 													{gallery.title}
 												</h3>
-												<p className="text-gray-600 text-sm first-letter:capitalize">
+												<p className="line-clamp-3 text-gray-600 text-sm first-letter:capitalize">
 													{gallery.description}
 												</p>
 												<p className="text-gray-500 text-xs">

@@ -148,7 +148,9 @@ function RouteComponent() {
 						<CardTitle className="font-semibold">Konten</CardTitle>
 					</CardHeader>
 					<CardContent className="flex gap-10">
-						<p className="first-letter:capitalize">{news?.data.content}</p>
+						<p className="whitespace-pre-line first-letter:capitalize">
+							{news?.data.content}
+						</p>
 					</CardContent>
 				</Card>
 

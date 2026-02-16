@@ -21,6 +21,7 @@
 		"awesome-phonenumber": "^7.6.0",
 		"class-variance-authority": "catalog:",
 		"clsx": "catalog:",
+		"date-fns": "catalog:",
 		"dotenv": "catalog:",
 		"lucide-react": "catalog:",
 		"maplibre-gl": "^5.15.0",

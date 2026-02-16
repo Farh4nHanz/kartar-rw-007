@@ -99,8 +99,8 @@ function RouteComponent() {
 				{/* Additional Info */}
 				<Card className="mt-12 rounded-lg px-2 py-5">
 					<CardHeader>
-						<CardTitle className="flex items-center gap-2 font-semibold text-blue-900 text-xl">
-							<Info className="size-6" />
+						<CardTitle className="flex flex-no-wrap items-center gap-3 font-semibold text-blue-900 text-xl">
+							<Info className="size-6 shrink-0" />
 							Informasi Kepengurusan
 						</CardTitle>
 					</CardHeader>

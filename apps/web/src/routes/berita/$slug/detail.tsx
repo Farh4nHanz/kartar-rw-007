@@ -29,68 +29,70 @@ function RouteComponent() {
 	if (!news?.data) return <NotFound />;
 
 	return (
-		<section className="container mx-auto px-4 py-10">
-			{/* Back button */}
-			<Button
-				variant="ghost"
-				className="mb-6 gap-2 text-blue-900"
-				onClick={() => window.history.back()}
-			>
-				<ArrowLeft className="size-4" />
-				Kembali
-			</Button>
+		<main className="flex h-fit min-h-screen w-full justify-center bg-gray-50">
+			<section className="container mx-auto px-4 py-10">
+				{/* Back button */}
+				<Button
+					variant="ghost"
+					className="mb-6 gap-2 text-blue-900"
+					onClick={() => window.history.back()}
+				>
+					<ArrowLeft className="size-4" />
+					Kembali
+				</Button>
 
-			{/* Header */}
-			<div className="mb-6 space-y-4">
-				<div className="flex flex-wrap items-center gap-3">
-					<Badge className="bg-blue-100 text-blue-900 capitalize hover:bg-blue-100">
-						{news?.data.category.name}
-					</Badge>
+				{/* Header */}
+				<div className="mb-6 space-y-4">
+					<div className="flex flex-wrap items-center gap-3">
+						<Badge className="bg-blue-100 text-blue-900 capitalize hover:bg-blue-100">
+							{news?.data.category.name}
+						</Badge>
 
-					{news?.data.published_at && (
-						<span className="flex items-center gap-1 text-muted-foreground text-sm">
-							<Calendar className="size-4" />
-							{new Intl.DateTimeFormat("id-ID", {
-								dateStyle: "long",
-							}).format(new Date(news.data?.published_at))}
-						</span>
-					)}
+						{news?.data.published_at && (
+							<span className="flex items-center gap-1 text-muted-foreground text-sm">
+								<Calendar className="size-4" />
+								{new Intl.DateTimeFormat("id-ID", {
+									dateStyle: "long",
+								}).format(new Date(news.data?.published_at))}
+							</span>
+						)}
+					</div>
+
+					<h1 className="font-bold text-3xl text-blue-900 capitalize leading-tight md:text-4xl">
+						{news?.data.title}
+					</h1>
+
+					<p className="text-muted-foreground text-sm leading-relaxed first-letter:capitalize">
+						{news?.data.excerpt}
+					</p>
 				</div>
 
-				<h1 className="font-bold text-3xl text-blue-900 capitalize leading-tight md:text-4xl">
-					{news?.data.title}
-				</h1>
+				{/* Thumbnail */}
+				{news?.data.thumbnail_url && (
+					<Card className="mb-8 max-h-96 overflow-hidden p-0">
+						<img
+							src={news.data.thumbnail_url}
+							alt={news.data.title}
+							className="aspect-video w-full object-cover italic"
+						/>
+					</Card>
+				)}
 
-				<p className="text-lg text-muted-foreground leading-relaxed first-letter:capitalize">
-					{news?.data.excerpt}
-				</p>
-			</div>
+				<Separator className="my-8" />
 
-			{/* Thumbnail */}
-			{news?.data.thumbnail_url && (
-				<Card className="mb-8 max-h-96 overflow-hidden p-0">
-					<img
-						src={news.data.thumbnail_url}
-						alt={news.data.title}
-						className="aspect-video w-full object-cover italic"
-					/>
+				{/* Content */}
+				<Card>
+					<CardHeader>
+						<CardTitle>Isi Berita</CardTitle>
+					</CardHeader>
+					<CardContent className="prose prose-blue max-w-none py-4">
+						<p className="whitespace-pre-line first-letter:capitalize">
+							{news?.data.content}
+						</p>
+					</CardContent>
 				</Card>
-			)}
-
-			<Separator className="my-8" />
-
-			{/* Content */}
-			<Card>
-				<CardHeader>
-					<CardTitle>Isi Berita</CardTitle>
-				</CardHeader>
-				<CardContent className="prose prose-blue max-w-none py-4">
-					<p className="whitespace-pre-line first-letter:capitalize">
-						{news?.data.content}
-					</p>
-				</CardContent>
-			</Card>
-		</section>
+			</section>
+		</main>
 	);
 }
 

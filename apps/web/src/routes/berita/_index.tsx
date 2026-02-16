@@ -124,7 +124,7 @@ function RouteComponent() {
 										</CardTitle>
 									</CardHeader>
 
-									<CardContent className="line-clamp-4 h-full text-muted-foreground text-sm first-letter:capitalize">
+									<CardContent className="line-clamp-3 h-full text-muted-foreground text-sm first-letter:capitalize">
 										{news.excerpt}
 									</CardContent>
 

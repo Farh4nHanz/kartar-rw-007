@@ -29,85 +29,87 @@ function RouteComponent() {
 	if (!gallery?.data) return <NotFound />;
 
 	return (
-		<section className="container mx-auto px-4 py-10">
-			{/* Back button */}
-			<Button
-				variant="ghost"
-				className="mb-6 gap-2 text-blue-900"
-				onClick={() => window.history.back()}
-			>
-				<ArrowLeft className="size-4" />
-				Kembali
-			</Button>
+		<main className="flex h-fit min-h-screen w-full justify-center bg-gray-50">
+			<section className="container mx-auto px-4 py-10">
+				{/* Back button */}
+				<Button
+					variant="ghost"
+					className="mb-6 gap-2 text-blue-900"
+					onClick={() => window.history.back()}
+				>
+					<ArrowLeft className="size-4" />
+					Kembali
+				</Button>
 
-			{/* Header */}
-			<div className="mb-6 space-y-4">
-				<div className="flex flex-wrap items-center gap-3">
-					<Badge className="bg-blue-100 text-blue-900 capitalize hover:bg-blue-100">
-						{gallery.data.category.name}
-					</Badge>
+				{/* Header */}
+				<div className="mb-6 space-y-4">
+					<div className="flex flex-wrap items-center gap-3">
+						<Badge className="bg-blue-100 text-blue-900 capitalize hover:bg-blue-100">
+							{gallery.data.category.name}
+						</Badge>
 
-					<span className="flex items-center gap-1 text-muted-foreground text-sm">
-						<Calendar className="size-4" />
-						{new Intl.DateTimeFormat("id-ID", {
-							dateStyle: "long",
-						}).format(new Date(gallery.data.activity_date))}
-					</span>
+						<span className="flex items-center gap-1 text-muted-foreground text-sm">
+							<Calendar className="size-4" />
+							{new Intl.DateTimeFormat("id-ID", {
+								dateStyle: "long",
+							}).format(new Date(gallery.data.activity_date))}
+						</span>
 
-					<span className="text-muted-foreground text-sm">
-						• {gallery.data.images.length} Foto
-					</span>
+						<span className="text-muted-foreground text-sm">
+							• {gallery.data.images.length} Foto
+						</span>
+					</div>
+
+					<h1 className="font-bold text-3xl text-blue-900 capitalize leading-tight md:text-4xl">
+						{gallery.data.title}
+					</h1>
+
+					<p className="text-muted-foreground text-sm leading-relaxed first-letter:capitalize">
+						{gallery.data.description}
+					</p>
 				</div>
 
-				<h1 className="font-bold text-3xl text-blue-900 capitalize leading-tight md:text-4xl">
-					{gallery.data.title}
-				</h1>
+				<Separator className="my-8" />
 
-				<p className="text-lg text-muted-foreground leading-relaxed first-letter:capitalize">
-					{gallery.data.description}
-				</p>
-			</div>
+				{/* Gallery Images */}
+				<Card>
+					<CardHeader>
+						<CardTitle className="flex items-center gap-2">
+							<ImageIcon className="size-5" />
+							Dokumentasi Kegiatan
+						</CardTitle>
+					</CardHeader>
 
-			<Separator className="my-8" />
+					<CardContent className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
+						{gallery.data.images.length ? (
+							gallery.data.images.map((image) => (
+								<div
+									key={image.id}
+									className="group relative aspect-square overflow-hidden rounded-lg border hover:cursor-pointer"
+									onClick={() =>
+										image.image_url && window.open(image.image_url, "_blank")
+									}
+								>
+									<img
+										src={image.image_url || "https://placehold.co/400x400"}
+										alt={gallery.data.title}
+										className="h-full w-full cursor-pointer object-cover transition-transform duration-300 group-hover:scale-105"
+									/>
 
-			{/* Gallery Images */}
-			<Card>
-				<CardHeader>
-					<CardTitle className="flex items-center gap-2">
-						<ImageIcon className="size-5" />
-						Dokumentasi Kegiatan
-					</CardTitle>
-				</CardHeader>
-
-				<CardContent className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
-					{gallery.data.images.length ? (
-						gallery.data.images.map((image) => (
-							<div
-								key={image.id}
-								className="group relative aspect-square overflow-hidden rounded-lg border hover:cursor-pointer"
-								onClick={() =>
-									image.image_url && window.open(image.image_url, "_blank")
-								}
-							>
-								<img
-									src={image.image_url || "https://placehold.co/400x400"}
-									alt={gallery.data.title}
-									className="h-full w-full cursor-pointer object-cover transition-transform duration-300 group-hover:scale-105"
-								/>
-
-								{/* Hover overlay */}
-								<div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity group-hover:opacity-100" />
+									{/* Hover overlay */}
+									<div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity group-hover:opacity-100" />
+								</div>
+							))
+						) : (
+							<div className="col-span-full flex flex-col items-center justify-center py-16 text-muted-foreground">
+								<ImageIcon className="mb-2 size-12" />
+								<p>Tidak ada foto untuk galeri ini</p>
 							</div>
-						))
-					) : (
-						<div className="col-span-full flex flex-col items-center justify-center py-16 text-muted-foreground">
-							<ImageIcon className="mb-2 size-12" />
-							<p>Tidak ada foto untuk galeri ini</p>
-						</div>
-					)}
-				</CardContent>
-			</Card>
-		</section>
+						)}
+					</CardContent>
+				</Card>
+			</section>
+		</main>
 	);
 }
 

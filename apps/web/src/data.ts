@@ -27,7 +27,8 @@ export const contactInfo = {
 		{
 			label: "Alamat",
 			icon: MapPin,
-			value: "Jl. Ancol Selatan RT 005 RW 07",
+			value:
+				"Jl. Ancol Sel. II No.7 14, RT.14/RW.7, Sunter Agung, Kec. Tj. Priok, Jkt Utara, Daerah Khusus Ibukota Jakarta 14350.",
 		},
 		{
 			label: "Jam Operasional",
