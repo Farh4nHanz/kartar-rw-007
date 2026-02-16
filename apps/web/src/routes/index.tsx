@@ -9,7 +9,9 @@ import {
 	CardTitle,
 } from "@workspace/ui/components/card";
 import { Skeleton } from "@workspace/ui/components/skeleton";
+import { differenceInMonths, differenceInYears } from "date-fns";
 import { ArrowRight, Award, Lightbulb, Target, Users } from "lucide-react";
+import { useMemo } from "react";
 import {
 	getLatestNewsQueryOptions,
 	getLatestProgramsQueryOptions,
@@ -31,6 +33,33 @@ function HomeComponent() {
 	const { data: news, isLoading: isNewsFetchLoading } = useQuery(
 		getLatestNewsQueryOptions(),
 	);
+
+	const today = new Date();
+	const from = new Date("2025-08-01");
+
+	const getFoundedDate = useMemo(() => {
+		const rtf = new Intl.RelativeTimeFormat("id", {
+			numeric: "always",
+		});
+
+		const years = differenceInYears(from, today);
+		if (years !== 0) {
+			const format = rtf.format(years, "year");
+			return {
+				date: format.replace(" tahun yang lalu", ""),
+				period: format.split(" ")[1],
+			};
+		}
+
+		const months = differenceInMonths(from, today);
+		if (months !== 0) {
+			const format = rtf.format(months, "month");
+			return {
+				date: format.replace(" bulan yang lalu", ""),
+				period: format.split(" ")[1],
+			};
+		}
+	}, [today, from]);
 
 	return (
 		<main className="flex h-fit min-h-screen w-full flex-col items-center *:px-6 *:not-first:py-16">
@@ -81,28 +110,30 @@ function HomeComponent() {
 				<div className="container grid w-full grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-6">
 					<div className="rounded-lg bg-blue-50 p-6 text-center transition-transform duration-300 hover:scale-105">
 						<Users className="mx-auto mb-3 size-12 text-blue-900" />
-						<div className="mb-1 font-bold text-3xl text-blue-900">30+</div>
+						<div className="mb-1 font-bold text-3xl text-blue-900">20+</div>
 						<div className="text-gray-600">Anggota Aktif</div>
 					</div>
 
 					<div className="rounded-lg bg-blue-50 p-6 text-center transition-transform duration-300 hover:scale-105">
 						<Target className="mx-auto mb-3 size-12 text-blue-900" />
-						<div className="mb-1 font-bold text-3xl text-blue-900">50+</div>
+						<div className="mb-1 font-bold text-3xl text-blue-900">10+</div>
 						<div className="text-gray-600">Program Terlaksana</div>
 					</div>
 
 					<div className="rounded-lg bg-blue-50 p-6 text-center transition-transform duration-300 hover:scale-105">
 						<Lightbulb className="mx-auto mb-3 size-12 text-blue-900" />
-						<div className="mb-1 font-bold text-3xl text-blue-900">20+</div>
+						<div className="mb-1 font-bold text-3xl text-blue-900">8+</div>
 						<div className="text-gray-600">Kolaborasi</div>
 					</div>
 
 					<div className="rounded-lg bg-blue-50 p-6 text-center transition-transform duration-300 hover:scale-105">
 						<Award className="mx-auto mb-3 size-12 text-blue-900" />
 						<div className="mb-1 font-bold text-3xl text-blue-900">
-							{new Date().getFullYear() - new Date("2010-01-01").getFullYear()}
+							{getFoundedDate?.date}
 						</div>
-						<div className="text-gray-600">Tahun Berdiri</div>
+						<div className="text-gray-600 capitalize">
+							{getFoundedDate?.period} Berdiri
+						</div>
 					</div>
 				</div>
 			</section>
@@ -120,9 +151,9 @@ function HomeComponent() {
 					</div>
 
 					{/* Program Cards */}
-					<div className="mb-8 grid w-full grid-cols-[repeat(auto-fill,minmax(350px,1fr))] items-center justify-center gap-6">
+					<div className="mb-8 grid w-full grid-cols-[repeat(auto-fill,minmax(250px,1fr))] items-center justify-center gap-6">
 						{isProgramsFetchLoading
-							? Array.from({ length: 3 }, () => (
+							? Array.from({ length: 4 }, () => (
 									<Card key={Math.random()} className="w-full rounded-md">
 										<CardHeader className="space-y-3">
 											{/* Category badge */}
@@ -150,8 +181,9 @@ function HomeComponent() {
 										key={program.id}
 										to="/program/$id/detail"
 										params={{ id: program.id }}
+										className="h-full"
 									>
-										<Card className="w-full rounded-md transition-shadow duration-300 hover:shadow-lg">
+										<Card className="h-full w-full rounded-md transition-shadow duration-300 hover:shadow-lg">
 											<CardHeader>
 												<div className="mb-2 inline-block w-fit rounded-full bg-blue-900 px-3 py-1 font-semibold text-white text-xs capitalize">
 													{program.category.name}
@@ -164,8 +196,8 @@ function HomeComponent() {
 												</CardDescription>
 											</CardHeader>
 
-											<CardContent>
-												<p className="text-gray-600 text-sm first-letter:capitalize">
+											<CardContent className="h-full">
+												<p className="line-clamp-4 text-gray-600 text-sm first-letter:capitalize">
 													{program.description}
 												</p>
 											</CardContent>
@@ -202,9 +234,9 @@ function HomeComponent() {
 					</div>
 
 					{/* News Cards */}
-					<div className="mb-8 grid w-full grid-cols-[repeat(auto-fill,minmax(350px,1fr))] items-center justify-center gap-6">
+					<div className="mb-8 grid w-full grid-cols-[repeat(auto-fill,minmax(250px,1fr))] items-center justify-center gap-6">
 						{isNewsFetchLoading
-							? Array.from({ length: 3 }, () => (
+							? Array.from({ length: 4 }, () => (
 									<Card key={Math.random()} className="w-full rounded-md">
 										<CardHeader>
 											{/* Category + Date */}
@@ -235,8 +267,9 @@ function HomeComponent() {
 										key={item.id}
 										to="/berita/$slug/detail"
 										params={{ slug: item.slug }}
+										className="h-full"
 									>
-										<Card className="w-full rounded-md transition-shadow duration-300 hover:shadow-lg">
+										<Card className="h-full w-full rounded-md transition-shadow duration-300 hover:shadow-lg">
 											<CardHeader>
 												<div className="mb-2 flex items-center justify-between gap-4">
 													<span className="rounded-full bg-blue-100 px-3 py-1 font-semibold text-blue-900 text-xs capitalize">
@@ -254,8 +287,8 @@ function HomeComponent() {
 												</CardTitle>
 											</CardHeader>
 
-											<CardContent>
-												<p className="text-gray-600 text-sm first-letter:capitalize">
+											<CardContent className="h-full">
+												<p className="line-clamp-4 text-gray-600 text-sm first-letter:capitalize">
 													{item.excerpt}
 												</p>
 											</CardContent>

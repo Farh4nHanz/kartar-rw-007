@@ -64,7 +64,7 @@ function RouteComponent() {
 						{gallery.data.title}
 					</h1>
 
-					<p className="text-lg text-muted-foreground leading-relaxed first-letter:capitalize">
+					<p className="text-muted-foreground text-sm leading-relaxed first-letter:capitalize">
 						{gallery.data.description}
 					</p>
 				</div>

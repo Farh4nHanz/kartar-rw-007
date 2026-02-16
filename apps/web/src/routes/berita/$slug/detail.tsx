@@ -62,7 +62,7 @@ function RouteComponent() {
 						{news?.data.title}
 					</h1>
 
-					<p className="text-lg text-muted-foreground leading-relaxed first-letter:capitalize">
+					<p className="text-muted-foreground text-sm leading-relaxed first-letter:capitalize">
 						{news?.data.excerpt}
 					</p>
 				</div>
