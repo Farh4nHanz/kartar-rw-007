@@ -99,7 +99,7 @@ function RouteComponent() {
 											<img
 												src={gallery.images.at(0)?.image_url || ""}
 												alt={gallery.title}
-												className="aspect-video h-full w-full rounded-lg object-cover object-center"
+												className="aspect-video h-full w-full rounded-t-lg object-cover object-center"
 											/>
 										) : (
 											<div className="flex aspect-video items-center justify-center bg-linear-to-br from-blue-100 to-gray-100">

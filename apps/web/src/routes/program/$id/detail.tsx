@@ -28,75 +28,77 @@ function RouteComponent() {
 	if (!program?.data) return <NotFound />;
 
 	return (
-		<section className="container mx-auto px-4 py-10">
-			{/* Back button */}
-			<Button
-				variant="ghost"
-				className="mb-6 gap-2 text-blue-900"
-				onClick={() => window.history.back()}
-			>
-				<ArrowLeft className="size-4" />
-				Kembali
-			</Button>
+		<main className="flex h-fit min-h-screen w-full justify-center bg-gray-50">
+			<section className="container mx-auto px-4 py-10">
+				{/* Back button */}
+				<Button
+					variant="ghost"
+					className="mb-6 gap-2 text-blue-900"
+					onClick={() => window.history.back()}
+				>
+					<ArrowLeft className="size-4" />
+					Kembali
+				</Button>
 
-			{/* Header */}
-			<div className="mb-6 space-y-4">
-				<div className="flex flex-wrap items-center gap-3">
-					<Badge className="bg-blue-100 text-blue-900 capitalize hover:bg-blue-100">
-						{program.data.category.name}
-					</Badge>
+				{/* Header */}
+				<div className="mb-6 space-y-4">
+					<div className="flex flex-wrap items-center gap-3">
+						<Badge className="bg-blue-100 text-blue-900 capitalize hover:bg-blue-100">
+							{program.data.category.name}
+						</Badge>
 
-					<span
-						className={cn(
-							"flex items-center gap-1 rounded-full px-3 py-1 font-medium text-xs capitalize",
-							program.data.status.toLowerCase() === "rutin"
-								? "bg-green-100 text-green-800"
-								: "bg-yellow-100 text-yellow-800",
-						)}
-					>
-						<Calendar className="size-3" />
-						{program.data.status}
-					</span>
+						<span
+							className={cn(
+								"flex items-center gap-1 rounded-full px-3 py-1 font-medium text-xs capitalize",
+								program.data.status.toLowerCase() === "rutin"
+									? "bg-green-100 text-green-800"
+									: "bg-yellow-100 text-yellow-800",
+							)}
+						>
+							<Calendar className="size-3" />
+							{program.data.status}
+						</span>
 
-					<span
-						className={cn(
-							"flex items-center gap-1 rounded-full px-3 py-1 font-medium text-xs",
-							program.data.is_active
-								? "bg-blue-100 text-blue-900"
-								: "bg-gray-100 text-gray-600",
-						)}
-					>
-						{program.data.is_active ? (
-							<CheckCircle className="size-3" />
-						) : (
-							<XCircle className="size-3" />
-						)}
-						{program.data.is_active ? "Aktif" : "Tidak Aktif"}
-					</span>
+						<span
+							className={cn(
+								"flex items-center gap-1 rounded-full px-3 py-1 font-medium text-xs",
+								program.data.is_active
+									? "bg-blue-100 text-blue-900"
+									: "bg-gray-100 text-gray-600",
+							)}
+						>
+							{program.data.is_active ? (
+								<CheckCircle className="size-3" />
+							) : (
+								<XCircle className="size-3" />
+							)}
+							{program.data.is_active ? "Aktif" : "Tidak Aktif"}
+						</span>
+					</div>
+
+					<h1 className="font-bold text-3xl text-blue-900 capitalize leading-tight md:text-4xl">
+						{program.data.title}
+					</h1>
+
+					<p className="flex items-center gap-2 text-muted-foreground text-sm capitalize">
+						<Calendar className="size-4" />
+						{program.data.schedule_type}
+					</p>
 				</div>
 
-				<h1 className="font-bold text-3xl text-blue-900 capitalize leading-tight md:text-4xl">
-					{program.data.title}
-				</h1>
-
-				<p className="flex items-center gap-2 text-muted-foreground text-sm capitalize">
-					<Calendar className="size-4" />
-					{program.data.schedule_type}
-				</p>
-			</div>
-
-			{/* Content */}
-			<Card>
-				<CardHeader>
-					<CardTitle>Deskripsi Mengenai Program atau Kegiatan ini</CardTitle>
-				</CardHeader>
-				<CardContent className="prose prose-blue max-w-none py-4">
-					<p className="whitespace-pre-line first-letter:capitalize">
-						{program.data.description}
-					</p>
-				</CardContent>
-			</Card>
-		</section>
+				{/* Content */}
+				<Card>
+					<CardHeader>
+						<CardTitle>Terkait Program Ini</CardTitle>
+					</CardHeader>
+					<CardContent className="prose prose-blue max-w-none py-4">
+						<p className="whitespace-pre-line first-letter:capitalize">
+							{program.data.description}
+						</p>
+					</CardContent>
+				</Card>
+			</section>
+		</main>
 	);
 }
 

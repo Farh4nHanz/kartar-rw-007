@@ -25,8 +25,8 @@ export default function Header() {
 	const matchRoute = useMatchRoute();
 
 	return (
-		<header className="sticky top-0 z-50 bg-white py-4 shadow-md *:not-last:px-6 lg:px-8">
-			<div className="flex h-fit min-h-20 items-center justify-between gap-16">
+		<header className="sticky top-0 z-50 bg-white py-4 shadow-md *:not-last:px-6 *:not-last:lg:px-8">
+			<div className="flex h-fit min-h-10 items-center justify-between gap-10 [anchor-name:--header]">
 				{/* Logo */}
 				<Link to="/" className="group flex shrink-0 items-center space-x-3">
 					<img
@@ -75,7 +75,12 @@ export default function Header() {
 
 			{/* Mobile Navigation */}
 			<Activity mode={isOpen ? "visible" : "hidden"}>
-				<nav className="mb-5 border-gray-200 border-t lg:hidden">
+				{/* 
+						If the py of the header tag changed, don't forget to update the top calc,
+						this code top-[calc(anchor(bottom)+1rem)] depends on the height of the header.
+						py-4 is equal to 1rem
+				*/}
+				<nav className="absolute top-[calc(anchor(bottom)+1rem)] w-full border-gray-200 border-t bg-background pb-3 [position-anchor:--header] lg:hidden">
 					{links.map((item) => (
 						<Link
 							key={item.label}
