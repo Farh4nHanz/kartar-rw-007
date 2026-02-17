@@ -1,3 +1,15 @@
+[dev]
+  command = "bun dev:web"
+  targetPort = 3001
+  port = 8888
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/.netlify/functions/sitemap"
+  status = 200
+  force = true
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

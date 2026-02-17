@@ -13,6 +13,7 @@ import { Skeleton } from "@workspace/ui/components/skeleton";
 import { cn } from "@workspace/ui/lib/utils";
 import { ArrowLeft, Calendar, CheckCircle, XCircle } from "lucide-react";
 import { getProgramByIdQueryOptions } from "@/hooks/query-options";
+import { useSEO } from "@/hooks/use-seo";
 
 export const Route = createFileRoute("/program/$id/detail")({
 	component: RouteComponent,
@@ -23,6 +24,11 @@ function RouteComponent() {
 	const { data: program, isLoading: isProgramFetchLoading } = useQuery(
 		getProgramByIdQueryOptions(id),
 	);
+
+	useSEO({
+		title: `${program?.data.title} | Karang Taruna RW 07`,
+		description: program?.data.description,
+	});
 
 	if (isProgramFetchLoading) return <ProgramDetailSkeleton />;
 	if (!program?.data) return <NotFound />;

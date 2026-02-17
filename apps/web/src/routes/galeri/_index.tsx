@@ -7,6 +7,7 @@ import { cn } from "@workspace/ui/lib/utils";
 import { ImageIcon } from "lucide-react";
 import { getAllGalleriesQueryOptions } from "@/hooks/query-options";
 import { useFilter } from "@/hooks/use-filter";
+import { useSEO } from "@/hooks/use-seo";
 
 export const Route = createFileRoute("/galeri/_index")({
 	component: RouteComponent,
@@ -22,6 +23,12 @@ function RouteComponent() {
 	const { filter, setFilter, categories, filteredData } = useFilter(
 		galleries?.data || [],
 	);
+
+	useSEO({
+		title: "Galeri Kegiatan | Karang Taruna RW 07",
+		description:
+			"Daftar galeri Karang Taruna RW 07 sebagai bentuk dokumentasi kegiatan.",
+	});
 
 	return (
 		<main className="flex h-fit min-h-screen w-full justify-center bg-gray-50 py-16">

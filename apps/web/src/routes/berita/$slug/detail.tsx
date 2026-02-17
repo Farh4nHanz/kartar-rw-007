@@ -13,6 +13,7 @@ import { Separator } from "@workspace/ui/components/separator";
 import { Skeleton } from "@workspace/ui/components/skeleton";
 import { ArrowLeft, Calendar } from "lucide-react";
 import { getNewsBySlugQueryOptions } from "@/hooks/query-options";
+import { useSEO } from "@/hooks/use-seo";
 
 export const Route = createFileRoute("/berita/$slug/detail")({
 	component: RouteComponent,
@@ -24,6 +25,11 @@ function RouteComponent() {
 	const { data: news, isLoading: isNewsDataFetchLoading } = useQuery(
 		getNewsBySlugQueryOptions(slug),
 	);
+
+	useSEO({
+		title: `${news?.data.title} | Karang Taruna RW 07`,
+		description: news?.data.excerpt ?? news?.data.title,
+	});
 
 	if (isNewsDataFetchLoading) return <NewsDetailSkeleton />;
 	if (!news?.data) return <NotFound />;

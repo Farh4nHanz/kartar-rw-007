@@ -10,6 +10,8 @@
 		"includes": [
 			"**",
 			"!**/.next",
+			"!**/node_modules",
+			"!**/build",
 			"!**/dist",
 			"!**/.turbo",
 			"!**/dev-dist",
@@ -24,7 +26,11 @@
 			"!**/.alchemy",
 			"!**/.svelte-kit",
 			"!**/wrangler.jsonc",
-			"!**/.source"
+			"!**/.source",
+			"!**/.deno.lock",
+			"!**/.netlify",
+			"!**/.tanstack",
+			"!**/public"
 		]
 	},
 	"formatter": {

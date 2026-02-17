@@ -13,6 +13,7 @@ import { Separator } from "@workspace/ui/components/separator";
 import { Skeleton } from "@workspace/ui/components/skeleton";
 import { ArrowLeft, Calendar, Image as ImageIcon } from "lucide-react";
 import { getGalleryDetailByIdQueryOptions } from "@/hooks/query-options";
+import { useSEO } from "@/hooks/use-seo";
 
 export const Route = createFileRoute("/galeri/$id/detail")({
 	component: RouteComponent,
@@ -24,6 +25,11 @@ function RouteComponent() {
 	const { data: gallery, isLoading: isGalleryDataFetchLoading } = useQuery(
 		getGalleryDetailByIdQueryOptions(id),
 	);
+
+	useSEO({
+		title: `Galeri ${gallery?.data.title} | Karang Taruna RW 07`,
+		description: `Dokumentasi kegiatan ${gallery?.data.title} Karang Taruna RW 07`,
+	});
 
 	if (isGalleryDataFetchLoading) return <GalleryDetailSkeleton />;
 	if (!gallery?.data) return <NotFound />;

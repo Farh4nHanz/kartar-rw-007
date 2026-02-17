@@ -30,7 +30,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 			{
 				name: "keywords",
 				content:
-					"Karang Taruna, RW 07, Pembinaan, Pemberdayaan, Pemuda, Organisasi, Sosial, Masyarakat",
+					"Karang Taruna, RW 07, Sekretariat, Pembinaan, Pemberdayaan, Pemuda, Organisasi, Sosial, Masyarakat, Sunter, Sunter Agung, Ancol",
 			},
 			{
 				name: "author",

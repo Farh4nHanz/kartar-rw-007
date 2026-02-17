@@ -13,6 +13,7 @@ import { cn } from "@workspace/ui/lib/utils";
 import { Calendar, Info } from "lucide-react";
 import { getAllProgramsQueryOptions } from "@/hooks/query-options";
 import { useFilter } from "@/hooks/use-filter";
+import { useSEO } from "@/hooks/use-seo";
 
 export const Route = createFileRoute("/program/_index")({
 	component: RouteComponent,
@@ -28,6 +29,11 @@ function RouteComponent() {
 	const { filter, setFilter, categories, filteredData } = useFilter(
 		programs?.data || [],
 	);
+
+	useSEO({
+		title: "Program Kerja | Karang Taruna RW 07",
+		description: "Daftar program kerja Karang Taruna RW 07 untuk masyarakat.",
+	});
 
 	return (
 		<main className="flex h-fit min-h-screen w-full justify-center bg-gray-50 py-16">

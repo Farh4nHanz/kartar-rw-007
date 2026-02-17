@@ -14,6 +14,7 @@ import { ArrowRight, Calendar, Tag } from "lucide-react";
 import { contactInfo } from "@/data";
 import { getAllNewsQueryOptions } from "@/hooks/query-options";
 import { useFilter } from "@/hooks/use-filter";
+import { useSEO } from "@/hooks/use-seo";
 
 export const Route = createFileRoute("/berita/_index")({
 	component: RouteComponent,
@@ -29,6 +30,11 @@ function RouteComponent() {
 	const { filter, setFilter, categories, filteredData } = useFilter(
 		news?.data || [],
 	);
+
+	useSEO({
+		title: "Berita & Informasi | Karang Taruna RW 07",
+		description: "Daftar berita dan informasi Karang Taruna RW 07.",
+	});
 
 	return (
 		<main className="flex h-fit min-h-screen w-full justify-center bg-gray-50 py-16">
